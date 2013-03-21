@@ -1,0 +1,38 @@
+{
+  "name": "traceurify",
+  "version": "0.0.0",
+  "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript on the fly.",
+  "main": "traceurify.js",
+  "scripts": {
+    "test": "node-trap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/traceurify.git"
+  },
+  "homepage": "https://github.com/thlorenz/traceurify",
+  "dependencies": {
+    "convert-source-map": "~0.2.5",
+    "traceur": "0.0.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "traceur",
+    "JavaScript.next",
+    "ES6",
+    "browserify",
+    "v2",
+    "js",
+    "plugin",
+    "transform"
+  ],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.6"
+  }
+}
