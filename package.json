@@ -13,7 +13,6 @@
   "homepage": "https://github.com/thlorenz/traceurify",
   "dependencies": {
     "convert-source-map": "~0.2.5",
-    "traceur": "0.0.1",
     "through": "~2.2.7"
   },
   "devDependencies": {
