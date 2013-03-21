@@ -1,7 +1,7 @@
 {
   "name": "traceurify",
   "version": "0.0.0",
-  "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript on the fly.",
+  "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.old (ES3) on the fly.",
   "main": "traceurify.js",
   "scripts": {
     "test": "node-trap test/*.js"
@@ -13,9 +13,13 @@
   "homepage": "https://github.com/thlorenz/traceurify",
   "dependencies": {
     "convert-source-map": "~0.2.5",
-    "traceur": "0.0.1"
+    "traceur": "0.0.1",
+    "through": "~2.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify": "~2.7.2",
+    "mold-source-map": "~0.2.0"
+  },
   "keywords": [
     "traceur",
     "JavaScript.next",
