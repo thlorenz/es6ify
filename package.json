@@ -1,10 +1,10 @@
 {
   "name": "traceurify",
   "version": "0.0.0",
-  "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.old (ES3) on the fly.",
+  "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.current (ES5) on the fly.",
   "main": "traceurify.js",
   "scripts": {
-    "test": "node-trap test/*.js"
+    "test": "tap test/*.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "browserify": "~2.7.2",
-    "mold-source-map": "~0.2.0"
+    "mold-source-map": "~0.2.0",
+    "tap": "~0.4.0"
   },
   "keywords": [
     "traceur",
