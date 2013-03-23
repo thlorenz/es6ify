@@ -13,12 +13,13 @@ browserify()
 
 Find the full version of this example [here](https://github.com/thlorenz/traceurify/blob/master/example/build.js).
 
+## Installation
+
+    npm install traceurify
+
 ![generators](https://github.com/thlorenz/traceurify/raw/master/assets/generators-shot.png)
 
 [Try it live]();
 
-## Installation
-
-    npm install traceurify
 
 
