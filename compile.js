@@ -41,7 +41,7 @@ module.exports = function compileFile(file, contents) {
 
   var reporter = {
     reportError : function(pos, msg) {
-      err = format('%s:%s:%s %s', file, pos.line, pos.offset, msg);
+      err = format('%s:%s:%s %s', file, pos.line + 1, pos.offset, msg);
     },
     hadError : function () { return !!err; } 
   };

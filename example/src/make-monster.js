@@ -1,5 +1,7 @@
 class Character {
   constructor(x, y, name) {
+    this.x = x;
+    this.y = y;
   }
   attack(character) {
     console.log('attacking', character);
@@ -25,3 +27,6 @@ class Monster extends Character {
   }
 }
 
+module.exports = function (x, y, name) {
+  return new Monster(x, y, name);
+};

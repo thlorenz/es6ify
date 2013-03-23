@@ -1,6 +1,10 @@
-module Block {
+console.log('block scope', module);
+module.exports = function () {
+  var a = 2
+    , b = 3
+    ;
   {
-    var tmp = a;
+    let tmp = a;
     a = b;
     b = tmp;
   }

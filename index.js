@@ -1,44 +1,39 @@
 'use strict';
 
-var traceur            =  require('traceur/src/node/traceur')
-  , convert            =  require('convert-source-map')
-  , through            =  require('through')
-  , SourceMapGenerator =  traceur.outputgeneration.SourceMapGenerator
-  , TreeWriter         =  traceur.outputgeneration.TreeWriter
-  , Parser             =  traceur.syntax.Parser
-  , SourceFile         =  traceur.syntax.SourceFile
+var convert =  require('convert-source-map')
+  , through =  require('through')
+  , compile =  require('./compile')
   ;
 
-function parse(name, source, errorReporter) {
-  var sourceFile =  new SourceFile(name, source);
-  var parser     =  new Parser(errorReporter, sourceFile);
-  return parser.parseProgram();
+function handleError(compiled, stderr) {
+  stderr.write(compiled.error);
+  return 'console.log("Compile Error: ' + compiled.error + '");';
 }
 
-function compile(file, src, stderr) {
-  stderr = stderr || process.stderr;
-  var errorReporter = {
-    reportError: function(position, message) {
-      stderr.write('file: ' + file + ' --- ' + message + ', ' + position + '\n');
-    }
-  };
+function transform(file, src, stderr) {
+  var compiled;
+  try {
+    compiled = compile(file, src);
+  } catch (err) {
+    return handleError({ error: err.message }, stderr);
+  }
 
-  var tree = parse(file, src, errorReporter);
-
-  var generator = new SourceMapGenerator({ file: file });
-  var options = { sourceMapGenerator: generator, showLineNumbers: false };
-
-  var compiledSrc = TreeWriter.write(tree, options);
+  if (compiled.error) return handleError(compiled, stderr);
   var comment = convert
-    .fromJSON(options.sourceMap)
-    .setProperty('sourcesContent', [ compiledSrc ])
+    .fromJSON(compiled.sourcemap)
+    // override sources that traceur adds i.e. in cases that require the runtime like generators it adds genratorWrap@runtime
+    // it also doesn't include the path in the source
+    .setProperty('sources', [ file ])
+    .setProperty('sourcesContent', [ src ])
     .toComment();
 
-  return compiledSrc + '\n';// + comment;
+  return compiled.source + '\n' + comment;
 }
 
-module.exports = function (filePattern) {
-  filePattern = filePattern || /\.js/;
+module.exports = function (filePattern, stderr) {
+  filePattern =  filePattern || /\.js/;
+  stderr      =  stderr      || process.stderr;
+
   return function (file) {
     if (!filePattern.test(file)) return through();
     
@@ -47,23 +42,12 @@ module.exports = function (filePattern) {
     
     function write (buf) { data += buf; }
     function end () {
-        this.queue(compile(file, data));
+        this.queue(transform(file, data, stderr));
         this.queue(null);
     }
   };
 };
 
+module.exports.runtime = require('node-traceur').runtimePath;
 if (module.parent) return;
 
-var fs = require('fs')
-  , path = require('path')
-  , srcdir = path.join(__dirname, './example/src/');
-
-// var file = 'destructuring.js';
-// var file = 'generators.js';
-var file = 'block-scope.js';
-var source= fs.readFileSync(srcdir + file, 'utf-8');
-
-var compiled = compile(file, source);
-console.log('=========================\nSOURCE:\n', source);
-console.log('=========================\nCOMPILED:\n', compiled);
