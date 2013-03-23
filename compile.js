@@ -26,6 +26,7 @@ var nodeTraceur        =  require('node-traceur')
   , 'generatorComprehension'
   , 'generators'
   , 'modules'
+  , 'deferredFunctions'
   , 'blockBinding'
   , 'sourceMaps'
   ].forEach(function (k) { traceur.options[k] = true; });
