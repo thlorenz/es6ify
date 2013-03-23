@@ -14,7 +14,7 @@
   "dependencies": {
     "convert-source-map": "~0.2.5",
     "through": "~2.2.7",
-    "node-traceur": "~0.1.0"
+    "node-traceur": "~0.1.2"
   },
   "devDependencies": {
     "browserify": "~2.7.2",
