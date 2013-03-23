@@ -20,9 +20,13 @@ function make(array) {
   if (array.length == 1) return new Tree(null, array[0], null);
   return new Tree(make(array[0]), array[1], make(array[2]));
 }
-let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
 
-// Iterate over it
-for (let node of inorder(tree)) {
-  console.log(node); // a, b, c, d, ...
-}
+module.exports = function () {
+  let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
+  console.log('generating tree labels in order:');
+
+  // Iterate over it
+  for (let node of inorder(tree)) {
+    console.log(node); // a, b, c, d, ...
+  }
+};
