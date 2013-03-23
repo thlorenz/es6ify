@@ -1,4 +1,3 @@
-console.log('block scope', module);
 module.exports = function () {
   var a = 2
     , b = 3

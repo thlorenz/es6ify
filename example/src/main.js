@@ -1,8 +1,5 @@
-let blockScope    =  require('./block-scope')
-  , destructuring =  require('./destructuring')
-  , generators    =  require('./generators')
-  , makeMonster   =  require('./make-monster')
-  ;
+let makeMonster   =  require('./make-monster');
+let { blockScope, destructuring, generators } = require('./features');
 
 blockScope();
 destructuring();
