@@ -5,5 +5,7 @@ module.exports = {
   , iterators         :  require('./iterators')
   , tryawait          :  require('./await')
   , defaultParameters :  require('./default-parameters')
+  , restParameters :  require('./rest-parameters')
+  , spreadOperator :  require('./spread-operator')
 };
 

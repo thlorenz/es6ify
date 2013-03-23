@@ -8,6 +8,8 @@ let {
   , iterators
   , tryawait
   , defaultParameters
+  , restParameters
+  , spreadOperator
 } = require('./features');
 
 blockScope();
@@ -25,3 +27,7 @@ tryawait(window.document.getElementsByTagName('p')[0]);
 defaultParameters('Heinz Muelleimer', 'Cobol', 'Germany');
 defaultParameters('Thorsten Lorenz');
 defaultParameters('Grandpa Otto', 'Java');
+
+restParameters('animals', 'cat', 'dog', 'zebra', 'giraffe', 'lion');
+
+spreadOperator([ 3, 4 ]);
