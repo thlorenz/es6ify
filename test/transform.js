@@ -33,7 +33,7 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       t.deepEqual(
           sourceMap
         , { version: 3,
-            file: '/Users/thlorenz/dev/js/projects/es6ify/example/src/features/iterators.js.es6',
+            file: file,
             sources: [ '/Users/thlorenz/dev/js/projects/es6ify/example/src/features/iterators.js' ],
             names: [],
             mappings: 'AAAA,MAAA,CAAA,OAAA,EAAiB,SAAA,CAAU;;ACEf,cAAoB,QAAA,CAAA,OAAA,CAAA,WAA2B,CDDrC,CAAC,CAAA,CAAG,EAAA,CAAG,EAAA,CAAA,CAAA;ACErB;AACE,WAAA,EAAO,IAAA;;;;;ADHgB;AAC7B,mBAAA,CAAA,GAAW,CAAC,UAAA,CAAY,QAAA,CAAA;AAAA;AAAA;AAAA;AAAA,KCMlB,MAAA,EAAM,CAAA,CAAG;AACT,QAAA,EAAI,CAAC,OAAA,CAAA,OAAA,CAAA,eAA+B,CAAC,CAAA,CAAA,CACnC,MAAM,EAAA;AAAA;AAAA;AAAA,CAAA',
