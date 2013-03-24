@@ -10,7 +10,7 @@ function handleError(compiled, stderr) {
   return 'console.log("Compile Error: ' + compiled.error + '");';
 }
 
-function transform(file, src, stderr) {
+function compileFile(file, src, stderr) {
   var compiled;
   try {
     compiled = compile(file, src);
@@ -30,7 +30,7 @@ function transform(file, src, stderr) {
   return compiled.source + '\n' + comment;
 }
 
-module.exports = function (filePattern, stderr) {
+function es6ify(filePattern, stderr) {
   filePattern =  filePattern || /\.js/;
   stderr      =  stderr      || process.stderr;
 
@@ -42,12 +42,14 @@ module.exports = function (filePattern, stderr) {
     
     function write (buf) { data += buf; }
     function end () {
-        this.queue(transform(file, data, stderr));
+        this.queue(compileFile(file, data, stderr));
         this.queue(null);
     }
   };
-};
+}
 
+module.exports = es6ify();
+module.exports.transform = es6ify;
 module.exports.runtime = require('node-traceur').runtimePath;
 if (module.parent) return;
 

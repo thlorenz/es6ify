@@ -4,7 +4,7 @@
 var test       =  require('tap').test;
 var browserify =  require('browserify');
 var vm         =  require('vm');
-var traceurify =  require('..');
+var es6ify     =  require('..');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ] ]
@@ -29,7 +29,7 @@ var format     =  require('util').format;
     t.plan(expectedLogs.length)
       
     browserify()
-      .transform(traceurify())
+      .transform(es6ify)
       .require(__dirname + '/bundle/' + filename + '.js', { entry: true })
       .bundle(function (err, src) {
         if (err) t.fail(err);
