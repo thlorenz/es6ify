@@ -1,4 +1,4 @@
-console.log('starting traceurify demo');
+console.log('starting es6ify demo');
 
 let makeMonster   =  require('./make-monster');
 let { 
@@ -6,7 +6,6 @@ let {
   , destructuring
   , generators 
   , iterators
-  , tryawait
   , defaultParameters
   , restParameters
   , spreadOperator
@@ -21,8 +20,6 @@ console.log('I am the %s monster', monster.name);
 monster.attack('cookie thief');
 
 iterators();
-
-tryawait(window.document.getElementsByTagName('p')[0]);
 
 defaultParameters('Heinz Muelleimer', 'Cobol', 'Germany');
 defaultParameters('Thorsten Lorenz');

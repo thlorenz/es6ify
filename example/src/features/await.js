@@ -1,3 +1,4 @@
+// This feature no longer part of the examples as it is not an ES6 feature
 function deferredTimeout(delay) {
     var deferred = new Deferred();
     window.setTimeout(function() {
