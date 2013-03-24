@@ -24,13 +24,14 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 [Try it live](http://thlorenz.github.com/es6ify/)
 
-
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [API](#api)
   - [es6ify](#es6ify)
-  - [es6ify.transform(filePattern : Regex, stderr : Stream)](#es6ifytransformfilepattern-:-regex-stderr-:-stream)
+  - [es6ify.configure(filePattern : Regex, stderr : Stream)](#es6ifyconfigurefilepattern-:-regex-stderr-:-stream)
   - [es6ify.runtime](#es6ifyruntime)
+- [Caching](#caching)
+- [Source Maps](#source-maps)
 - [Supported ES6 features](#supported-es6-features)
   - [arrayComprehension](#arraycomprehension)
   - [arrowFunctions](#arrowfunctions)
@@ -55,18 +56,54 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 Returns a transform with default file pattern and standard error stream.
 
-### es6ify.transform(filePattern : Regex, stderr : Stream)
+```js
+browserify()
+  .add(require('es6ify').runtime)
+  .transform(require('es6ify'))
+  .require(require.resolve('./src/main.js'), { entry: true })
+  .bundle({ debug: true })
+  .pipe(fs.createWriteStream(bundlePath));
+```
+
+### es6ify.configure(filePattern : Regex, stderr : Stream)
 
 Returns a es6 transform with custom file pattern and standard error stream.
 
 The default file pattern includes all JavaScript files, but you may override it in order to only transform files coming
 from a certain directory, with a specific file name and/or extension, etc.
 
+By configuring the regex to exclude ES5 files, you can optimize the performance of the transform. However transforming
+ES5 JavaScript will work since it is a subset of ES6.
+
+```js
+browserify()
+  .add(require('es6ify').runtime)
+   // compile all .js files except the ones coming from node_modules
+  .transform(require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/))
+  .require(require.resolve('./src/main.js'), { entry: true })
+  .bundle({ debug: true })
+  .pipe(fs.createWriteStream(bundlePath));
+```
+
 ### es6ify.runtime
 
 Returns runtime necessary to support ES6 features and therefore needs to be added to the bundle like in the example
 above.
 
+## Caching
+
+When es6ify is run on a development server to help generate the browserify bundle on the fly, it makes sense to only
+recompile ES6 files that changed. Therefore es6ify caches previously compiled files and just pulls them from there if no
+changes were made to the file.
+
+## Source Maps
+
+es6ify instructs the traceur transpiler to generate source maps. It then inlines all original sources and adds the
+resulting source map `base64` encoded to the bottom of the transformed content. This allows debugging the original ES6
+source when using the `debug` flag with browserify.
+
+If the `debug` flag is not set, these source maps will be removed by browserify and thus will not be contained inside
+your production bundle.
 
 ## Supported ES6 features
 
