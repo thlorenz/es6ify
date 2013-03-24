@@ -51,5 +51,3 @@ function es6ify(filePattern, stderr) {
 module.exports = es6ify();
 module.exports.transform = es6ify;
 module.exports.runtime = require('node-traceur').runtimePath;
-if (module.parent) return;
-
