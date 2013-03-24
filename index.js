@@ -3,7 +3,15 @@
 var convert =  require('convert-source-map')
   , through =  require('through')
   , compile =  require('./compile')
-  ;
+  , crypto  =  require('crypto')
+  , cache   =  {};
+
+function getHash(data) {
+  return crypto
+    .createHash('md5')
+    .update(data)
+    .digest('hex');
+}
 
 function handleError(compiled, stderr) {
   stderr.write(compiled.error);
@@ -42,12 +50,19 @@ function es6ify(filePattern, stderr) {
     
     function write (buf) { data += buf; }
     function end () {
-        this.queue(compileFile(file, data, stderr));
-        this.queue(null);
+      var hash = getHash(data)
+        , cached = cache[file];
+
+      if (!cached || cached.hash !== hash) {
+        cache[file] = { compiled: compileFile(file, data, stderr), hash: hash };
+      }   
+
+      this.queue(cache[file].compiled);
+      this.queue(null);
     }
   };
 }
 
-module.exports = es6ify();
-module.exports.transform = es6ify;
-module.exports.runtime = require('node-traceur').runtimePath;
+module.exports           =  es6ify();
+module.exports.configure =  es6ify;
+module.exports.runtime   =  require('node-traceur').runtimePath;
