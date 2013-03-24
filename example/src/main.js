@@ -9,6 +9,7 @@ let {
   , defaultParameters
   , restParameters
   , spreadOperator
+  , arrowFunctions
 } = require('./features');
 
 blockScope();
@@ -28,3 +29,5 @@ defaultParameters('Grandpa Otto', 'Java');
 restParameters('animals', 'cat', 'dog', 'zebra', 'giraffe', 'lion');
 
 spreadOperator([ 3, 4 ]);
+
+arrowFunctions('a messsage from your personal arrow function');
