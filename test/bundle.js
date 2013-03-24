@@ -5,15 +5,27 @@ var test       =  require('tap').test;
 var browserify =  require('browserify');
 var vm         =  require('vm');
 var traceurify =  require('..');
+var format     =  require('util').format;
 
-[ [ 'run-destructuring' ,   [ 'hello, world' ] ]
-, [ 'run-block-scope'   ,   [ 'tmp is undefined: ' ] ]
+[ [ 'run-destructuring'     , [ 'hello, world' ] ]
+, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] ]
+, [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
+, [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
+, [ 'run-spread-operator'       , [ '3 + 4 = 7' ] ]
+, [ 'run-combined', [
+      'hello, world'
+    , 'tmp is undefined:  true'
+    , 'name: Bruno, codes: JavaScript, lives in: USA'
+    , 'list fruits has the following items', 'apple', 'banana' 
+    , '3 + 4 = 7'
+    ] 
+  ] 
 ].forEach(function (row) {
 
   var filename     =  row[0];
   var expectedLogs =  row[1];
 
-  test('bundle without runtime - destructuring', function (t) {
+  test('\nbundle without runtime - ' + filename, function (t) {
     t.plan(expectedLogs.length)
       
     browserify()
@@ -28,8 +40,11 @@ var traceurify =  require('..');
         t.end()
       });
     
-    function log (msg) {
-      t.equal(msg, expectedLogs.shift());
+    function log () {
+      var args = [].slice.call(arguments);
+      var output = format.apply(null, args);
+
+      t.equal(output, expectedLogs.shift());
     }
   })
 })
