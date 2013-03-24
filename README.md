@@ -94,8 +94,6 @@ above.
 
 ### propertyMethods
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js#L18)
-
 ### propertyNameShorthand
 
 ### templateLiterals
