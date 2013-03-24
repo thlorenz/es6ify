@@ -20,7 +20,7 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 ## What You Get
 
-![generators](https://github.com/thlorenz/es6ify/raw/master/assets/generators-shot.png)
+![screenshot](https://github.com/thlorenz/es6ify/raw/master/assets/screenshot.png)
 
 [Try it live](http://thlorenz.github.com/es6ify/)
 
