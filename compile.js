@@ -25,7 +25,6 @@ var nodeTraceur        =  require('node-traceur')
   , 'spread'
   , 'generatorComprehension'
   , 'generators'
-  , 'modules'
   , 'deferredFunctions'
   , 'blockBinding'
   , 'sourceMaps'
