@@ -25,6 +25,30 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 [Try it live](http://thlorenz.github.com/es6ify/)
 
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [API](#api)
+  - [es6ify](#es6ify)
+  - [es6ify.transform(filePattern : Regex, stderr : Stream)](#es6ifytransformfilepattern-:-regex-stderr-:-stream)
+  - [es6ify.runtime](#es6ifyruntime)
+- [Supported ES6 features](#supported-es6-features)
+  - [arrayComprehension](#arraycomprehension)
+  - [arrowFunctions](#arrowfunctions)
+  - [classes](#classes)
+  - [defaultParameters](#defaultparameters)
+  - [destructuring](#destructuring)
+  - [forOf](#forof)
+  - [propertyMethods](#propertymethods)
+  - [propertyNameShorthand](#propertynameshorthand)
+  - [templateLiterals](#templateliterals)
+  - [restParameters](#restparameters)
+  - [spread](#spread)
+  - [generatorComprehension](#generatorcomprehension)
+  - [generators](#generators)
+  - [blockBinding](#blockbinding)
+- [Unsupported ES6 Features](#unsupported-es6-features)
+  - [modules](#modules)
+
 ## API
 
 ### es6ify
