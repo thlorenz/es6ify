@@ -1,12 +1,12 @@
 # es6ify [![build status](https://secure.travis-ci.org/thlorenz/es6ify.png)](http://travis-ci.org/thlorenz/es6ify)
 
 [browserify](https://github.com/substack/node-browserify) v2 transform to compile JavaScript.next (ES6) to
-JavaScript.current (ES6) on the fly
+JavaScript.current (ES5) on the fly
 
 ```js
 browserify()
   .add(es6ify.runtime)
-  .transform(es6ify))
+  .transform(es6ify)
   .require(require.resolve('./src/main.js'), { entry: true })
   .bundle({ debug: true })
   .pipe(fs.createWriteStream(bundlePath));
@@ -59,7 +59,7 @@ Returns a transform with default file pattern and standard error stream.
 
 Returns a es6 transform with custom file pattern and standard error stream.
 
-The default file pattern includes all JavaScript files, but you may override it in order to only transfrom files coming
+The default file pattern includes all JavaScript files, but you may override it in order to only transform files coming
 from a certain directory, with a specific file name and/or extension, etc.
 
 ### es6ify.runtime
