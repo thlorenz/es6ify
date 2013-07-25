@@ -1,7 +1,6 @@
 'use strict';
 
-var nodeTraceur        =  require('node-traceur')
-  , traceur            =  nodeTraceur.traceur
+var traceur            =  require('traceur')
   , compile            =  traceur.codegeneration.Compiler.compile
   , SourceMapGenerator =  traceur.outputgeneration.SourceMapGenerator
   , Project            =  traceur.semantics.symbols.Project
@@ -43,12 +42,12 @@ module.exports = function compileFile(file, contents) {
     reportError : function(pos, msg) {
       err = format('%s:%s:%s %s', file, pos.line + 1, pos.offset, msg);
     },
-    hadError : function () { return !!err; } 
+    hadError : function () { return !!err; }
   };
 
   project.addFile(sourceFile);
 
-  var compiled = compile(reporter, project, false); 
+  var compiled = compile(reporter, project, false);
 
   if (err) return { source: null, sourcemap: null, error: err };
 

@@ -44,10 +44,10 @@ function es6ify(filePattern, stderr) {
 
   return function (file) {
     if (!filePattern.test(file)) return through();
-    
+
     var data = '';
     return through(write, end);
-    
+
     function write (buf) { data += buf; }
     function end () {
       var hash = getHash(data)
@@ -55,7 +55,7 @@ function es6ify(filePattern, stderr) {
 
       if (!cached || cached.hash !== hash) {
         cache[file] = { compiled: compileFile(file, data, stderr), hash: hash };
-      }   
+      }
 
       this.queue(cache[file].compiled);
       this.queue(null);
@@ -65,4 +65,4 @@ function es6ify(filePattern, stderr) {
 
 module.exports           =  es6ify();
 module.exports.configure =  es6ify;
-module.exports.runtime   =  require('node-traceur').runtimePath;
+module.exports.runtime   =  require.resolve('traceur/src/runtime/runtime.js');
