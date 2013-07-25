@@ -29,12 +29,12 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     fs.createReadStream(file)
         .pipe(es6ify(file))
         .pipe(through(write));
-    
+
     // second time
     fs.createReadStream(file)
         .pipe(es6ify(file))
         .pipe(through(write, end));
-    
+
     function write (buf) { data += buf; }
     function end () {
       var sourceMap = convert.fromSource(data).toObject();
@@ -45,7 +45,7 @@ test('transform adds sourcemap comment and uses cache on second time', function 
             file: file + '.es6',
             sources: [ file ],
             names: [],
-            mappings: 'AAAA,MAAA,CAAA,OAAA,EAAiB,SAAA,CAAU;;ACEf,cAAoB,QAAA,CAAA,OAAA,CAAA,WAA2B,CDDrC,CAAC,CAAA,CAAG,EAAA,CAAG,EAAA,CAAA,CAAA;ACErB;AACE,WAAA,EAAO,IAAA;;;;;ADHgB;AAC7B,mBAAA,CAAA,GAAW,CAAC,UAAA,CAAY,QAAA,CAAA;AAAA;AAAA;AAAA;AAAA,KCMlB,MAAA,EAAM,CAAA,CAAG;AACT,QAAA,EAAI,CAAC,OAAA,CAAA,OAAA,CAAA,eAA+B,CAAC,CAAA,CAAA,CACnC,MAAM,EAAA;AAAA;AAAA;AAAA,CAAA',
+            mappings: 'AAAA,MAAA,CAAA,OAAA,EAAiB,SAAA,CAAU;;ACEf,0CAAiD,CDDvC,CAAC,CAAA,CAAG,EAAA,CAAG,EAAA,CAAA,CAAA;ACErB;AACE,WAAA,EAAO,IAAA;;;;;ADHgB;AAC7B,mBAAA,CAAA,GAAW,CAAC,UAAA,CAAY,QAAA,CAAA;AAAA;AAAA;AAAA;AAAA,KCMlB,MAAA,EAAM,CAAA,CAAG;AACT,QAAA,EAAI,gCAAkC,CAAC,CAAA,CAAA,CACrC,MAAM,EAAA;AAAA;AAAA;AAAA,CAAA',
             sourcesContent: [ 'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n' ] }
         , 'adds sourcemap comment including original source'
       );
