@@ -11,7 +11,7 @@ var test       =  require('tap').test
 
 test('transform adds sourcemap comment and uses cache on second time', function (t) {
 
-    t.plan(2);
+    t.plan(3);
     var data = '';
     var compiles = 0;
 
@@ -45,10 +45,11 @@ test('transform adds sourcemap comment and uses cache on second time', function 
             file: file + '.es6',
             sources: [ file ],
             names: [],
-            mappings: 'AAAA,MAAA,CAAA,OAAA,EAAiB,SAAA,CAAU;;ACEf,0CAAiD,CDDvC,CAAC,CAAA,CAAG,EAAA,CAAG,EAAA,CAAA,CAAA;ACErB;AACE,WAAA,EAAO,IAAA;;;;;ADHgB;AAC7B,mBAAA,CAAA,GAAW,CAAC,UAAA,CAAY,QAAA,CAAA;AAAA;AAAA;AAAA;AAAA,KCMlB,MAAA,EAAM,CAAA,CAAG;AACT,QAAA,EAAI,gCAAkC,CAAC,CAAA,CAAA,CACrC,MAAM,EAAA;AAAA;AAAA;AAAA,CAAA',
+            mappings: sourceMap.mappings,
             sourcesContent: [ 'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n' ] }
         , 'adds sourcemap comment including original source'
       );
+      t.ok(sourceMap.mappings.length);
       t.equal(compiles, 1, 'compiles only the first time');
     }
 });

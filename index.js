@@ -13,20 +13,11 @@ function getHash(data) {
     .digest('hex');
 }
 
-function handleError(compiled, stderr) {
-  stderr.write(compiled.error);
-  return 'console.log("Compile Error: ' + compiled.error + '");';
-}
-
-function compileFile(file, src, stderr) {
+function compileFile(file, src) {
   var compiled;
-  try {
-    compiled = compile(file, src);
-  } catch (err) {
-    return handleError({ error: err.message }, stderr);
-  }
+  compiled = compile(file, src);
+  if (compiled.error) throw new Error(compiled.error);
 
-  if (compiled.error) return handleError(compiled, stderr);
   var comment = convert
     .fromJSON(compiled.sourcemap)
     // override sources that traceur adds i.e. in cases that require the runtime like generators it adds genratorWrap@runtime
@@ -38,9 +29,8 @@ function compileFile(file, src, stderr) {
   return compiled.source + '\n' + comment;
 }
 
-function es6ify(filePattern, stderr) {
+function es6ify(filePattern) {
   filePattern =  filePattern || /\.js/;
-  stderr      =  stderr      || process.stderr;
 
   return function (file) {
     if (!filePattern.test(file)) return through();
@@ -54,7 +44,12 @@ function es6ify(filePattern, stderr) {
         , cached = cache[file];
 
       if (!cached || cached.hash !== hash) {
-        cache[file] = { compiled: compileFile(file, data, stderr), hash: hash };
+        try {
+          cache[file] = { compiled: compileFile(file, data), hash: hash };
+        } catch (ex) {
+          this.emit('error', ex);
+          return this.queue(null);
+        }
       }
 
       this.queue(cache[file].compiled);
