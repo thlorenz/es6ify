@@ -28,7 +28,7 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 - [API](#api)
   - [es6ify](#es6ify)
-  - [es6ify.configure(filePattern : Regex, stderr : Stream)](#es6ifyconfigurefilepattern-:-regex-stderr-:-stream)
+  - [es6ify.configure(filePattern : Regex)](#es6ifyconfigurefilepattern-:)
   - [es6ify.runtime](#es6ifyruntime)
 - [Caching](#caching)
 - [Source Maps](#source-maps)
@@ -65,7 +65,7 @@ browserify()
   .pipe(fs.createWriteStream(bundlePath));
 ```
 
-### es6ify.configure(filePattern : Regex, stderr : Stream)
+### es6ify.configure(filePattern : Regex)
 
 Returns a es6 transform with custom file pattern and standard error stream.
 

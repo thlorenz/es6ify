@@ -58,7 +58,7 @@ function es6ify(filePattern) {
   };
 }
 
-module.exports           =  es6ify();
-module.exports.configure =  es6ify;
-module.exports.runtime   =  require.resolve('traceur/src/runtime/runtime.js');
-module.exports.compileFile = compileFile;
+module.exports             =  es6ify();
+module.exports.configure   =  es6ify;
+module.exports.runtime     =  require.resolve('traceur/src/runtime/runtime.js');
+module.exports.compileFile =  compileFile;
