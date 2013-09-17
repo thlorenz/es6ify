@@ -38,7 +38,6 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     function write (buf) { data += buf; }
     function end () {
       var sourceMap = convert.fromSource(data).toObject();
-
       t.deepEqual(
           sourceMap
         , { version: 3,
