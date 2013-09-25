@@ -13,7 +13,7 @@
   "homepage": "https://github.com/thlorenz/es6ify",
   "dependencies": {
     "through": "~2.2.7",
-    "source-map": "0.1.x",
+    "source-map": "~0.1.29",
     "traceur": "~0.0.3"
   },
   "devDependencies": {
