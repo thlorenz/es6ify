@@ -1,6 +1,6 @@
 {
   "name": "es6ify",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.current (ES5) on the fly.",
   "main": "es6ify.js",
   "scripts": {
