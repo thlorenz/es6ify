@@ -165,3 +165,7 @@ need es6ify.
 
 Compiling a single file makes caching impossible and will lead to longer bundle times when used on the development
 server to bundle on the fly.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thlorenz/es6ify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
