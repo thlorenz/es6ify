@@ -1,5 +1,7 @@
 # es6ify [![build status](https://secure.travis-ci.org/thlorenz/es6ify.png)](http://travis-ci.org/thlorenz/es6ify)
 
+[![NPM](https://nodei.co/npm/es6ify.png?downloads=true&stars=true)](https://nodei.co/npm/es6ify/)
+
 [browserify](https://github.com/substack/node-browserify) v2 transform to compile JavaScript.next (ES6) to
 JavaScript.current (ES5) on the fly
 
