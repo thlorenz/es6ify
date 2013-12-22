@@ -29,7 +29,7 @@ function compileFile(file, src) {
 
   consumer.eachMapping(function (mapping) {
     // Ignore mappings that are not from our source file
-    if(mapping.source && path.basename(file) === mapping.source) {
+    if(mapping.source && file === mapping.source) {
       generator.addMapping(
         {
           original: {

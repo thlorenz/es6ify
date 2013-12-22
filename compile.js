@@ -1,64 +1,43 @@
 'use strict';
+var fs                     = require('fs'),
+    path                   = require('path'),
+    traceur                = require('traceur'),
+    format                 = require('util').format,
+    FromOptionsTransformer = traceur.codegeneration.FromOptionsTransformer,
+    Parser                 = traceur.syntax.Parser,
+    SourceFile             = traceur.syntax.SourceFile,
+    TreeWriter             = traceur.outputgeneration.TreeWriter,
+    SourceMapGenerator     = traceur.outputgeneration.SourceMapGenerator;
 
-var traceur            =  require('traceur')
-  , compile            =  traceur.codegeneration.Compiler.compile
-  , SourceMapGenerator =  traceur.outputgeneration.SourceMapGenerator
-  , Project            =  traceur.semantics.symbols.Project
-  , ProjectWriter      =  traceur.outputgeneration.ProjectWriter
-  , SourceFile         =  traceur.syntax.SourceFile
-  , format             =  require('util').format
-  , path               =  require('path')
-  ;
-
-+function initGlobalTraceurOptions() {
-  [ 'arrayComprehension'
-  , 'arrowFunctions'
-  , 'classes'
-  , 'defaultParameters'
-  , 'destructuring'
-  , 'forOf'
-  , 'propertyMethods'
-  , 'propertyNameShorthand'
-  , 'templateLiterals'
-  , 'restParameters'
-  , 'spread'
-  , 'generatorComprehension'
-  , 'generators'
-  , 'deferredFunctions'
-  , 'blockBinding'
-  , 'sourceMaps'
-  ].forEach(function (k) { traceur.options[k] = true; });
-}();
+traceur.options.modules = 'commonjs';
 
 module.exports = function compileFile(file, contents) {
-
-  var name       =  path.basename(file)
-    , project    =  new Project(file)
-    , sourceFile =  new SourceFile(name, contents)
-    , err
-    ;
-
-  var reporter = {
+  var err,
+      reporter = {
     reportError : function(pos, msg) {
-      err = format('%s:%s:%s %s', file, pos.line + 1, pos.offset, msg);
+      err = err || '';
+      err += format('%s:%s:%s %s\n', file, pos.line + 1, pos.offset, msg);
     },
     hadError : function () { return !!err; }
   };
 
-  project.addFile(sourceFile);
+  var sourceFile  = new SourceFile(file, contents),
+      parser      = new Parser(reporter, sourceFile),
+      tree        = parser.parseModule(),
+      transformer = new FromOptionsTransformer(reporter),
+      transformed = transformer.transform(tree),
+      options     = {},
+      compiled    = '';
 
-  var compiled = compile(reporter, project, false);
-
-  if (err) return { source: null, sourcemap: null, error: err };
-
-  var options;
-
-  if (traceur.options.sourceMaps) {
-    var config = { file: file + '.es6' };
-    var sourceMapGenerator = new SourceMapGenerator(config);
+  if (reporter.hadError()) {
+    return { source: null, sourcemap: null, error: err };
+  } else {
+    var sourceMapGenerator = new SourceMapGenerator({
+      file: file + '.es6'
+    });
     options = { sourceMapGenerator: sourceMapGenerator };
+    compiled = TreeWriter.write(transformed, options);
   }
 
-  var source = ProjectWriter.write(compiled, options);
-  return { source: source, sourcemap: options.sourceMap, error: null };
-};
+  return { source: compiled, sourcemap: options.sourceMap, error: null };
+}
