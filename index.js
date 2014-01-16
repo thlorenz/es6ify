@@ -53,7 +53,7 @@ function compileFile(file, src) {
 }
 
 function es6ify(filePattern) {
-  filePattern =  filePattern || /\.js/;
+  filePattern =  filePattern || /\.js$/;
 
   return function (file) {
     if (!filePattern.test(file)) return through();
