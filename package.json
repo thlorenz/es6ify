@@ -28,6 +28,7 @@
     "JavaScript.next",
     "ES6",
     "browserify",
+    "browserify-transform",
     "v2",
     "js",
     "plugin",
