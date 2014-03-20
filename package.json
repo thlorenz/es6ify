@@ -14,7 +14,8 @@
   "dependencies": {
     "through": "~2.2.7",
     "source-map": "~0.1.29",
-    "traceur": "0.0.7"
+    "traceur": "0.0.30",
+    "util-extend": "^1.0.1"
   },
   "devDependencies": {
     "mold-source-map": "~0.2.0",

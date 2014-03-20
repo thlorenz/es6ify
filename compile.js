@@ -1,64 +1,42 @@
 'use strict';
 
-var traceur            =  require('traceur')
-  , compile            =  traceur.codegeneration.Compiler.compile
-  , SourceMapGenerator =  traceur.outputgeneration.SourceMapGenerator
-  , Project            =  traceur.semantics.symbols.Project
-  , ProjectWriter      =  traceur.outputgeneration.ProjectWriter
-  , SourceFile         =  traceur.syntax.SourceFile
-  , format             =  require('util').format
-  , path               =  require('path')
-  ;
+var extend = require("util-extend");
+var compile = require("traceur").compile;
 
-+function initGlobalTraceurOptions() {
-  [ 'arrayComprehension'
-  , 'arrowFunctions'
-  , 'classes'
-  , 'defaultParameters'
-  , 'destructuring'
-  , 'forOf'
-  , 'propertyMethods'
-  , 'propertyNameShorthand'
-  , 'templateLiterals'
-  , 'restParameters'
-  , 'spread'
-  , 'generatorComprehension'
-  , 'generators'
-  , 'deferredFunctions'
-  , 'blockBinding'
-  , 'sourceMaps'
-  ].forEach(function (k) { traceur.options[k] = true; });
-}();
+var options = {
+    experimental: true,
+    arrayComprehension: true,
+    arrowFunctions: true,
+    classes: true,
+    computedPropertyNames: true,
+    defaultParameters: true,
+    destructuring: true,
+    forOf: true,
+    generatorComprehension: true,
+    generators: true,
+    modules: true,
+    numericLiterals: true,
+    propertyMethods: true,
+    propertyNameShorthand: true,
+    restParameters: true,
+    spread: true,
+    templateLiterals: true,
+    blockBinding: true,
+    symbols: true,
+    deferredFunctions: true,
+    sourceMap: true
+};
 
 module.exports = function compileFile(file, contents) {
 
-  var name       =  path.basename(file)
-    , project    =  new Project(file)
-    , sourceFile =  new SourceFile(name, contents)
-    , err
-    ;
+    var result = compile(contents, extend(options, { filename: file }));
 
-  var reporter = {
-    reportError : function(pos, msg) {
-      err = format('%s:%s:%s %s', file, pos.line + 1, pos.offset, msg);
-    },
-    hadError : function () { return !!err; }
-  };
-
-  project.addFile(sourceFile);
-
-  var compiled = compile(reporter, project, false);
-
-  if (err) return { source: null, sourcemap: null, error: err };
-
-  var options;
-
-  if (traceur.options.sourceMaps) {
-    var config = { file: file + '.es6' };
-    var sourceMapGenerator = new SourceMapGenerator(config);
-    options = { sourceMapGenerator: sourceMapGenerator };
-  }
-
-  var source = ProjectWriter.write(compiled, options);
-  return { source: source, sourcemap: options.sourceMap, error: null };
+    if (result.errors.length) {
+        return { source: null, sourcemap: null, error: result.errors[0] };
+    }
+    return {
+        source: result.js,
+        errors: result.errors,
+        sourcemap: result.sourceMap ? JSON.parse(result.sourceMap) : null
+    };
 };

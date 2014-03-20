@@ -8,6 +8,7 @@ var es6ify     =  require('..');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ] ]
+, [ 'run-classes'       , [ 'An instance of Foo says hi from its .toString()!' ] ]
 , [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
@@ -34,7 +35,7 @@ var format     =  require('util').format;
       .bundle(function (err, src) {
         if (err) t.fail(err);
         vm.runInNewContext(src, {
-            window: {}, 
+            window: {},
             console: { log: log }
         });
         t.end()
