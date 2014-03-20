@@ -1,6 +1,6 @@
 class Foo {
     toString() {
-        console.log('An instance of Foo says hi from its .toString()!')
+        return 'An instance of Foo says hi from its .toString()!';
     }
 }
 
