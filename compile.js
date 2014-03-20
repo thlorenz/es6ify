@@ -14,7 +14,7 @@ var options = {
     forOf: true,
     generatorComprehension: true,
     generators: true,
-    modules: true,
+    modules: 'commonjs',
     numericLiterals: true,
     propertyMethods: true,
     propertyNameShorthand: true,
