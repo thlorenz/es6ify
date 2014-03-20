@@ -5,6 +5,7 @@ let {
     blockScope
   , destructuring
   , generators 
+  , classes
   , iterators
   , defaultParameters
   , restParameters
@@ -15,6 +16,7 @@ let {
 blockScope();
 destructuring();
 generators();
+classes();
 const monster = makeMonster(3, 4, 'cookie');
 
 console.log('I am the %s monster', monster.name);
