@@ -7,6 +7,7 @@ var SM          = require('source-map')
   , compile     =  require('./compile')
   , crypto      =  require('crypto')
   , path        =  require('path')
+  , runtime     =  require.resolve(require('traceur').RUNTIME_PATH)
   , cache       =  {};
 
 function getHash(data) {
@@ -29,7 +30,7 @@ function compileFile(file, src) {
 
   consumer.eachMapping(function (mapping) {
     // Ignore mappings that are not from our source file
-    if(mapping.source && path.basename(file) === mapping.source) {
+    if(mapping.source && file === mapping.source) {
       generator.addMapping(
         {
           original: {
@@ -56,6 +57,10 @@ function es6ify(filePattern) {
   filePattern =  filePattern || /\.js$/;
 
   return function (file) {
+
+    // Don't es6ify the traceur runtime
+    if (file === runtime) return through();
+
     if (!filePattern.test(file)) return through();
 
     var data = '';
@@ -83,5 +88,5 @@ function es6ify(filePattern) {
 
 module.exports             =  es6ify();
 module.exports.configure   =  es6ify;
-module.exports.runtime     =  require.resolve('traceur/src/runtime/runtime.js');
+module.exports.runtime     =  runtime;
 module.exports.compileFile =  compileFile;
