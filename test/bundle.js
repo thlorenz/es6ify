@@ -7,9 +7,6 @@ var vm         =  require('vm');
 var es6ify     =  require('..');
 var format     =  require('util').format;
 
-// Adds $traceurRuntime to globals
-require(es6ify.runtime);
-
 [ [ 'run-destructuring'     , [ 'hello, world' ] ]
 , [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] ]
 , [ 'run-classes'       , [ 'An instance of Foo says hi from its .toString()!' ] ]
@@ -32,14 +29,16 @@ require(es6ify.runtime);
 
   test('\nbundle with runtime - ' + filename, function (t) {
     t.plan(expectedLogs.length)
-      browserify()
+      
+    browserify()
+      .add(es6ify.runtime)
       .transform(es6ify)
       .require(__dirname + '/bundle/' + filename + '.js', { entry: true })
       .bundle(function (err, src) {
         if (err) t.fail(err);
+        src = 'window=this;'+src;
         vm.runInNewContext(src, {
-            $traceurRuntime: $traceurRuntime,
-            window: {},
+            window: {}, 
             console: { log: log }
         });
         t.end()
