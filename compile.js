@@ -6,7 +6,6 @@ module.exports = function compileFile(file, contents) {
 
     var result = compile(contents, { 
       modules: 'commonjs',
-      blockBinding: true,
       sourceMap: true,
       filename: file
     });

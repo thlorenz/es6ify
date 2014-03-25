@@ -8,14 +8,12 @@ var es6ify     =  require('..');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ] ]
-, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] ]
 , [ 'run-classes'       , [ 'An instance of Foo says hi from its .toString()!' ] ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
 , [ 'run-spread-operator'       , [ '3 + 4 = 7' ] ]
 , [ 'run-combined', [
       'hello, world'
-    , 'tmp is undefined:  true'
     , 'An instance of Foo says hi from its .toString()!'
     , 'name: Bruno, codes: JavaScript, lives in: USA'
     , 'list fruits has the following items', 'apple', 'banana' 
