@@ -22,18 +22,21 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     }
 
     var es6ify = proxyquire('..', { './compile' : trackingCompile } )
+    es6ify.traceurOverrides = { blockBinding: true };
 
     var file = path.join(__dirname, '../example/src/features/iterators.js');
 
     // first time
     fs.createReadStream(file)
-        .pipe(es6ify(file))
-        .pipe(through(write));
+      .pipe(es6ify(file))
+      .on('error', console.error) 
+      .pipe(through(write));
 
     // second time
     fs.createReadStream(file)
-        .pipe(es6ify(file))
-        .pipe(through(write, end));
+      .pipe(es6ify(file))
+      .on('error', console.error) 
+      .pipe(through(write, end));
 
     function write (buf) { data += buf; }
     function end () {

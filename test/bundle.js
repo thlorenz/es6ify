@@ -5,14 +5,15 @@ var test       =  require('tap').test;
 var browserify =  require('browserify');
 var vm         =  require('vm');
 var es6ify     =  require('..');
+var compile    =  require('../compile');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ] ]
-, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] ]
+, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false, { blockBinding: true } ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
-, [ 'run-classes'       , [ 'An instance of Foo says hi from its .toString()!' ], true ]
-, [ 'run-spread-operator'       , [ '3 + 4 = 7' ], true ]
+, [ 'run-classes'           , [ 'An instance of Foo says hi from its .toString()!' ], true ]
+, [ 'run-spread-operator'   , [ '3 + 4 = 7' ], true ]
 , [ 'run-combined'
   , [ 'hello, world'
     , 'tmp is undefined:  true'
@@ -22,16 +23,19 @@ var format     =  require('util').format;
     , '3 + 4 = 7'
     ] 
   , true
+  , { blockBinding: true }
   ] 
 ].forEach(function (row) {
 
   var filename     = row[0];
   var expectedLogs = row[1];
   var useRuntime   = !!row[2];
+  var overrides    = row[3] || {};
 
   test('\nbundle ' + (useRuntime ? 'with' : 'without') + ' traceur runtime - ' + filename, function (t) {
     t.plan(expectedLogs.length)
       
+    es6ify.traceurOverrides = overrides;
     var bfy = browserify();
     if (useRuntime) bfy.add(es6ify.runtime);
 

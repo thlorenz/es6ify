@@ -19,7 +19,7 @@ function getHash(data) {
 
 function compileFile(file, src) {
   var compiled;
-  compiled = compile(file, src);
+  compiled = compile(file, src, exports.traceurOverrides);
   if (compiled.error) throw new Error(compiled.error);
 
   var comment
@@ -86,7 +86,10 @@ function es6ify(filePattern) {
   };
 }
 
-module.exports             =  es6ify();
-module.exports.configure   =  es6ify;
-module.exports.runtime     =  runtime;
-module.exports.compileFile =  compileFile;
+exports = module.exports = es6ify();
+
+exports.configure        = es6ify;
+exports.runtime          = runtime;
+exports.compileFile      = compileFile;
+exports.traceurOverrides = {};
+
