@@ -1,9 +1,9 @@
-# es6ify [![build status](https://secure.travis-ci.org/thlorenz/es6ify.png)](http://travis-ci.org/thlorenz/es6ify)
+# es6ify [![build status](https://secure.travis-ci.org/thlorenz/es6ify.png?branch=master)](http://travis-ci.org/thlorenz/es6ify)
 
 [![NPM](https://nodei.co/npm/es6ify.png?downloads=true&stars=true)](https://nodei.co/npm/es6ify/)
 
-[browserify](https://github.com/substack/node-browserify) v2 transform to compile JavaScript.next (ES6) to
-JavaScript.current (ES5) on the fly
+[browserify](https://github.com/substack/node-browserify) `>=v2` transform to compile JavaScript.next (ES6) to
+JavaScript.current (ES5) on the fly.
 
 ```js
 browserify()
@@ -81,9 +81,9 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js">index.js</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js#L98">lineno 98</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L98">lineno 98</a>
 </li>
 </ul></dd>
 </dl>
@@ -117,9 +117,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js">index.js</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js#L121">lineno 121</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L121">lineno 121</a>
 </li>
 </ul></dd>
 </dl>
@@ -137,9 +137,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js">index.js</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js#L137">lineno 137</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L137">lineno 137</a>
 </li>
 </ul>
 </dd>
@@ -183,9 +183,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js">index.js</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js#L20">lineno 20</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L20">lineno 20</a>
 </li>
 </ul></dd>
 </dl>
@@ -236,9 +236,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js">index.js</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/update-traceur/index.js#L111">lineno 111</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L111">lineno 111</a>
 </li>
 </ul></dd>
 </dl>

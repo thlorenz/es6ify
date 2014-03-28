@@ -1,6 +1,6 @@
 {
   "name": "es6ify",
-  "version": "0.4.8",
+  "version": "1.0.0",
   "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.current (ES5) on the fly.",
   "main": "es6ify.js",
   "scripts": {
@@ -15,10 +15,9 @@
     "through": "~2.2.7",
     "source-map": "~0.1.29",
     "traceur": "0.0.31",
-    "xtend": "^2.2.0"
+    "xtend": "~2.2.0"
   },
   "devDependencies": {
-    "mold-source-map": "~0.2.0",
     "tap": "~0.4.0",
     "proxyquire": "~0.4.0",
     "convert-source-map": "~0.2.6",
