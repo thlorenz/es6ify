@@ -17,6 +17,15 @@ function getHash(data) {
     .digest('hex');
 }
 
+/**
+ * Compile function, exposed to be used from other libraries, not needed when using es6ify as a transform.
+ * 
+ * @name es6ify::compileFile
+ * @function
+ * @param {string} file name of the file that is being compiled to ES5
+ * @param {string} src source of the file being compiled to ES5
+ * @return {string} compiled source
+ */
 function compileFile(file, src) {
   var compiled;
   compiled = compile(file, src, exports.traceurOverrides);
@@ -86,10 +95,54 @@ function es6ify(filePattern) {
   };
 }
 
+/**
+ * The es6ify transform to be used with browserify.
+ *
+ * #### Example
+ *
+ * `browserify().transform(es6ify)`
+ * 
+ * @name es6ify
+ * @function
+ * @return {function} function that returns a `TransformStream` when called with a `file`
+ */
 exports = module.exports = es6ify();
 
-exports.configure        = es6ify;
-exports.runtime          = runtime;
-exports.compileFile      = compileFile;
-exports.traceurOverrides = {};
+/**
+ * Configurable es6ify transform function that allows specifying the `filePattern` of files to be compiled.
+ * 
+ * @name es6ify::configure
+ * @function
+ * @param {string=} filePattern (default: `/\.js$/) pattern of files that will be es6ified
+ * @return {function} function that returns a `TransformStream` when called with a `file`
+ */
+exports.configure = es6ify;
 
+/**
+ * The traceur runtime exposed here so it can be included in the bundle via:
+ *
+ * `browserify.add(es6ify.runtime)`
+ *
+ * ### Note
+ *
+ * The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
+ * 
+ * @name e6ify::runtime
+ */
+exports.runtime = runtime;
+
+
+exports.compileFile = compileFile;
+
+/**
+ * Allows to override traceur compiler defaults.
+ * 
+ * ### Example
+ * 
+ * In order to support block scope (`let`) do:
+ *
+ * `es6ify.traceurOverrides = { blockBinding: true }`
+ * 
+ * @name  es6ify::traceurOverrides
+ */
+exports.traceurOverrides = {};
