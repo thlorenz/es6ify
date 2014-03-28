@@ -6,6 +6,7 @@
     <title>es6ify by thlorenz</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/jsdoc.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascripts/respond.js"></script>
     <script src="javascripts/bundle.js"></script>
@@ -44,7 +45,7 @@ JavaScript.current (ES5) on the fly</p>
 
 <h1>Try it!</h1>
 
-<p>Open your dev tools and look inside the Sources tab and/or the Console to see the results.</p>
+<p style="font-weight: bold; font-size: 18px; color: yellowgreen;">Open your dev tools and look inside the Sources tab and/or the Console to see the results.</p>
 
 <p>Make sure to use a browser that supports source maps and to enable them in the settings.</p>
 
@@ -74,117 +75,278 @@ JavaScript.current (ES5) on the fly</p>
 
 <h2>API</h2>
 
-<h3>es6ify</h3>
+<!-- START docme generated API please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN docme TO UPDATE -->
 
-<p>Returns a transform with default file pattern and standard error stream.</p>
+<div class="jsdoc-githubify">
+<section>
+<article>
+<div class="container-overview">
+<dl>
+<dt>
+<h4 class="name" id="es6ify"><span class="type-signature"></span>es6ify<span class="type-signature"> &rarr; {function}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>The es6ify transform to be used with browserify.</p>
+<h4>Example</h4>
+<p><code>browserify().transform(es6ify)</code></p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L98">lineno 98</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>function that returns a <code>TransformStream</code> when called with a <code>file</code></p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">function</span>
+</dd>
+</dl>
+</dd>
+<dl class="details">
+</dl>
+</div>
+<dl>
+<dt>
+<h4 class="name" id="e6ify::runtime"><span class="type-signature"></span>e6ify::runtime<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>The traceur runtime exposed here so it can be included in the bundle via:</p>
+<p><code>browserify.add(es6ify.runtime)</code></p>
+<p>The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.</p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L121">lineno 121</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="es6ify::traceurOverrides"><span class="type-signature"></span>es6ify::traceurOverrides<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Allows to override traceur compiler defaults.</p>
+<p>In order to support block scope (<code>let</code>) do:</p>
+<p><code>es6ify.traceurOverrides = { blockBinding: true }</code></p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L137">lineno 137</a>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dt>
+<h4 class="name" id="es6ify::compileFile"><span class="type-signature"></span>es6ify::compileFile<span class="signature">(file, src)</span><span class="type-signature"> &rarr; {string}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Compile function, exposed to be used from other libraries, not needed when using es6ify as a transform.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>file</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="description last"><p>name of the file that is being compiled to ES5</p></td>
+</tr>
+<tr>
+<td class="name"><code>src</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="description last"><p>source of the file being compiled to ES5</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L20">lineno 20</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>compiled source</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">string</span>
+</dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="es6ify::configure"><span class="type-signature"></span>es6ify::configure<span class="signature">(<span class="optional">filePattern</span>)</span><span class="type-signature"> &rarr; {function}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Configurable es6ify transform function that allows specifying the <code>filePattern</code> of files to be compiled.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Argument</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>filePattern</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="attributes">
+&lt;optional><br>
+</td>
+<td class="description last"><p>(default: `/.js$/) pattern of files that will be es6ified</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L111">lineno 111</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>function that returns a <code>TransformStream</code> when called with a <code>file</code></p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">function</span>
+</dd>
+</dl>
+</dd>
+</dl>
+</article>
+</section>
 
-<div class="highlight"><pre><span class="nx">browserify</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'es6ify'</span><span class="p">).</span><span class="nx">runtime</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'es6ify'</span><span class="p">))</span>
-  <span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'./src/main.js'</span><span class="p">),</span> <span class="p">{</span> <span class="nx">entry</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">bundle</span><span class="p">({</span> <span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">bundlePath</span><span class="p">));</span>
-</pre></div>
+<p><em>generated with <a href="https://github.com/thlorenz/docme">docme</a></em></p>
+</div>
 
-<h3>es6ify.configure(filePattern : Regex, stderr : Stream)</h3>
+<!-- END docme generated API please keep comment here to allow auto update -->
 
-<p>Returns a es6 transform with custom file pattern and standard error stream.</p>
-
+<h2>Examples</h2>
+<h3>es6ify.configure(filePattern : Regex)</h3>
 <p>The default file pattern includes all JavaScript files, but you may override it in order to only transform files coming
 from a certain directory, with a specific file name and/or extension, etc.</p>
-
 <p>By configuring the regex to exclude ES5 files, you can optimize the performance of the transform. However transforming
 ES5 JavaScript will work since it is a subset of ES6.</p>
-
-<div class="highlight"><pre><span class="nx">browserify</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'es6ify'</span><span class="p">).</span><span class="nx">runtime</span><span class="p">)</span>
+<div class="highlight"><pre>browserify<span class="p">(</span><span class="p">)</span>
+  <span class="p">.</span>add<span class="p">(</span>require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">.</span>runtime<span class="p">)</span>
    <span class="c1">// compile all .js files except the ones coming from node_modules</span>
-  <span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'es6ify'</span><span class="p">).</span><span class="nx">configure</span><span class="p">(</span><span class="sr">/^(?!.*node_modules)+.+\.js$/</span><span class="p">))</span>
-  <span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'./src/main.js'</span><span class="p">),</span> <span class="p">{</span> <span class="nx">entry</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">bundle</span><span class="p">({</span> <span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">bundlePath</span><span class="p">));</span>
+  <span class="p">.</span>transform<span class="p">(</span>require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">.</span>configure<span class="p">(</span>/^(?!.*node_modules)+.+\.js$/<span class="p">)</span><span class="p">)</span>
+  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
 </pre></div>
-
-<h3>es6ify.runtime</h3>
-
-<p>Returns runtime necessary to support ES6 features and therefore needs to be added to the bundle like in the example
-above.</p>
-
+<h3>es6ify.traceurOverrides</h3>
+<p>Some features supported by traceur are still experimental and/or not implemented according to the ES6 spec.
+Therefore they have been disabled by default, but can be enabled by overriding these options.</p>
+<p>For instance to support the block scope (<code>let</code>) feature youd do the following.</p>
+<div class="highlight"><pre><span class="k">var</span> es6ify <span class="o">=</span> require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">;</span>
+es6ify<span class="p">.</span>traceurOverrides <span class="o">=</span> <span class="p">{</span> blockBinding<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">;</span>
+browserify<span class="p">(</span><span class="p">)</span>
+  <span class="p">.</span>add<span class="p">(</span>es6ify<span class="p">.</span>runtime<span class="p">)</span>
+  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
+</pre></div>
 <h2>Caching</h2>
-
 <p>When es6ify is run on a development server to help generate the browserify bundle on the fly, it makes sense to only
 recompile ES6 files that changed. Therefore es6ify caches previously compiled files and just pulls them from there if no
 changes were made to the file.</p>
-
 <h2>Source Maps</h2>
-
 <p>es6ify instructs the traceur transpiler to generate source maps. It then inlines all original sources and adds the
 resulting source map <code>base64</code> encoded to the bottom of the transformed content. This allows debugging the original ES6
 source when using the <code>debug</code> flag with browserify.</p>
-
 <p>If the <code>debug</code> flag is not set, these source maps will be removed by browserify and thus will not be contained inside
 your production bundle.</p>
-
 <h2>Supported ES6 features</h2>
-
 <h3>arrayComprehension</h3>
-
 <h3>arrowFunctions</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js">example</a></p>
-
 <h3>classes</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js">example</a></p>
-
 <h3>defaultParameters</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js">example</a></p>
-
 <h3>destructuring</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js">example</a></p>
-
 <h3>forOf</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js">example</a></p>
-
 <h3>propertyMethods</h3>
-
 <h3>propertyNameShorthand</h3>
-
 <h3>templateLiterals</h3>
-
 <h3>restParameters</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js">example</a></p>
-
 <h3>spread</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js">example</a></p>
-
 <h3>generatorComprehension</h3>
-
 <h3>generators</h3>
-
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js">example</a></p>
-
-<h3>blockBinding</h3>
-
-<p>The block binding <code>let</code> is implemented in ES5 via <code>try/catch</code> blocks which may affect performance.</p>
-
-<h2>Unsupported ES6 Features</h2>
-
 <h3>modules</h3>
+<p>Imports and exports are converted to <code>commonjs</code> style <code>require</code> and <code>module.exports</code> statements to seamlessly integrate
+with browserify.</p>
+<h2>Experimental ES6 Features not supported by default</h2>
+<h3>block scope (<code>let</code>)</h3>
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js">example</a></p>
+<p>The block binding <code>let</code> is implemented in ES5 via <code>try/catch</code> blocks which may affect performance.</p>
+<p>It is also experimental and therefore not supported by default, but you can support for it by adding 
+<code>{ blockBinding: true }</code> to <code>es6ify.traceurOverrides</code>.</p>
 
-<p>I recommend to use <code>require</code> instead since that integrates better with browserify. </p>
-
-<p>If you want to use ES6 modules, you need to compile all files that use them into one file since
-inlining them is the only way to make this work in ES5. You can then <code>browserify.add</code> that file and therefore wouldn't
-need es6ify.</p>
-
-<p>Compiling a single file makes caching impossible and will lead to longer bundle times when used on the development
-server to bundle on the fly.</p>
       </section>
 
     </div>
