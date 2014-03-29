@@ -59,12 +59,15 @@ JavaScript.current (ES5) on the fly</p>
 
 <h2>How the bundle was built</h2>
 
-<div class="highlight"><pre><span class="nx">browserify</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">es6ify</span><span class="p">.</span><span class="nx">runtime</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">es6ify</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'./src/main.js'</span><span class="p">),</span> <span class="p">{</span> <span class="nx">entry</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">bundle</span><span class="p">({</span> <span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">bundlePath</span><span class="p">));</span>
+<div class="highlight"><pre><span class="c1">// experimental support for block scope (let)</span>
+es6ify<span class="p">.</span>traceurOverrides <span class="o">=</span> <span class="p">{</span> blockBinding<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">;</span>
+
+browserify<span class="p">(</span><span class="p">)</span>
+  <span class="p">.</span>add<span class="p">(</span>es6ify<span class="p">.</span>runtime<span class="p">)</span>
+  <span class="p">.</span>transform<span class="p">(</span>es6ify<span class="p">)</span>
+  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
+  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
 </pre></div>
 
 <p>Find the full version of this example <a href="https://github.com/thlorenz/es6ify/blob/master/example/build.js">here</a>.</p>
