@@ -335,15 +335,13 @@ your production bundle.
 
 ### arrowFunctions
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js)
-
 ```js
 var log = msg => console.log(msg);
 ```
 
-### classes
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js)
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js)
+### classes
 
 ```js
 class Character {
@@ -355,6 +353,8 @@ class Character {
     console.log('attacking', character);
   }
 }
+
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js)
 
 class Monster extends Character {
   constructor(x, y, name) {
@@ -378,32 +378,32 @@ class Monster extends Character {
 
 ### defaultParameters
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js)
-
 ```js
 function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
   console.log('name: %s, codes: %s, lives in: %s', name, codes, livesIn);
 };
 ```
 
-### destructuring
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js)
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js)
+### destructuring
 
 ```js
 var [a, [b], c, d] = ['hello', [', ', 'junk'], ['world']];
 console.log(a + b + c); // hello world
 ```
 
-### forOf
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js)
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js)
+### forOf
 
 ```js
 for (let element of [1, 2, 3]) {
   console.log('element:', element);
 }
 ```
+
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js)
 
 ### propertyMethods
 
@@ -429,18 +429,16 @@ console.log(`${x} + ${y} = ${ x + y}`)
 
 ### restParameters
 
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js)
-
 ```js
 function printList(listname, ...items) {
   console.log('list %s has the following items', listname);
   items.forEach(function (item) { console.log(item); });
 };
 ```
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js)
+
 
 ### spread
-
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js)
 
 ```js
 function add(x, y) {
@@ -451,6 +449,8 @@ add(...numbers);
 // 5 + 10 = 15
 };
 ```
+
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js)
 
 ### generatorComprehension
 
@@ -464,8 +464,6 @@ function* numberlist() {
 ```
 
 ### generators
-
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js)
 
 ```js
 // A binary tree class.
@@ -501,6 +499,8 @@ for (let node of inorder(tree)) {
 }
 ```
 
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js)
+
 ### modules 
 
 Imports and exports are converted to `commonjs` style `require` and `module.exports` statements to seamlessly integrate
@@ -509,8 +509,6 @@ with browserify.
 ## Experimental ES6 Features not supported by default
 
 ### block scope (`let`)
-
-[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js)
 
 ```js
 function () {
@@ -523,6 +521,8 @@ function () {
   console.log('tmp is undefined: ', typeof tmp == 'undefined');
 }
 ```
+
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js)
 
 The block binding `let` is implemented in ES5 via `try/catch` blocks which may affect performance.
 
