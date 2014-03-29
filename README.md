@@ -354,8 +354,6 @@ class Character {
   }
 }
 
-[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js)
-
 class Monster extends Character {
   constructor(x, y, name) {
     super(x, y);
@@ -375,6 +373,8 @@ class Monster extends Character {
   }
 }
 ```
+
+[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js)
 
 ### defaultParameters
 
