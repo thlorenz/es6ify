@@ -327,34 +327,211 @@ resulting source map <code>base64</code> encoded to the bottom of the transforme
 source when using the <code>debug</code> flag with browserify.</p>
 <p>If the <code>debug</code> flag is not set, these source maps will be removed by browserify and thus will not be contained inside
 your production bundle.</p>
-<h2>Supported ES6 features</h2>
-<h3>arrayComprehension</h3>
-<h3>arrowFunctions</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js">example</a></p>
-<h3>classes</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js">example</a></p>
-<h3>defaultParameters</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js">example</a></p>
-<h3>destructuring</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js">example</a></p>
-<h3>forOf</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js">example</a></p>
-<h3>propertyMethods</h3>
-<h3>propertyNameShorthand</h3>
-<h3>templateLiterals</h3>
-<h3>restParameters</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js">example</a></p>
-<h3>spread</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js">example</a></p>
-<h3>generatorComprehension</h3>
-<h3>generators</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js">example</a></p>
-<h3>modules</h3>
+
+<h2>
+<a name="supported-es6-features" class="anchor" href="#supported-es6-features"><span class="octicon octicon-link"></span></a>Supported ES6 features</h2>
+
+<h3>
+<a name="arraycomprehension" class="anchor" href="#arraycomprehension"><span class="octicon octicon-link"></span></a>arrayComprehension</h3>
+
+<div class="highlight highlight-js"><pre><span class="p">[</span><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span><span class="p">];</span> <span class="c1">// [1, 4, 9]</span>
+<span class="p">[</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="s1">'abcdefgh'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="s1">'12345678'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span> <span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">y</span><span class="p">)];</span>
+</pre></div>
+
+<h3>
+<a name="arrowfunctions" class="anchor" href="#arrowfunctions"><span class="octicon octicon-link"></span></a>arrowFunctions</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js">full example</a></p>
+
+<h3>
+<a name="classes" class="anchor" href="#classes"><span class="octicon octicon-link"></span></a>classes</h3>
+
+<div class="highlight highlight-js"><pre><span class="kr">class</span> <span class="nx">Character</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'attacking'</span><span class="p">,</span> <span class="nx">character</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Monster</span> <span class="kr">extends</span> <span class="nx">Character</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">health_</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">get</span> <span class="nx">isAlive</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">health</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+  <span class="nx">get</span> <span class="nx">health</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">health_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="nx">set</span> <span class="nx">health</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'Health must be non-negative.'</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">health_</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/make-monster.js">full example</a></p>
+
+<h3>
+<a name="defaultparameters" class="anchor" href="#defaultparameters"><span class="octicon octicon-link"></span></a>defaultParameters</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">logDeveloper</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">codes</span> <span class="o">=</span> <span class="s1">'JavaScript'</span><span class="p">,</span> <span class="nx">livesIn</span> <span class="o">=</span> <span class="s1">'USA'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'name: %s, codes: %s, lives in: %s'</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">codes</span><span class="p">,</span> <span class="nx">livesIn</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js">full example</a></p>
+
+<h3>
+<a name="destructuring" class="anchor" href="#destructuring"><span class="octicon octicon-link"></span></a>destructuring</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="p">[</span><span class="nx">b</span><span class="p">],</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hello'</span><span class="p">,</span> <span class="p">[</span><span class="s1">', '</span><span class="p">,</span> <span class="s1">'junk'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'world'</span><span class="p">]];</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span><span class="p">);</span> <span class="c1">// hello world</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js">full example</a></p>
+
+<h3>
+<a name="forof" class="anchor" href="#forof"><span class="octicon octicon-link"></span></a>forOf</h3>
+
+<div class="highlight highlight-js"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'element:'</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js">full example</a></p>
+
+<h3>
+<a name="propertymethods" class="anchor" href="#propertymethods"><span class="octicon octicon-link"></span></a>propertyMethods</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">prop</span><span class="o">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="c1">// No need for function</span>
+  <span class="nx">method</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">prop</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+<h3>
+<a name="propertynameshorthand" class="anchor" href="#propertynameshorthand"><span class="octicon octicon-link"></span></a>propertyNameShorthand</h3>
+
+<h3>
+<a name="templateliterals" class="anchor" href="#templateliterals"><span class="octicon octicon-link"></span></a>templateLiterals</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">x</span><span class="p">}</span> <span class="o">+</span> <span class="nx">$</span><span class="p">{</span><span class="nx">y</span><span class="p">}</span> <span class="o">=</span> <span class="nx">$</span><span class="p">{</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="c1">// 5 + 10 = 15</span>
+</pre></div>
+
+<h3>
+<a name="restparameters" class="anchor" href="#restparameters"><span class="octicon octicon-link"></span></a>restParameters</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">printList</span><span class="p">(</span><span class="nx">listname</span><span class="p">,</span> <span class="p">...</span><span class="nx">items</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'list %s has the following items'</span><span class="p">,</span> <span class="nx">listname</span><span class="p">);</span>
+  <span class="nx">items</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js">full example</a></p>
+
+<h3>
+<a name="spread" class="anchor" href="#spread"><span class="octicon octicon-link"></span></a>spread</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'%d + %d = %d'</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="nx">add</span><span class="p">(...</span><span class="nx">numbers</span><span class="p">);</span>
+<span class="c1">// 5 + 10 = 15</span>
+<span class="p">};</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js">full example</a></p>
+
+<h3>
+<a name="generatorcomprehension" class="anchor" href="#generatorcomprehension"><span class="octicon octicon-link"></span></a>generatorComprehension</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span><span class="o">*</span> <span class="nx">numberlist</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="nx">of</span> <span class="nx">numberlist</span><span class="p">)</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span><span class="p">);</span> <span class="c1">// [1, 4, 9]</span>
+</pre></div>
+
+<h3>
+<a name="generators" class="anchor" href="#generators"><span class="octicon octicon-link"></span></a>generators</h3>
+
+<div class="highlight highlight-js"><pre><span class="c1">// A binary tree class.</span>
+<span class="kd">function</span> <span class="nx">Tree</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span> <span class="nx">label</span><span class="p">,</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">left</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">label</span> <span class="o">=</span> <span class="nx">label</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">right</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// A recursive generator that iterates the Tree labels in-order.</span>
+<span class="kd">function</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">yield</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">left</span><span class="p">);</span>
+    <span class="k">yield</span> <span class="nx">t</span><span class="p">.</span><span class="nx">label</span><span class="p">;</span>
+    <span class="k">yield</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Make a tree</span>
+<span class="kd">function</span> <span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Leaf node:</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">Tree</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">null</span><span class="p">);</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Tree</span><span class="p">(</span><span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nx">array</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
+<span class="p">}</span>
+
+
+<span class="kd">let</span> <span class="nx">tree</span> <span class="o">=</span> <span class="nx">make</span><span class="p">([[[</span><span class="s1">'a'</span><span class="p">],</span> <span class="s1">'b'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'c'</span><span class="p">]],</span> <span class="s1">'d'</span><span class="p">,</span> <span class="p">[[</span><span class="s1">'e'</span><span class="p">],</span> <span class="s1">'f'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'g'</span><span class="p">]]]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'generating tree labels in order:'</span><span class="p">);</span>
+
+<span class="c1">// Iterate over it</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">node</span> <span class="nx">of</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">tree</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span> <span class="c1">// a, b, c, d, ...</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js">full example</a></p>
+
+<h3>
+<a name="modules" class="anchor" href="#modules"><span class="octicon octicon-link"></span></a>modules</h3>
+
 <p>Imports and exports are converted to <code>commonjs</code> style <code>require</code> and <code>module.exports</code> statements to seamlessly integrate
 with browserify.</p>
-<h2>Experimental ES6 Features not supported by default</h2>
-<h3>block scope (<code>let</code>)</h3>
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js">example</a></p>
+
+<h2>
+<a name="experimental-es6-features-not-supported-by-default" class="anchor" href="#experimental-es6-features-not-supported-by-default"><span class="octicon octicon-link"></span></a>Experimental ES6 Features not supported by default</h2>
+
+<h3>
+<a name="block-scope-let" class="anchor" href="#block-scope-let"><span class="octicon octicon-link"></span></a>block scope (<code>let</code>)</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">{</span> <span class="c1">// new block</span>
+    <span class="kd">let</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span><span class="p">;</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'tmp is undefined: '</span><span class="p">,</span> <span class="k">typeof</span> <span class="nx">tmp</span> <span class="o">==</span> <span class="s1">'undefined'</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js">full example</a></p>
+
 <p>The block binding <code>let</code> is implemented in ES5 via <code>try/catch</code> blocks which may affect performance.</p>
 <p>It is also experimental and therefore not supported by default, but you can support for it by adding 
 <code>{ blockBinding: true }</code> to <code>es6ify.traceurOverrides</code>.</p>
