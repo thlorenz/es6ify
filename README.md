@@ -335,11 +335,15 @@ your production bundle.
 
 ### arrowFunctions
 
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js)
+
 ```js
 var log = msg => console.log(msg);
 ```
 
 ### classes
+
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js)
 
 ```js
 class Character {
@@ -374,6 +378,8 @@ class Monster extends Character {
 
 ### defaultParameters
 
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js)
+
 ```js
 function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
   console.log('name: %s, codes: %s, lives in: %s', name, codes, livesIn);
@@ -382,12 +388,16 @@ function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
 
 ### destructuring
 
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js)
+
 ```js
 var [a, [b], c, d] = ['hello', [', ', 'junk'], ['world']];
 console.log(a + b + c); // hello world
 ```
 
 ### forOf
+
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js)
 
 ```js
 for (let element of [1, 2, 3]) {
@@ -409,8 +419,6 @@ var object = {
 
 ### propertyNameShorthand
 
-? not sure which this is ~pfraze
-
 ### templateLiterals
 
 ```js
@@ -421,6 +429,8 @@ console.log(`${x} + ${y} = ${ x + y}`)
 
 ### restParameters
 
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js)
+
 ```js
 function printList(listname, ...items) {
   console.log('list %s has the following items', listname);
@@ -429,6 +439,8 @@ function printList(listname, ...items) {
 ```
 
 ### spread
+
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js)
 
 ```js
 function add(x, y) {
@@ -442,8 +454,6 @@ add(...numbers);
 
 ### generatorComprehension
 
-double check this ~pfraze
-
 ```js
 function* numberlist() {
   yield 1;
@@ -454,6 +464,8 @@ function* numberlist() {
 ```
 
 ### generators
+
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js)
 
 ```js
 // A binary tree class.
@@ -498,8 +510,10 @@ with browserify.
 
 ### block scope (`let`)
 
+[example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js)
+
 ```js
-unction () {
+function () {
   var a = 2, b = 3;
   { // new block
     let tmp = a;
