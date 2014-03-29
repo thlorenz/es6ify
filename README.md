@@ -341,6 +341,10 @@ var log = msg => console.log(msg);
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js)
 
+```js
+var log = msg => console.log(msg);
+```
+
 ### classes
 
 ```js
@@ -376,6 +380,37 @@ class Monster extends Character {
 }
 ```
 
+```js
+class Character {
+  constructor(x, y, name) {
+    this.x = x;
+    this.y = y;
+  }
+  attack(character) {
+    console.log('attacking', character);
+  }
+}
+
+class Monster extends Character {
+  constructor(x, y, name) {
+    super(x, y);
+    this.name = name;
+    this.health_ = 100;
+  }
+
+  attack(character) {
+    super.attack(character);
+  }
+
+  get isAlive() { return this.health > 0; }
+  get health() { return this.health_; }
+  set health(value) {
+    if (value < 0) throw new Error('Health must be non-negative.');
+    this.health_ = value;
+  }
+}
+```
+
 ### defaultParameters
 
 ```js
@@ -386,6 +421,12 @@ function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js)
 
+```js
+function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
+  console.log('name: %s, codes: %s, lives in: %s', name, codes, livesIn);
+};
+```
+
 ### destructuring
 
 ```js
@@ -394,6 +435,11 @@ console.log(a + b + c); // hello world
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js)
+
+```js
+var [a, [b], c, d] = ['hello', [', ', 'junk'], ['world']];
+console.log(a + b + c); // hello world
+```
 
 ### forOf
 
@@ -404,6 +450,12 @@ for (let element of [1, 2, 3]) {
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js)
+
+```js
+for (let element of [1, 2, 3]) {
+  console.log('element:', element);
+}
+```
 
 ### propertyMethods
 
@@ -438,6 +490,13 @@ function printList(listname, ...items) {
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js)
 
 
+```js
+function printList(listname, ...items) {
+  console.log('list %s has the following items', listname);
+  items.forEach(function (item) { console.log(item); });
+};
+```
+
 ### spread
 
 ```js
@@ -451,6 +510,16 @@ add(...numbers);
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js)
+
+```js
+function add(x, y) {
+  console.log('%d + %d = %d', x, y, x + y);
+}
+var numbers = [5, 10]
+add(...numbers);
+// 5 + 10 = 15
+};
+```
 
 ### generatorComprehension
 
@@ -501,6 +570,40 @@ for (let node of inorder(tree)) {
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js)
 
+```js
+// A binary tree class.
+function Tree(left, label, right) {
+  this.left = left;
+  this.label = label;
+  this.right = right;
+}
+
+// A recursive generator that iterates the Tree labels in-order.
+function* inorder(t) {
+  if (t) {
+    yield* inorder(t.left);
+    yield t.label;
+    yield* inorder(t.right);
+  }
+}
+
+// Make a tree
+function make(array) {
+  // Leaf node:
+  if (array.length == 1) return new Tree(null, array[0], null);
+  return new Tree(make(array[0]), array[1], make(array[2]));
+}
+
+
+let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
+console.log('generating tree labels in order:');
+
+// Iterate over it
+for (let node of inorder(tree)) {
+  console.log(node); // a, b, c, d, ...
+}
+```
+
 ### modules 
 
 Imports and exports are converted to `commonjs` style `require` and `module.exports` statements to seamlessly integrate
@@ -523,6 +626,18 @@ function () {
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js)
+
+```js
+function () {
+  var a = 2, b = 3;
+  { // new block
+    let tmp = a;
+    a = b;
+    b = tmp;
+  }
+  console.log('tmp is undefined: ', typeof tmp == 'undefined');
+}
+```
 
 The block binding `let` is implemented in ES5 via `try/catch` blocks which may affect performance.
 
