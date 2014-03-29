@@ -30,6 +30,7 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
+- [Enabling sourcemaps and related posts](#enabling-sourcemaps-and-related-posts)
 - [API](#api)
 - [Examples](#examples)
 	- [es6ify.configure(filePattern : Regex)](#es6ifyconfigurefilepattern--regex)
@@ -56,6 +57,13 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Enabling sourcemaps and related posts
+
+- [in chrome or firefox](http://blog.teamtreehouse.com/introduction-source-maps)
+- [in chrome - official developer docs](https://developers.google.com/chrome-developer-tools/docs/javascript-debugging#source-maps)
+- [in IE - very sad cause not supported](http://stackoverflow.com/questions/17945833/source-mapping-in-ie-sourceurl) 
+- [browserify-sourcemaps](http://thlorenz.com/blog/browserify-sourcemaps)
+- [html5 rocks sourcemaps post](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)
 
 ## API
 
