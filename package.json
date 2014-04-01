@@ -12,9 +12,9 @@
   },
   "homepage": "https://github.com/thlorenz/es6ify",
   "dependencies": {
-    "through": "~2.2.7",
     "source-map": "~0.1.29",
-    "traceur": "0.0.31",
+    "through": "~2.2.7",
+    "traceur": "0.0.32",
     "xtend": "~2.2.0"
   },
   "devDependencies": {
