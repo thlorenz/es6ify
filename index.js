@@ -9,6 +9,9 @@ var SM          = require('source-map')
   , path        =  require('path')
   , extend      =  require('xtend')
   , runtime     =  require.resolve(require('traceur').RUNTIME_PATH)
+  , runtimeSrc  =  require('fs').readFileSync(runtime).toString()
+  , runtimeOfst =  runtimeSrc.toString().split(/\n/g).length
+  , runtimeTgt  =  null
   , cache       =  {};
 
 function getHash(data) {
@@ -26,18 +29,22 @@ function getHash(data) {
  * @param {string} file name of the file that is being compiled to ES5
  * @param {string} src source of the file being compiled to ES5
  * @param {Object} opts the compile options
+ * @param {boolean} prependRuntime whether to prepend the runtime
  * @return {string} compiled source
  */
-function compileFile(file, src, opts) {
+function compileFile(file, src, opts, prependRuntime) {
   var compiled;
   compiled = compile(file, src, extend(opts, exports.traceurOverrides));
   if (compiled.error) throw new Error(compiled.error);
 
   var comment
+    , output
+    , offset = 0
     , consumer = new SMConsumer(compiled.sourcemap)
     , generator = new SMGenerator({file: file + '.es6'});
 
   generator.setSourceContent(file, src);
+  if (prependRuntime) offset = runtimeOfst;
 
   consumer.eachMapping(function (mapping) {
     // Ignore mappings that are not from our source file
@@ -50,7 +57,7 @@ function compileFile(file, src, opts) {
           }
         , generated: {
             column: mapping.generatedColumn
-          , line: mapping.generatedLine
+          , line: mapping.generatedLine + offset
           }
         , source: file
         , name: mapping.name
@@ -60,8 +67,10 @@ function compileFile(file, src, opts) {
   });
 
   comment = new Buffer(generator.toString()).toString('base64');
-
-  return compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment;
+  output  = compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment; 
+  if (prependRuntime) output = runtimeSrc.toString() + output;
+  
+  return output;
 }
 
 /**
@@ -101,7 +110,8 @@ function es6ifyStream(file, options) {
   // Don't es6ify the traceur runtime
   if (file === runtime) return through();
   if (!filePattern.test(file)) return through();
-
+  if (opts.runtime && !runtimeTgt) runtimeTgt = file;
+  
   return through(write, end);
 
   function write (buf) {
@@ -114,7 +124,10 @@ function es6ifyStream(file, options) {
 
     if (!cached || cached.hash !== hash) {
       try {
-        cache[file] = { compiled: compileFile(file, data, opts), hash: hash };
+        cache[file] = {
+          compiled: compileFile(file, data, opts, file === runtimeTgt),
+          hash: hash
+        };
       } catch (ex) {
         this.emit('error', ex);
         return this.queue(null);
