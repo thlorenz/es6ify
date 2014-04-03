@@ -94,7 +94,7 @@ function es6ifyConfigure(filePattern) {
 function es6ify(file) {
   if (typeof file === 'object') {
     // if not a file path then return the pure
-    // transform function with the option in the
+    // transform function passing the options using the
     // closure.
     var options = file;
     return function (iFile) {
@@ -109,15 +109,14 @@ function es6ify(file) {
 }
 
 function es6ifyStream(file, options) {
-  var opts = options || {}
-    , filePattern = opts.filePattern || /\.js$/
+  var opts = extend({ addTraceurRuntime: true, filePattern: /\.js$/ }, options)
     , data = '';
 
   // Don't es6ify the traceur runtime
   if (file === runtime) return through();
-  if (!filePattern.test(file)) return through();
+  if (!opts.filePattern.test(file)) return through();
   if (opts.addTraceurRuntime && !runtimeTgt) runtimeTgt = file;
-  
+
   return through(write, end);
 
   function write (buf) {
