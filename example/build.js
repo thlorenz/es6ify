@@ -8,12 +8,11 @@ var path       = require('path')
   , bundlePath = path.join(jsRoot, 'bundle.js')
   ;
 
-es6ify.traceurOverrides = { blockBinding: true };
-
-browserify()
-  .add(es6ify.runtime)
-  .transform(es6ify)
-  .require(require.resolve('./src/main.js'), { entry: true })
+browserify('./src/main.js')
+  .transform(es6ify({ // Idea: pass options directly to the es6ify function
+    addTraceurRuntime: true, // Idea: Include traceur runtime by default, but allow to exclude
+    traceurOptions: { blockBinding: true } // Idea: Rename traceurOverrides to traceurOptions
+  }))
   .bundle({ debug: true })
   .on('error', function (err) { console.error(err); })
   .pipe(fs.createWriteStream(bundlePath));

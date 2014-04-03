@@ -79,7 +79,7 @@ function compileFile(file, src, opts, prependRuntime) {
  * @returns {function(string, Object): Stream}
  */
 function es6ifyConfigure(filePattern) {
-  filePattern = filePattern || /\.js$/;
+  // support backward compat passing a file pattern
   return es6ify({ filePattern: filePattern });
 }
 
@@ -93,12 +93,18 @@ function es6ifyConfigure(filePattern) {
  */
 function es6ify(file) {
   if (typeof file === 'object') {
+    // if not a file path then return the pure
+    // transform function with the option in the
+    // closure.
     var options = file;
     return function (iFile) {
       return es6ifyStream(iFile, options);
     };
   }
 
+  // if file is a string (filepath) then execute
+  // the stream function and return the Stream, basically
+  // delegate.
   return es6ifyStream(file);
 }
 
@@ -110,7 +116,7 @@ function es6ifyStream(file, options) {
   // Don't es6ify the traceur runtime
   if (file === runtime) return through();
   if (!filePattern.test(file)) return through();
-  if (opts.runtime && !runtimeTgt) runtimeTgt = file;
+  if (opts.addTraceurRuntime && !runtimeTgt) runtimeTgt = file;
   
   return through(write, end);
 
@@ -125,7 +131,7 @@ function es6ifyStream(file, options) {
     if (!cached || cached.hash !== hash) {
       try {
         cache[file] = {
-          compiled: compileFile(file, data, opts, file === runtimeTgt),
+          compiled: compileFile(file, data, opts.traceurOptions, file === runtimeTgt),
           hash: hash
         };
       } catch (ex) {
