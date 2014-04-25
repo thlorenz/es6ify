@@ -24,7 +24,7 @@ function getHash(data) {
 
 /**
  * Compile function, exposed to be used from other libraries, not needed when using es6ify as a transform.
- * 
+ *
  * @name es6ify::compileFile
  * @function
  * @param {string} file name of the file that is being compiled to ES5
@@ -35,7 +35,7 @@ function getHash(data) {
  */
 function compileFile(file, src, opts, prependRuntime) {
   var compiled;
-  compiled = compile(file, src, extend(opts, exports.traceurOverrides));
+  compiled = compile(file, src, extend(opts, traceurOverrides));
   if (compiled.error) throw new Error(compiled.error);
 
   var comment
@@ -68,9 +68,9 @@ function compileFile(file, src, opts, prependRuntime) {
   });
 
   comment = new Buffer(generator.toString()).toString('base64');
-  output  = compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment; 
+  output  = compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment;
   if (prependRuntime) output = runtimeSrc.toString() + output;
-  
+
   return output;
 }
 
@@ -86,7 +86,7 @@ function es6ifyConfigure(filePattern) {
 }
 
 /**
- * If executed with a string parameter it will return a stream of 
+ * If executed with a string parameter it will return a stream of
  * the transformed file.
  *
  * If executed with an object parameter it returns a function that
@@ -152,7 +152,7 @@ function es6ifyStream(file, options) {
  * #### Example
  *
  * `browserify().transform(es6ify)`
- * 
+ *
  * @name es6ify
  * @function
  * @return {function} function that returns a `TransformStream` when called with a `file`
@@ -161,7 +161,7 @@ exports = module.exports = es6ify;
 
 /**
  * Configurable es6ify transform function that allows specifying the `filePattern` of files to be compiled.
- * 
+ *
  * @name es6ify::configure
  * @function
  * @param {string=} filePattern (default: `/\.js$/) pattern of files that will be es6ified
@@ -177,7 +177,7 @@ exports.configure = es6ifyConfigure;
  * ### Note
  *
  * The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
- * 
+ *
  * @name e6ify::runtime
  */
 exports.runtime = runtime;
@@ -187,16 +187,19 @@ exports.compileFile = compileFile;
 
 /**
  * Allows to override traceur compiler defaults.
- * 
+ *
  * ### Example
- * 
+ *
  * In order to support block scope (`let`) do:
  *
  * `es6ify.traceurOverrides = { blockBinding: true }`
- * 
+ *
  * @name  es6ify::traceurOverrides
  */
 exports.__defineSetter__('traceurOverrides', function (value) {
   console.log('DEPRECATED traceurOverrides');
   traceurOverrides = value;
+});
+exports.__defineGetter__('traceurOverrides', function () {
+  return traceurOverrides;
 });
