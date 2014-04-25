@@ -74,14 +74,9 @@ function compileFile(file, src, opts, prependRuntime) {
   return output;
 }
 
-/**
- * Returns a function that when executed returns a browserify transform function.
- *
- * @param {RegExp} filePattern the file pattern regular expression
- * @returns {function(string, Object): Stream}
- */
 function es6ifyConfigure(filePattern) {
-  // support backward compat passing a file pattern
+  // TODO: Improve deprecation message
+  console.log('DEPRECATED es6ifyConfigure: Use the filePattern property in the es6ify options.');
   return es6ify({ filePattern: filePattern });
 }
 
@@ -180,7 +175,11 @@ exports.configure = es6ifyConfigure;
  *
  * @name e6ify::runtime
  */
-exports.runtime = runtime;
+exports.__defineGetter__('runtime', function () {
+  // TODO: Improve deprecation message
+  console.log('DEPRECATED runtime: Use the addTraceurRuntime property in the es6ify options.');
+  return runtime;
+});
 
 
 exports.compileFile = compileFile;
@@ -197,7 +196,8 @@ exports.compileFile = compileFile;
  * @name  es6ify::traceurOverrides
  */
 exports.__defineSetter__('traceurOverrides', function (value) {
-  console.log('DEPRECATED traceurOverrides');
+  // TODO: Improve deprecation message
+  console.log('DEPRECATED traceurOverrides: Use the traceurOverrides property in the es6ify options.');
   traceurOverrides = value;
 });
 exports.__defineGetter__('traceurOverrides', function () {
