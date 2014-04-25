@@ -41,7 +41,7 @@ var format     =  require('util').format;
 
     bfy
       .transform(es6ify)
-      .require(__dirname + '/bundle-compat/' + filename + '.js', { entry: true })
+      .require(__dirname + '/bundle/' + filename + '.js', { entry: true })
       .bundle(function (err, src) {
         if (err) t.fail(err);
         src = 'window=this;'+src;

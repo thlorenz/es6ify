@@ -9,9 +9,9 @@ var path       =  require('path');
 test('\nsyntax error', function (t) {
   browserify()
     .transform(es6ify)
-    .require(__dirname + '/bundle-compat/syntax-error.js', { entry: true })
+    .require(__dirname + '/bundle/syntax-error.js', { entry: true })
     .bundle(function (err, src) {
-      t.equal(err.message, path.resolve(__dirname + '/bundle-compat/syntax-error.js') + ':1:10: \'identifier\' expected');
+      t.equal(err.message, path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:10: \'identifier\' expected');
       t.end();
     });
 })
