@@ -75,6 +75,7 @@ function compileFile(file, src, opts, prependRuntime) {
 
 /**
  * Returns a function that when executed returns a browserify transform function.
+ *
  * @param {RegExp} filePattern the file pattern regular expression
  * @returns {function(string, Object): Stream}
  */
@@ -86,25 +87,23 @@ function es6ifyConfigure(filePattern) {
 /**
  * If executed with a string parameter it will return a stream of 
  * the transformed file.
+ *
  * If executed with an object parameter it returns a function that
  * when executed returns a browserify tranform function.
+ *
  * @param {Object|string} file the tranformation options or a file path
  * @returns {Stream|function(string, Object): Stream} a stream or a function depending on the given parameter
  */
 function es6ify(file) {
   if (typeof file === 'object') {
-    // if not a file path then return the pure
-    // transform function passing the options using the
-    // closure.
+    // Parameter is an options object
     var options = file;
     return function (iFile) {
       return es6ifyStream(iFile, options);
     };
   }
 
-  // if file is a string (filepath) then execute
-  // the stream function and return the Stream, basically
-  // delegate.
+  // Parameter is a file path so delegate
   return es6ifyStream(file);
 }
 
@@ -115,6 +114,7 @@ function es6ifyStream(file, options) {
   // Don't es6ify the traceur runtime
   if (file === runtime) return through();
   if (!opts.filePattern.test(file)) return through();
+  // Cache the first file, which will contain the traceur runtime
   if (opts.addTraceurRuntime && !runtimeTgt) runtimeTgt = file;
 
   return through(write, end);
