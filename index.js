@@ -74,12 +74,6 @@ function compileFile(file, src, opts, prependRuntime) {
   return output;
 }
 
-function es6ifyConfigure(filePattern) {
-  // TODO: Improve deprecation message
-  console.log('DEPRECATED es6ifyConfigure: Use the filePattern property in the es6ify options.');
-  return es6ify({ filePattern: filePattern });
-}
-
 /**
  * If executed with a string parameter it will return a stream of
  * the transformed file.
@@ -162,7 +156,11 @@ exports = module.exports = es6ify;
  * @param {string=} filePattern (default: `/\.js$/) pattern of files that will be es6ified
  * @return {function} function that returns a `TransformStream` when called with a `file`
  */
-exports.configure = es6ifyConfigure;
+exports.configure = function es6ifyConfigure(filePattern) {
+  // TODO: Improve deprecation message
+  console.log('DEPRECATED es6ifyConfigure: Use the filePattern property in the es6ify options.');
+  return es6ify({ filePattern: filePattern });
+};
 
 /**
  * The traceur runtime exposed here so it can be included in the bundle via:
