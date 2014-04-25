@@ -12,7 +12,8 @@ var SM          = require('source-map')
   , runtimeSrc  =  require('fs').readFileSync(runtime).toString()
   , runtimeOfst =  runtimeSrc.toString().split(/\n/g).length
   , runtimeTgt  =  null
-  , cache       =  {};
+  , cache       =  {}
+  , traceurOverrides =  {};
 
 function getHash(data) {
   return crypto
@@ -195,4 +196,7 @@ exports.compileFile = compileFile;
  * 
  * @name  es6ify::traceurOverrides
  */
-exports.traceurOverrides = {};
+exports.__defineSetter__('traceurOverrides', function (value) {
+  console.log('DEPRECATED traceurOverrides');
+  traceurOverrides = value;
+});
