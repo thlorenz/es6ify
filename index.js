@@ -120,7 +120,7 @@ function es6ifyStream(file, options) {
     if (!cached || cached.hash !== hash) {
       try {
         cache[file] = {
-          compiled: compileFile(file, data, opts.traceurOptions, file === runtimeTgt),
+          compiled: compileFile(file, data, opts.traceurOverrides, file === runtimeTgt),
           hash: hash
         };
       } catch (ex) {
