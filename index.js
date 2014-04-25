@@ -158,7 +158,7 @@ exports = module.exports = es6ify;
  */
 exports.configure = function es6ifyConfigure(filePattern) {
   // TODO: Improve deprecation message
-  console.log('DEPRECATED es6ifyConfigure: Use the filePattern property in the es6ify options.');
+  console.warn('DEPRECATED es6ifyConfigure: Use the filePattern property in the es6ify options.');
   return es6ify({ filePattern: filePattern });
 };
 
@@ -175,7 +175,7 @@ exports.configure = function es6ifyConfigure(filePattern) {
  */
 exports.__defineGetter__('runtime', function () {
   // TODO: Improve deprecation message
-  console.log('DEPRECATED runtime: Use the addTraceurRuntime property in the es6ify options.');
+  console.warn('DEPRECATED runtime: Use the addTraceurRuntime property in the es6ify options.');
   return runtime;
 });
 
@@ -195,7 +195,7 @@ exports.compileFile = compileFile;
  */
 exports.__defineSetter__('traceurOverrides', function (value) {
   // TODO: Improve deprecation message
-  console.log('DEPRECATED traceurOverrides: Use the traceurOverrides property in the es6ify options.');
+  console.warn('DEPRECATED traceurOverrides: Use the traceurOverrides property in the es6ify options.');
   traceurOverrides = value;
 });
 exports.__defineGetter__('traceurOverrides', function () {
