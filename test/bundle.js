@@ -37,7 +37,7 @@ var format     =  require('util').format;
       
     es6ify.traceurOverrides = overrides;
     var bfy = browserify();
-    if (useRuntime) bfy.add(es6ify.runtime);
+    bfy.add(es6ify.runtime);
 
     bfy
       .transform(es6ify)
