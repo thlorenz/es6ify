@@ -14,6 +14,4 @@ results
 npm-debug.log
 node_modules
 
-bundle.js
-
 .DS_Store

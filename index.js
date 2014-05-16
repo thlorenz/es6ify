@@ -11,7 +11,6 @@ var SM          = require('source-map')
   , runtime     =  require.resolve(require('traceur').RUNTIME_PATH)
   , runtimeSrc  =  require('fs').readFileSync(runtime).toString()
   , runtimeOfst =  runtimeSrc.toString().split(/\n/g).length
-  , runtimeTgt  =  null
   , cache       =  {}
   , traceurOverrides =  {};
 
@@ -105,7 +104,7 @@ function es6ifyStream(file, options) {
   if (file === runtime) return through();
   if (!opts.filePattern.test(file)) return through();
   // Cache the first file, which will contain the traceur runtime
-  if (opts.addTraceurRuntime && !runtimeTgt) runtimeTgt = file;
+  if (opts.addTraceurRuntime && !opts.runtimeTgt) opts.runtimeTgt = file;
 
   return through(write, end);
 
@@ -120,7 +119,7 @@ function es6ifyStream(file, options) {
     if (!cached || cached.hash !== hash) {
       try {
         cache[file] = {
-          compiled: compileFile(file, data, opts.traceurOverrides, file === runtimeTgt),
+          compiled: compileFile(file, data, opts.traceurOverrides, file === opts.runtimeTgt),
           hash: hash
         };
       } catch (ex) {
