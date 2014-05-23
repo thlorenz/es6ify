@@ -390,7 +390,7 @@ function logDeveloper(name, codes = 'JavaScript', livesIn = 'USA') {
 
 ```js
 var [a, [b], c, d] = ['hello', [', ', 'junk'], ['world']];
-console.log(a + b + c); // hello world
+console.log(a + b + c); // hello, world
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js)
