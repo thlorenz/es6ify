@@ -7,7 +7,7 @@ var compile = require('traceur').compile
 var traceurOptions = { 
   modules      : 'commonjs',
   sourceMap    : true
-}
+};
 
 exports = module.exports = function compileFile(file, contents, traceurOverrides) {
   var options = xtend(traceurOptions, traceurOverrides, { filename: file });
