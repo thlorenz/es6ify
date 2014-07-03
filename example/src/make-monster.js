@@ -27,6 +27,6 @@ class Monster extends Character {
   }
 }
 
-module.exports = function (x, y, name) {
+export default function makeMonster(x, y, name) {
   return new Monster(x, y, name);
-};
+}

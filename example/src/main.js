@@ -1,6 +1,7 @@
 console.log('starting es6ify demo');
 
-let makeMonster   =  require('./make-monster');
+import makeMonster from './make-monster';	//es6 module
+
 let { 
     blockScope
   , destructuring
