@@ -14,7 +14,7 @@ test('\nsyntax error', function (t) {
       t.equal(err.message, path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:10: \'identifier\' expected');
       t.end();
     });
-})
+});
 
 test('\ncompiling block-scope without blockBinding override', function (t) {
   browserify()

@@ -1,6 +1,6 @@
 {
   "name": "es6ify",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.current (ES5) on the fly.",
   "main": "es6ify.js",
   "scripts": {
@@ -12,16 +12,16 @@
   },
   "homepage": "https://github.com/thlorenz/es6ify",
   "dependencies": {
-    "source-map": "~0.1.29",
-    "through": "~2.2.7",
-    "traceur": "0.0.42",
-    "xtend": "~2.2.0"
+    "source-map": "~0.1.34",
+    "through": "~2.3.4",
+    "traceur": "0.0.49",
+    "xtend": "~3.0.0"
   },
   "devDependencies": {
     "tap": "~0.4.0",
-    "proxyquire": "~0.4.0",
-    "convert-source-map": "~0.2.6",
-    "browserify": "~3.33.1"
+    "proxyquire": "~1.0.1",
+    "convert-source-map": "~0.3.4",
+    "browserify": "~4.2"
   },
   "keywords": [
     "traceur",

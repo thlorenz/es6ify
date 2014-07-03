@@ -8,13 +8,16 @@ var path       = require('path')
   , bundlePath = path.join(jsRoot, 'bundle.js')
   ;
 
-es6ify.traceurOverrides = { blockBinding: true };
+es6ify.traceurOverrides = {
+	blockBinding: true,
+	experimental: true
+};
 
 browserify()
   .add(es6ify.runtime)
   .transform(es6ify)
   .require(require.resolve('./src/main.js'), { entry: true })
-  .bundle({ debug: true })
+  .bundle({ debug: false })
   .on('error', function (err) { console.error(err); })
   .pipe(fs.createWriteStream(bundlePath));
 

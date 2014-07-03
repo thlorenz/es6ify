@@ -7,7 +7,7 @@ var test       =  require('tap').test
   , through    =  require('through')
   , convert    =  require('convert-source-map')
   , compile    =  require('../compile')
-  , proxyquire =  require('proxyquire')
+  , proxyquire =  require('proxyquire');
 
 test('transform adds sourcemap comment and uses cache on second time', function (t) {
 
@@ -21,8 +21,8 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       return compile.apply(this, args);
     }
 
-    var es6ify = proxyquire('..', { './compile' : trackingCompile } )
-    es6ify.traceurOverrides = { blockBinding: true };
+    var es6ify = proxyquire('..', { './compile' : trackingCompile } );
+    es6ify.traceurOverrides = { blockBinding: true, experimental: true  };
 
     var file = path.join(__dirname, '../example/src/features/iterators.js');
 
