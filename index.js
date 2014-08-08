@@ -126,6 +126,7 @@ exports.configure = es6ify;
  * ### Note
  *
  * The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
+ * See [this comment](https://github.com/google/traceur-compiler/issues/1007#issuecomment-42837067) for details.
  * 
  * @name e6ify::runtime
  */
