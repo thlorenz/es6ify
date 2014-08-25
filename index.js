@@ -26,9 +26,9 @@ function getHash(data) {
  * @param {string} src source of the file being compiled to ES5
  * @return {string} compiled source
  */
-function compileFile(file, src) {
+function compileFile(file, src, opts) {
   var compiled;
-  compiled = compile(file, src, exports.traceurOverrides);
+  compiled = compile(file, src, opts);
   if (compiled.error) throw new Error(compiled.error);
 
   var comment
@@ -62,9 +62,9 @@ function compileFile(file, src) {
   return compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment;
 }
 
-function es6ify(filePattern) {
+function es6ify(filePattern, opts) {
   filePattern =  filePattern || /\.js$/;
-
+  opts = opts || exports.traceurOverrides;
   return function (file) {
 
     // Don't es6ify the traceur runtime
@@ -82,7 +82,7 @@ function es6ify(filePattern) {
 
       if (!cached || cached.hash !== hash) {
         try {
-          cache[file] = { compiled: compileFile(file, data), hash: hash };
+          cache[file] = { compiled: compileFile(file, data, opts), hash: hash };
         } catch (ex) {
           this.emit('error', ex);
           return this.queue(null);
