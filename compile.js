@@ -21,17 +21,13 @@ exports = module.exports = function compileFile(file, contents, traceurOverrides
 
     var result = compiler.compile(contents);
     var sourceMap = compiler.getSourceMap();
-    var errors = null;
-  }catch(err){
-    errors = err;
-    if (errors.length) {
+  }catch(errors){
       return { source: null, sourcemap: null, error: errors[0] };
-    }
   }
 
   return {
       source: result,
-      errors: errors,
+      errors: null,
       sourcemap: sourceMap ? JSON.parse(sourceMap) : null
   };
 };
