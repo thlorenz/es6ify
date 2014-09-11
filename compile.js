@@ -1,6 +1,6 @@
 'use strict';
 
-var compile = require('traceur').compile
+var Compiler = require('traceur').NodeCompiler
   , xtend = require('xtend')
   ;
 
@@ -16,15 +16,22 @@ exports = module.exports = function compileFile(file, contents, traceurOverrides
     options.sourceMaps = options.sourceMap;
     delete options.sourceMap;
   }
+  try{
+    var compiler = new Compiler(options);
 
-  var result = compile(contents, options);
-
-  if (result.errors.length) {
-      return { source: null, sourcemap: null, error: result.errors[0] };
+    var result = compiler.compile(contents);
+    var sourceMap = compiler.getSourceMap();
+    var errors = null;
+  }catch(err){
+    errors = err;
+    if (errors.length) {
+      return { source: null, sourcemap: null, error: errors[0] };
+    }
   }
+
   return {
-      source: result.js,
-      errors: result.errors,
-      sourcemap: result.generatedSourceMap ? JSON.parse(result.generatedSourceMap) : null
+      source: result,
+      errors: errors,
+      sourcemap: sourceMap ? JSON.parse(sourceMap) : null
   };
 };

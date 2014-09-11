@@ -38,6 +38,7 @@ function compileFile(file, src) {
   generator.setSourceContent(file, src);
 
   consumer.eachMapping(function (mapping) {
+    mapping.source = path.normalize(mapping.source);
     // Ignore mappings that are not from our source file
     if(mapping.source && file === mapping.source) {
       generator.addMapping(
