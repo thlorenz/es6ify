@@ -29,13 +29,13 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     // first time
     fs.createReadStream(file)
       .pipe(es6ify(file))
-      .on('error', console.error) 
+      .on('error', console.error)
       .pipe(through(write));
 
     // second time
     fs.createReadStream(file)
       .pipe(es6ify(file))
-      .on('error', console.error) 
+      .on('error', console.error)
       .pipe(through(write, end));
 
     function write (buf) { data += buf; }

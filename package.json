@@ -14,7 +14,7 @@
   "dependencies": {
     "source-map": "~0.1.29",
     "through": "~2.2.7",
-    "traceur": "0.0.55",
+    "traceur": "0.0.62",
     "xtend": "~2.2.0"
   },
   "devDependencies": {
