@@ -10,7 +10,7 @@ var traceurOptions = {
 };
 
 exports = module.exports = function compileFile(file, contents, traceurOverrides) {
-  var options = xtend(traceurOptions, traceurOverrides, { filename: file });
+  var options = xtend(traceurOptions, traceurOverrides);
   if (typeof options.sourceMap !== 'undefined') {
     console.warn('es6ify: DEPRECATED options.sourceMap has changed to options.sourceMaps (plural)');
     options.sourceMaps = options.sourceMap;
@@ -19,7 +19,7 @@ exports = module.exports = function compileFile(file, contents, traceurOverrides
   try{
     var compiler = new Compiler(options);
 
-    var result = compiler.compile(contents);
+    var result = compiler.compile(contents, file);
     var sourceMap = compiler.getSourceMap();
   }catch(errors){
       return { source: null, sourcemap: null, error: errors[0] };
