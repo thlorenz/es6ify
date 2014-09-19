@@ -1,6 +1,6 @@
 'use strict';
 
-var compile = require('traceur').compile
+var traceur = require('traceur')
   , xtend = require('xtend')
   ;
 
@@ -10,21 +10,25 @@ var traceurOptions = {
 };
 
 exports = module.exports = function compileFile(file, contents, traceurOverrides) {
-  var options = xtend(traceurOptions, traceurOverrides, { filename: file });
+  var options = xtend(traceurOptions, traceurOverrides);
   if (typeof options.sourceMap !== 'undefined') {
     console.warn('es6ify: DEPRECATED options.sourceMap has changed to options.sourceMaps (plural)');
     options.sourceMaps = options.sourceMap;
     delete options.sourceMap;
   }
 
-  var result = compile(contents, options);
+  var compiler = new traceur.NodeCompiler(traceur.commonJSOptions(options));
 
-  if (result.errors.length) {
-      return { source: null, sourcemap: null, error: result.errors[0] };
+  try {
+    var result = compiler.compile(contents, file);
+    var generatedSourceMap = compiler.getSourceMap();
+    return {
+        source: result,
+        error: null,
+        sourcemap: generatedSourceMap ? JSON.parse(generatedSourceMap) : null
+    };
+
+  } catch (e) {
+    return { source: null, sourcemap: null, error: e[0] };
   }
-  return {
-      source: result.js,
-      errors: result.errors,
-      sourcemap: result.generatedSourceMap ? JSON.parse(result.generatedSourceMap) : null
-  };
 };
