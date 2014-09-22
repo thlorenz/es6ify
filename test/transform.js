@@ -8,6 +8,7 @@ var test       =  require('tap').test
   , convert    =  require('convert-source-map')
   , compile    =  require('../compile')
   , proxyquire =  require('proxyquire')
+  , os         =  require('os');
 
 test('transform adds sourcemap comment and uses cache on second time', function (t) {
 
@@ -48,7 +49,7 @@ test('transform adds sourcemap comment and uses cache on second time', function 
             sources: [ file ],
             names: [],
             mappings: sourceMap.mappings,
-            sourcesContent: [ 'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n' ] }
+            sourcesContent: [ 'module.exports = function () {' + os.EOL + '  for (let element of [1, 2, 3]) {' + os.EOL + '    console.log(\'element:\', element);' + os.EOL + '  }' + os.EOL + '};' + os.EOL + '' ] }
         , 'adds sourcemap comment including original source'
       );
       t.ok(sourceMap.mappings.length);
