@@ -27,7 +27,7 @@ exports = module.exports = function compileFile(file, contents, traceurOverrides
 
   return {
       source: result,
-      errors: null,
+      error: null,
       sourcemap: sourceMap ? JSON.parse(sourceMap) : null
   };
 };
