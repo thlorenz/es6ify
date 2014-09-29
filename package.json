@@ -21,7 +21,7 @@
     "tap": "~0.4.0",
     "proxyquire": "~0.4.0",
     "convert-source-map": "~0.2.6",
-    "browserify": "~3.33.1"
+    "browserify": "~5.12.1"
   },
   "keywords": [
     "traceur",

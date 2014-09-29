@@ -11,7 +11,7 @@ test('\nsyntax error', function (t) {
     .transform(es6ify)
     .require(__dirname + '/bundle/syntax-error.js', { entry: true })
     .bundle(function (err, src) {
-      t.equal(err.message, path.relative(__dirname, 'bundle/syntax-error.js') + ':1:10: Unexpected token (');
+      t.ok(err.message.indexOf(path.relative(__dirname, 'bundle/syntax-error.js') + ':1:10: Unexpected token (') === 0);
       t.end();
     });
 })
