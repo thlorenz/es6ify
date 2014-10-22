@@ -19,12 +19,12 @@ var format     =  require('util').format;
     , 'tmp is undefined:  true'
     , 'An instance of Foo says hi from its .toString()!'
     , 'name: Bruno, codes: JavaScript, lives in: USA'
-    , 'list fruits has the following items', 'apple', 'banana' 
+    , 'list fruits has the following items', 'apple', 'banana'
     , '3 + 4 = 7'
-    ] 
+    ]
   , true
   , { blockBinding: true }
-  ] 
+  ]
 ].forEach(function (row) {
 
   var filename     = row[0];
@@ -34,7 +34,7 @@ var format     =  require('util').format;
 
   test('\nbundle ' + (useRuntime ? 'with' : 'without') + ' traceur runtime - ' + filename, function (t) {
     t.plan(expectedLogs.length)
-      
+
     es6ify.traceurOverrides = overrides;
     var bfy = browserify();
     if (useRuntime) bfy.add(es6ify.runtime);
@@ -46,12 +46,12 @@ var format     =  require('util').format;
         if (err) t.fail(err);
         src = 'window=this;'+src;
         vm.runInNewContext(src, {
-            window: {}, 
+            window: {},
             console: { log: log }
         });
         t.end()
       });
-    
+
     function log () {
       var args = [].slice.call(arguments);
       var output = format.apply(null, args);
