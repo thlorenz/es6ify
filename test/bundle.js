@@ -9,14 +9,14 @@ var compile    =  require('../compile');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ], true ]
-, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false ]
+//, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
 , [ 'run-classes'           , [ 'An instance of Foo says hi from its .toString()!' ], true ]
 , [ 'run-spread-operator'   , [ '3 + 4 = 7' ], true ]
 , [ 'run-combined'
   , [ 'hello, world'
-    , 'tmp is undefined:  true'
+//    , 'tmp is undefined:  true'
     , 'An instance of Foo says hi from its .toString()!'
     , 'name: Bruno, codes: JavaScript, lives in: USA'
     , 'list fruits has the following items', 'apple', 'banana'
