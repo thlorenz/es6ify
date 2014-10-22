@@ -56,9 +56,8 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 ## Enabling sourcemaps and related posts
 
-- [in chrome or firefox](http://blog.teamtreehouse.com/introduction-source-maps)
-- [in chrome - official developer docs](https://developers.google.com/chrome-developer-tools/docs/javascript-debugging#source-maps)
-- [in IE - very sad cause not supported](http://stackoverflow.com/questions/17945833/source-mapping-in-ie-sourceurl)
+- In Chrome or Firefox: enabled by default
+- In IE: works in IE11 onward by default
 - [browserify-sourcemaps](http://thlorenz.com/blog/browserify-sourcemaps)
 - [html5 rocks sourcemaps post](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)
 
