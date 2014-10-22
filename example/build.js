@@ -8,8 +8,6 @@ var path       = require('path')
   , bundlePath = path.join(jsRoot, 'bundle.js')
   ;
 
-es6ify.traceurOverrides = { blockBinding: true };
-
 browserify()
   .add(es6ify.runtime)
   .transform(es6ify)

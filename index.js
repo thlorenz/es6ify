@@ -19,7 +19,7 @@ function getHash(data) {
 
 /**
  * Compile function, exposed to be used from other libraries, not needed when using es6ify as a transform.
- * 
+ *
  * @name es6ify::compileFile
  * @function
  * @param {string} file name of the file that is being compiled to ES5
@@ -102,7 +102,7 @@ function es6ify(filePattern) {
  * #### Example
  *
  * `browserify().transform(es6ify)`
- * 
+ *
  * @name es6ify
  * @function
  * @return {function} function that returns a `TransformStream` when called with a `file`
@@ -111,7 +111,7 @@ exports = module.exports = es6ify();
 
 /**
  * Configurable es6ify transform function that allows specifying the `filePattern` of files to be compiled.
- * 
+ *
  * @name es6ify::configure
  * @function
  * @param {string=} filePattern (default: `/\.js$/) pattern of files that will be es6ified
@@ -128,7 +128,7 @@ exports.configure = es6ify;
  *
  * The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
  * See [this comment](https://github.com/google/traceur-compiler/issues/1007#issuecomment-42837067) for details.
- * 
+ *
  * @name e6ify::runtime
  */
 exports.runtime = runtime;
@@ -138,13 +138,13 @@ exports.compileFile = compileFile;
 
 /**
  * Allows to override traceur compiler defaults.
- * 
- * ### Example
- * 
- * In order to support block scope (`let`) do:
  *
- * `es6ify.traceurOverrides = { blockBinding: true }`
- * 
+ * ### Example
+ *
+ * In order to support async functions (`async`/`await`) do:
+ *
+ * `es6ify.traceurOverrides = { asyncFunctions: true }`
+ *
  * @name  es6ify::traceurOverrides
  */
 exports.traceurOverrides = {};

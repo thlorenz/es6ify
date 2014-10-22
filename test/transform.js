@@ -22,7 +22,6 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     }
 
     var es6ify = proxyquire('..', { './compile' : trackingCompile } )
-    es6ify.traceurOverrides = { blockBinding: true };
 
     var file = path.join(__dirname, '../example/src/features/iterators.js');
 

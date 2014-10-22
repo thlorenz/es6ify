@@ -9,7 +9,7 @@ var compile    =  require('../compile');
 var format     =  require('util').format;
 
 [ [ 'run-destructuring'     , [ 'hello, world' ], true ]
-, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false, { blockBinding: true } ]
+, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
 , [ 'run-classes'           , [ 'An instance of Foo says hi from its .toString()!' ], true ]
@@ -23,7 +23,6 @@ var format     =  require('util').format;
     , '3 + 4 = 7'
     ]
   , true
-  , { blockBinding: true }
   ]
 ].forEach(function (row) {
 

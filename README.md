@@ -38,7 +38,6 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 - [Caching](#caching)
 - [Source Maps](#source-maps)
 - [Supported ES6 features](#supported-es6-features)
-	- [arrayComprehension](#arraycomprehension)
 	- [arrowFunctions](#arrowfunctions)
 	- [classes](#classes)
 	- [defaultParameters](#defaultparameters)
@@ -52,8 +51,6 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 	- [generatorComprehension](#generatorcomprehension)
 	- [generators](#generators)
 	- [modules](#modules)
-- [Experimental ES6 Features not supported by default](#experimental-es6-features-not-supported-by-default)
-	- [block scope (`let`)](#block-scope-let)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -61,7 +58,7 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 
 - [in chrome or firefox](http://blog.teamtreehouse.com/introduction-source-maps)
 - [in chrome - official developer docs](https://developers.google.com/chrome-developer-tools/docs/javascript-debugging#source-maps)
-- [in IE - very sad cause not supported](http://stackoverflow.com/questions/17945833/source-mapping-in-ie-sourceurl) 
+- [in IE - very sad cause not supported](http://stackoverflow.com/questions/17945833/source-mapping-in-ie-sourceurl)
 - [browserify-sourcemaps](http://thlorenz.com/blog/browserify-sourcemaps)
 - [html5 rocks sourcemaps post](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)
 
@@ -272,7 +269,7 @@ Type
 </div>
 <!-- END docme generated API please keep comment here to allow auto update -->
 
-## Examples 
+## Examples
 
 ### es6ify.configure(filePattern : Regex)
 
@@ -294,14 +291,15 @@ browserify()
 
 ### es6ify.traceurOverrides
 
-Some features supported by traceur are still experimental and/or not implemented according to the ES6 spec.
-Therefore they have been disabled by default, but can be enabled by overriding these options.
+Some features supported by traceur are still experimental: either nonstandard, proposed but not yet standardized, or
+just too slow to use for most code. Therefore Traceur disables them by default. They can be enabled by overriding these
+options.
 
-For instance to support the block scope (`let`) feature youd do the following.
+For instance to support the async functions (`async`/`await`) feature you'd do the following.
 
 ```js
 var es6ify = require('es6ify');
-es6ify.traceurOverrides = { blockBinding: true };
+es6ify.traceurOverrides = { asyncFunctions: true };
 browserify()
   .add(es6ify.runtime)
   .require(require.resolve('./src/main.js'), { entry: true })
@@ -325,13 +323,6 @@ If the `debug` flag is not set, these source maps will be removed by browserify 
 your production bundle.
 
 ## Supported ES6 features
-
-### arrayComprehension
-
-```js
-[for (i of [1, 2, 3]) i * i]; // [1, 4, 9]
-[for (x of 'abcdefgh'.split('')) for (y of '12345678'.split('')) (x+y)];
-```
 
 ### arrowFunctions
 
@@ -501,32 +492,18 @@ for (let node of inorder(tree)) {
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js)
 
-### modules 
+### block scoping
+
+```js
+{
+  let tmp = 5;
+}
+console.log(typeof tmp === 'undefined'); // true
+```
+
+### modules
 
 Imports and exports are converted to `commonjs` style `require` and `module.exports` statements to seamlessly integrate
 with browserify.
-
-## Experimental ES6 Features not supported by default
-
-### block scope (`let`)
-
-```js
-function () {
-  var a = 2, b = 3;
-  { // new block
-    let tmp = a;
-    a = b;
-    b = tmp;
-  }
-  console.log('tmp is undefined: ', typeof tmp == 'undefined');
-}
-```
-
-[full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js)
-
-The block binding `let` is implemented in ES5 via `try/catch` blocks which may affect performance.
-
-It is also experimental and therefore not supported by default, but you can support for it by adding 
-`{ blockBinding: true }` to `es6ify.traceurOverrides`.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thlorenz/es6ify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
