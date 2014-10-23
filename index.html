@@ -38,65 +38,131 @@
         </div>
 
         <h1>es6ify <a href="http://travis-ci.org/thlorenz/es6ify"><img src="https://secure.travis-ci.org/thlorenz/es6ify.png" alt="build status"></a>
-</h1>
+        </h1>
 
-<p><a href="https://github.com/substack/node-browserify">browserify</a> v2 transform to compile JavaScript.next (ES6) to
-JavaScript.current (ES5) on the fly</p>
+        <p><a href="https://github.com/substack/node-browserify">browserify</a> v2 transform to compile JavaScript.next (ES6) to
+        JavaScript.current (ES5) on the fly</p>
 
-<h1>Try it!</h1>
+        <h1>Try it!</h1>
 
-<p style="font-weight: bold; font-size: 18px; color: yellowgreen;">Open your dev tools and look inside the Sources tab and/or the Console to see the results.</p>
+        <p style="font-weight: bold; font-size: 18px; color: yellowgreen;">Open your dev tools and look inside the Sources tab and/or the Console to see the results.</p>
 
-<p>Make sure to use a browser that supports source maps and to enable them in the settings.</p>
+        <p>Make sure to use a browser that supports source maps and to enable them in the settings.</p>
 
-<p>Most examples are derived from the <a href="https://code.google.com/p/traceur-compiler/wiki/LanguageFeatures">traceur language features</a>.</p>
+        <p>Most examples are derived from the <a href="https://code.google.com/p/traceur-compiler/wiki/LanguageFeatures">traceur language features</a>.</p>
 
-<p>You may have to refresh the page a few times after opening dev tools.</p>
+        <p>You may have to refresh the page a few times after opening dev tools.</p>
 
-<h2>What You Get</h2>
-
-<p><img src="https://github.com/thlorenz/es6ify/raw/master/assets/screenshot.png" alt="screenshot"></p>
-
-<h2>How the bundle was built</h2>
-
-<div class="highlight"><pre><span class="c1">// experimental support for block scope (let)</span>
-es6ify<span class="p">.</span>traceurOverrides <span class="o">=</span> <span class="p">{</span> blockBinding<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">;</span>
-
-browserify<span class="p">(</span><span class="p">)</span>
-  <span class="p">.</span>add<span class="p">(</span>es6ify<span class="p">.</span>runtime<span class="p">)</span>
-  <span class="p">.</span>transform<span class="p">(</span>es6ify<span class="p">)</span>
-  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
-</pre></div>
-
+<!-- START README -->
+<h1 id="es6ify-build-status-https-secure-travis-ci-org-thlorenz-es6ify-png-branch-master-http-travis-ci-org-thlorenz-es6ify-">es6ify <a href="http://travis-ci.org/thlorenz/es6ify"><img src="https://secure.travis-ci.org/thlorenz/es6ify.png?branch=master" alt="build status"></a></h1>
+<p><a href="https://nodei.co/npm/es6ify/"><img src="https://nodei.co/npm/es6ify.png?downloads=true&amp;stars=true" alt="NPM"></a></p>
+<p><a href="https://github.com/substack/node-browserify">browserify</a> <code>&gt;=v2</code> transform to compile JavaScript.next (ES6) to
+JavaScript.current (ES5) on the fly.</p>
+<pre><code class="lang-js">browserify()
+  .add(es6ify.runtime)
+  .transform(es6ify)
+  .require(require.resolve(&#39;./src/main.js&#39;), { entry: true })
+  .bundle({ debug: true })
+  .pipe(fs.createWriteStream(bundlePath));
+</code></pre>
 <p>Find the full version of this example <a href="https://github.com/thlorenz/es6ify/blob/master/example/build.js">here</a>.</p>
+<h2 id="installation">Installation</h2>
+<pre><code>npm install es6ify
+</code></pre><h2 id="what-you-get">What You Get</h2>
+<p><img src="https://github.com/thlorenz/es6ify/raw/master/assets/screenshot.png" alt="screenshot"></p>
+<p><a href="http://thlorenz.github.com/es6ify/">Try it live</a></p>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<strong>Table of Contents</strong>  <em>generated with <a href="http://doctoc.herokuapp.com/">DocToc</a></em>
 
-<h2>Installation</h2>
+- <a href="#enabling-sourcemaps-and-related-posts">Enabling sourcemaps and related posts</a>
+- <a href="#api">API</a>
+- <a href="#examples">Examples</a>
+    - <a href="#es6ifyconfigurefilepattern--regex">es6ify.configure(filePattern : Regex)</a>
+    - <a href="#es6ifytraceuroverrides">es6ify.traceurOverrides</a>
+- <a href="#caching">Caching</a>
+- <a href="#source-maps">Source Maps</a>
+- <a href="#supported-es6-features">Supported ES6 features</a>
+    - <a href="#arrowfunctions">arrowFunctions</a>
+    - <a href="#classes">classes</a>
+    - <a href="#defaultparameters">defaultParameters</a>
+    - <a href="#destructuring">destructuring</a>
+    - <a href="#forof">forOf</a>
+    - <a href="#propertymethods">propertyMethods</a>
+    - <a href="#propertynameshorthand">propertyNameShorthand</a>
+    - <a href="#templateliterals">templateLiterals</a>
+    - <a href="#restparameters">restParameters</a>
+    - <a href="#spread">spread</a>
+    - <a href="#generators">generators</a>
+    - <a href="#modules">modules</a>
 
-<pre><code>npm install es6ify </code></pre>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-<h2>Enabling sourcemaps and related posts</h2>
+<h2 id="enabling-sourcemaps-and-related-posts">Enabling sourcemaps and related posts</h2>
 <ul>
-<li><a href="http://blog.teamtreehouse.com/introduction-source-maps">in chrome or firefox</a></li>
-<li><a href="https://developers.google.com/chrome-developer-tools/docs/javascript-debugging#source-maps">in chrome - official developer docs</a></li>
-<li><a href="http://stackoverflow.com/questions/17945833/source-mapping-in-ie-sourceurl">in IE - very sad cause not supported</a> </li>
+<li>In Chrome or Firefox: enabled by default</li>
+<li>In IE: works in IE11 onward by default</li>
 <li><a href="http://thlorenz.com/blog/browserify-sourcemaps">browserify-sourcemaps</a></li>
 <li><a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">html5 rocks sourcemaps post</a></li>
 </ul>
-
-<h2>API</h2>
-
+<h2 id="api">API</h2>
 <!-- START docme generated API please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN docme TO UPDATE -->
 
+<div>
 <div class="jsdoc-githubify">
 <section>
 <article>
 <div class="container-overview">
+<dl class="details">
+</dl>
+</div>
 <dl>
 <dt>
-<h4 class="name" id="es6ify"><span class="type-signature"></span>es6ify<span class="type-signature"> &rarr; {function}</span></h4>
+<h4 class="name" id="e6ify::runtime"><span class="type-signature"></span>e6ify::runtime<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>The traceur runtime exposed here so it can be included in the bundle via:</p>
+<p><code>browserify.add(es6ify.runtime)</code></p>
+<p>The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
+See <a href="https://github.com/google/traceur-compiler/issues/1007#issuecomment-42837067">this comment</a> for details.</p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L122">lineno 122</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="es6ify::traceurOverrides"><span class="type-signature"></span>es6ify::traceurOverrides<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Allows to override traceur compiler defaults.</p>
+<p>In order to support async functions (<code>async</code>/<code>await</code>) do:</p>
+<p><code>es6ify.traceurOverrides = { asyncFunctions: true }</code></p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L139">lineno 139</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+</dl>
+<dl>
+<dt>
+<h4 class="name" id="es6ify"><span class="type-signature"></span>es6ify<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -110,7 +176,7 @@ browserify<span class="p">(</span><span class="p">)</span>
 <li>
 <a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L98">lineno 98</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L99">lineno 99</a>
 </li>
 </ul></dd>
 </dl>
@@ -127,52 +193,6 @@ Type
 </dd>
 </dl>
 </dd>
-<dl class="details">
-</dl>
-</div>
-<dl>
-<dt>
-<h4 class="name" id="e6ify::runtime"><span class="type-signature"></span>e6ify::runtime<span class="type-signature"></span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>The traceur runtime exposed here so it can be included in the bundle via:</p>
-<p><code>browserify.add(es6ify.runtime)</code></p>
-<p>The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.</p>
-</div>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L121">lineno 121</a>
-</li>
-</ul></dd>
-</dl>
-</dd>
-<dt>
-<h4 class="name" id="es6ify::traceurOverrides"><span class="type-signature"></span>es6ify::traceurOverrides<span class="type-signature"></span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>Allows to override traceur compiler defaults.</p>
-<p>In order to support block scope (<code>let</code>) do:</p>
-<p><code>es6ify.traceurOverrides = { blockBinding: true }</code></p>
-</div>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L137">lineno 137</a>
-</li>
-</ul>
-</dd>
-</dl>
-</dd>
-</dl>
 <dt>
 <h4 class="name" id="es6ify::compileFile"><span class="type-signature"></span>es6ify::compileFile<span class="signature">(file, src)</span><span class="type-signature"> &rarr; {string}</span></h4>
 </dt>
@@ -253,7 +273,7 @@ Type
 <span class="param-type">string</span>
 </td>
 <td class="attributes">
-&lt;optional><br>
+&lt;optional&gt;<br>
 </td>
 <td class="description last"><p>(default: `/.js$/) pattern of files that will be es6ified</p></td>
 </tr>
@@ -265,7 +285,7 @@ Type
 <li>
 <a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L111">lineno 111</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L112">lineno 112</a>
 </li>
 </ul></dd>
 </dl>
@@ -285,259 +305,188 @@ Type
 </dl>
 </article>
 </section>
-
-<p><em>generated with <a href="https://github.com/thlorenz/docme">docme</a></em></p>
 </div>
 
-<!-- END docme generated API please keep comment here to allow auto update -->
-
-<h2>Examples</h2>
-<h3>es6ify.configure(filePattern : Regex)</h3>
+<p><em>generated with <a href="https://github.com/thlorenz/docme">docme</a></em>
+</div>
+<!-- END docme generated API please keep comment here to allow auto update --></p>
+<h2 id="examples">Examples</h2>
+<h3 id="es6ify-configure-filepattern-regex-">es6ify.configure(filePattern : Regex)</h3>
 <p>The default file pattern includes all JavaScript files, but you may override it in order to only transform files coming
 from a certain directory, with a specific file name and/or extension, etc.</p>
 <p>By configuring the regex to exclude ES5 files, you can optimize the performance of the transform. However transforming
 ES5 JavaScript will work since it is a subset of ES6.</p>
-<div class="highlight"><pre>browserify<span class="p">(</span><span class="p">)</span>
-  <span class="p">.</span>add<span class="p">(</span>require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">.</span>runtime<span class="p">)</span>
-   <span class="c1">// compile all .js files except the ones coming from node_modules</span>
-  <span class="p">.</span>transform<span class="p">(</span>require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">.</span>configure<span class="p">(</span>/^(?!.*node_modules)+.+\.js$/<span class="p">)</span><span class="p">)</span>
-  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
-</pre></div>
-<h3>es6ify.traceurOverrides</h3>
-<p>Some features supported by traceur are still experimental and/or not implemented according to the ES6 spec.
-Therefore they have been disabled by default, but can be enabled by overriding these options.</p>
-<p>For instance to support the block scope (<code>let</code>) feature youd do the following.</p>
-<div class="highlight"><pre><span class="k">var</span> es6ify <span class="o">=</span> require<span class="p">(</span><span class="s">'es6ify'</span><span class="p">)</span><span class="p">;</span>
-es6ify<span class="p">.</span>traceurOverrides <span class="o">=</span> <span class="p">{</span> blockBinding<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">;</span>
-browserify<span class="p">(</span><span class="p">)</span>
-  <span class="p">.</span>add<span class="p">(</span>es6ify<span class="p">.</span>runtime<span class="p">)</span>
-  <span class="p">.</span>require<span class="p">(</span>require<span class="p">.</span>resolve<span class="p">(</span><span class="s">'./src/main.js'</span><span class="p">)</span><span class="p">,</span> <span class="p">{</span> entry<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>bundle<span class="p">(</span><span class="p">{</span> debug<span class="o">:</span> <span class="kc">true</span> <span class="p">}</span><span class="p">)</span>
-  <span class="p">.</span>pipe<span class="p">(</span>fs<span class="p">.</span>createWriteStream<span class="p">(</span>bundlePath<span class="p">)</span><span class="p">)</span><span class="p">;</span>
-</pre></div>
-<h2>Caching</h2>
+<pre><code class="lang-js">browserify()
+  .add(require(&#39;es6ify&#39;).runtime)
+   // compile all .js files except the ones coming from node_modules
+  .transform(require(&#39;es6ify&#39;).configure(/^(?!.*node_modules)+.+\.js$/))
+  .require(require.resolve(&#39;./src/main.js&#39;), { entry: true })
+  .bundle({ debug: true })
+  .pipe(fs.createWriteStream(bundlePath));
+</code></pre>
+<h3 id="es6ify-traceuroverrides">es6ify.traceurOverrides</h3>
+<p>Some features supported by traceur are still experimental: either nonstandard, proposed but not yet standardized, or
+just too slow to use for most code. Therefore Traceur disables them by default. They can be enabled by overriding these
+options.</p>
+<p>For instance to support the async functions (<code>async</code>/<code>await</code>) feature you&#39;d do the following.</p>
+<pre><code class="lang-js">var es6ify = require(&#39;es6ify&#39;);
+es6ify.traceurOverrides = { asyncFunctions: true };
+browserify()
+  .add(es6ify.runtime)
+  .require(require.resolve(&#39;./src/main.js&#39;), { entry: true })
+  .bundle({ debug: true })
+  .pipe(fs.createWriteStream(bundlePath));
+</code></pre>
+<h2 id="caching">Caching</h2>
 <p>When es6ify is run on a development server to help generate the browserify bundle on the fly, it makes sense to only
 recompile ES6 files that changed. Therefore es6ify caches previously compiled files and just pulls them from there if no
 changes were made to the file.</p>
-<h2>Source Maps</h2>
+<h2 id="source-maps">Source Maps</h2>
 <p>es6ify instructs the traceur transpiler to generate source maps. It then inlines all original sources and adds the
 resulting source map <code>base64</code> encoded to the bottom of the transformed content. This allows debugging the original ES6
 source when using the <code>debug</code> flag with browserify.</p>
 <p>If the <code>debug</code> flag is not set, these source maps will be removed by browserify and thus will not be contained inside
 your production bundle.</p>
-
-<h2>
-<a name="supported-es6-features" class="anchor" href="#supported-es6-features"><span class="octicon octicon-link"></span></a>Supported ES6 features</h2>
-
-<h3>
-<a name="arraycomprehension" class="anchor" href="#arraycomprehension"><span class="octicon octicon-link"></span></a>arrayComprehension</h3>
-
-<div class="highlight highlight-js"><pre><span class="p">[</span><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span><span class="p">];</span> <span class="c1">// [1, 4, 9]</span>
-<span class="p">[</span><span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="nx">of</span> <span class="s1">'abcdefgh'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="nx">y</span> <span class="nx">of</span> <span class="s1">'12345678'</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span> <span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">y</span><span class="p">)];</span>
-</pre></div>
-
-<h3>
-<a name="arrowfunctions" class="anchor" href="#arrowfunctions"><span class="octicon octicon-link"></span></a>arrowFunctions</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
-</pre></div>
-
+<h2 id="supported-es6-features">Supported ES6 features</h2>
+<h3 id="arrowfunctions">arrowFunctions</h3>
+<pre><code class="lang-js">var log = msg =&gt; console.log(msg);
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/arrow-functions.js">full example</a></p>
+<h3 id="classes">classes</h3>
+<pre><code class="lang-js">class Character {
+  constructor(x, y, name) {
+    this.x = x;
+    this.y = y;
+  }
+  attack(character) {
+    console.log(&#39;attacking&#39;, character);
+  }
+}
 
-<h3>
-<a name="classes" class="anchor" href="#classes"><span class="octicon octicon-link"></span></a>classes</h3>
+class Monster extends Character {
+  constructor(x, y, name) {
+    super(x, y);
+    this.name = name;
+    this.health_ = 100;
+  }
 
-<div class="highlight highlight-js"><pre><span class="kr">class</span> <span class="nx">Character</span> <span class="p">{</span>
-  <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'attacking'</span><span class="p">,</span> <span class="nx">character</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+  attack(character) {
+    super.attack(character);
+  }
 
-<span class="kr">class</span> <span class="nx">Monster</span> <span class="kr">extends</span> <span class="nx">Character</span> <span class="p">{</span>
-  <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">super</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">health_</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">super</span><span class="p">.</span><span class="nx">attack</span><span class="p">(</span><span class="nx">character</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="nx">get</span> <span class="nx">isAlive</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">health</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-  <span class="nx">get</span> <span class="nx">health</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">health_</span><span class="p">;</span> <span class="p">}</span>
-  <span class="nx">set</span> <span class="nx">health</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'Health must be non-negative.'</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">health_</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/make-monster.js">full example</a></p>
-
-<h3>
-<a name="defaultparameters" class="anchor" href="#defaultparameters"><span class="octicon octicon-link"></span></a>defaultParameters</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">logDeveloper</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">codes</span> <span class="o">=</span> <span class="s1">'JavaScript'</span><span class="p">,</span> <span class="nx">livesIn</span> <span class="o">=</span> <span class="s1">'USA'</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'name: %s, codes: %s, lives in: %s'</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">codes</span><span class="p">,</span> <span class="nx">livesIn</span><span class="p">);</span>
-<span class="p">};</span>
-</pre></div>
-
+  get isAlive() { return this.health &gt; 0; }
+  get health() { return this.health_; }
+  set health(value) {
+    if (value &lt; 0) throw new Error(&#39;Health must be non-negative.&#39;);
+    this.health_ = value;
+  }
+}
+</code></pre>
+<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/make-monster.js">full example</a></p>
+<h3 id="defaultparameters">defaultParameters</h3>
+<pre><code class="lang-js">function logDeveloper(name, codes = &#39;JavaScript&#39;, livesIn = &#39;USA&#39;) {
+  console.log(&#39;name: %s, codes: %s, lives in: %s&#39;, name, codes, livesIn);
+};
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/default-parameters.js">full example</a></p>
-
-<h3>
-<a name="destructuring" class="anchor" href="#destructuring"><span class="octicon octicon-link"></span></a>destructuring</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="p">[</span><span class="nx">b</span><span class="p">],</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hello'</span><span class="p">,</span> <span class="p">[</span><span class="s1">', '</span><span class="p">,</span> <span class="s1">'junk'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'world'</span><span class="p">]];</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span><span class="p">);</span> <span class="c1">// hello, world</span>
-</pre></div>
-
+<h3 id="destructuring">destructuring</h3>
+<pre><code class="lang-js">var [a, [b], c, d] = [&#39;hello&#39;, [&#39;, &#39;, &#39;junk&#39;], [&#39;world&#39;]];
+console.log(a + b + c); // hello, world
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/destructuring.js">full example</a></p>
-
-<h3>
-<a name="forof" class="anchor" href="#forof"><span class="octicon octicon-link"></span></a>forOf</h3>
-
-<div class="highlight highlight-js"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="nx">of</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'element:'</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-
+<h3 id="forof">forOf</h3>
+<pre><code class="lang-js">for (let element of [1, 2, 3]) {
+  console.log(&#39;element:&#39;, element);
+}
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/iterators.js">full example</a></p>
-
-<h3>
-<a name="propertymethods" class="anchor" href="#propertymethods"><span class="octicon octicon-link"></span></a>propertyMethods</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">prop</span><span class="o">:</span> <span class="mi">42</span><span class="p">,</span>
-  <span class="c1">// No need for function</span>
-  <span class="nx">method</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">prop</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
-
-<h3>
-<a name="propertynameshorthand" class="anchor" href="#propertynameshorthand"><span class="octicon octicon-link"></span></a>propertyNameShorthand</h3>
-
-<h3>
-<a name="templateliterals" class="anchor" href="#templateliterals"><span class="octicon octicon-link"></span></a>templateLiterals</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">x</span><span class="p">}</span> <span class="o">+</span> <span class="nx">$</span><span class="p">{</span><span class="nx">y</span><span class="p">}</span> <span class="o">=</span> <span class="nx">$</span><span class="p">{</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
-<span class="c1">// 5 + 10 = 15</span>
-</pre></div>
-
-<h3>
-<a name="restparameters" class="anchor" href="#restparameters"><span class="octicon octicon-link"></span></a>restParameters</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">printList</span><span class="p">(</span><span class="nx">listname</span><span class="p">,</span> <span class="p">...</span><span class="nx">items</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'list %s has the following items'</span><span class="p">,</span> <span class="nx">listname</span><span class="p">);</span>
-  <span class="nx">items</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span> <span class="p">});</span>
-<span class="p">};</span>
-</pre></div>
-
+<h3 id="propertymethods">propertyMethods</h3>
+<pre><code class="lang-js">var object = {
+  prop: 42,
+  // No need for function
+  method() {
+    return this.prop;
+  }
+};
+</code></pre>
+<h3 id="propertynameshorthand">propertyNameShorthand</h3>
+<pre><code class="lang-js">var foo = &#39;foo&#39;;
+var bar = &#39;bar&#39;;
+var obj = { foo, bar };
+</code></pre>
+<h3 id="templateliterals">templateLiterals</h3>
+<pre><code class="lang-js">var x = 5, y = 10;
+console.log(`${x} + ${y} = ${ x + y}`)
+// 5 + 10 = 15
+</code></pre>
+<h3 id="restparameters">restParameters</h3>
+<pre><code class="lang-js">function printList(listname, ...items) {
+  console.log(&#39;list %s has the following items&#39;, listname);
+  items.forEach(function (item) { console.log(item); });
+};
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/rest-parameters.js">full example</a></p>
-
-<h3>
-<a name="spread" class="anchor" href="#spread"><span class="octicon octicon-link"></span></a>spread</h3>
-
-<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'%d + %d = %d'</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="kd">var</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-<span class="nx">add</span><span class="p">(...</span><span class="nx">numbers</span><span class="p">);</span>
-<span class="c1">// 5 + 10 = 15</span>
-<span class="p">};</span>
-</pre></div>
-
+<h3 id="spread">spread</h3>
+<pre><code class="lang-js">function add(x, y) {
+  console.log(&#39;%d + %d = %d&#39;, x, y, x + y);
+}
+var numbers = [5, 10]
+add(...numbers);
+// 5 + 10 = 15
+};
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js">full example</a></p>
+<h3 id="generators">generators</h3>
+<pre><code class="lang-js">// A binary tree class.
+function Tree(left, label, right) {
+  this.left = left;
+  this.label = label;
+  this.right = right;
+}
 
-<h3>
-<a name="generatorcomprehension" class="anchor" href="#generatorcomprehension"><span class="octicon octicon-link"></span></a>generatorComprehension</h3>
+// A recursive generator that iterates the Tree labels in-order.
+function* inorder(t) {
+  if (t) {
+    yield* inorder(t.left);
+    yield t.label;
+    yield* inorder(t.right);
+  }
+}
 
-<div class="highlight highlight-js"><pre><span class="kd">function</span><span class="o">*</span> <span class="nx">numberlist</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">yield</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="k">yield</span> <span class="mi">2</span><span class="p">;</span>
-  <span class="k">yield</span> <span class="mi">3</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">(</span><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="nx">of</span> <span class="nx">numberlist</span><span class="p">)</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span><span class="p">);</span> <span class="c1">// [1, 4, 9]</span>
-</pre></div>
-
-<h3>
-<a name="generators" class="anchor" href="#generators"><span class="octicon octicon-link"></span></a>generators</h3>
-
-<div class="highlight highlight-js"><pre><span class="c1">// A binary tree class.</span>
-<span class="kd">function</span> <span class="nx">Tree</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span> <span class="nx">label</span><span class="p">,</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">left</span><span class="p">;</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">label</span> <span class="o">=</span> <span class="nx">label</span><span class="p">;</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">right</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// A recursive generator that iterates the Tree labels in-order.</span>
-<span class="kd">function</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">yield</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">left</span><span class="p">);</span>
-    <span class="k">yield</span> <span class="nx">t</span><span class="p">.</span><span class="nx">label</span><span class="p">;</span>
-    <span class="k">yield</span><span class="o">*</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">// Make a tree</span>
-<span class="kd">function</span> <span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// Leaf node:</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">Tree</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">null</span><span class="p">);</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nx">Tree</span><span class="p">(</span><span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nx">array</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">make</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
-<span class="p">}</span>
+// Make a tree
+function make(array) {
+  // Leaf node:
+  if (array.length == 1) return new Tree(null, array[0], null);
+  return new Tree(make(array[0]), array[1], make(array[2]));
+}
 
 
-<span class="kd">let</span> <span class="nx">tree</span> <span class="o">=</span> <span class="nx">make</span><span class="p">([[[</span><span class="s1">'a'</span><span class="p">],</span> <span class="s1">'b'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'c'</span><span class="p">]],</span> <span class="s1">'d'</span><span class="p">,</span> <span class="p">[[</span><span class="s1">'e'</span><span class="p">],</span> <span class="s1">'f'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'g'</span><span class="p">]]]);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'generating tree labels in order:'</span><span class="p">);</span>
+let tree = make([[[&#39;a&#39;], &#39;b&#39;, [&#39;c&#39;]], &#39;d&#39;, [[&#39;e&#39;], &#39;f&#39;, [&#39;g&#39;]]]);
+console.log(&#39;generating tree labels in order:&#39;);
 
-<span class="c1">// Iterate over it</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">node</span> <span class="nx">of</span> <span class="nx">inorder</span><span class="p">(</span><span class="nx">tree</span><span class="p">))</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span> <span class="c1">// a, b, c, d, ...</span>
-<span class="p">}</span>
-</pre></div>
-
+// Iterate over it
+for (let node of inorder(tree)) {
+  console.log(node); // a, b, c, d, ...
+}
+</code></pre>
 <p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/generators.js">full example</a></p>
-
-<h3>
-<a name="modules" class="anchor" href="#modules"><span class="octicon octicon-link"></span></a>modules</h3>
-
+<h3 id="block-scoping">block scoping</h3>
+<pre><code class="lang-js">{
+  let tmp = 5;
+}
+console.log(typeof tmp === &#39;undefined&#39;); // true
+</code></pre>
+<p>NOTE: Traceur has a pretty bad bug that makes the above code not work correctly for now: <a href="https://github.com/google/traceur-compiler/issues/1358">google/traceur-compiler#1358</a>.</p>
+<h3 id="modules">modules</h3>
 <p>Imports and exports are converted to <code>commonjs</code> style <code>require</code> and <code>module.exports</code> statements to seamlessly integrate
 with browserify.</p>
+<p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/thlorenz/es6ify/trend.png" alt="Bitdeli Badge"></a></p>
 
-<h2>
-<a name="experimental-es6-features-not-supported-by-default" class="anchor" href="#experimental-es6-features-not-supported-by-default"><span class="octicon octicon-link"></span></a>Experimental ES6 Features not supported by default</h2>
 
-<h3>
-<a name="block-scope-let" class="anchor" href="#block-scope-let"><span class="octicon octicon-link"></span></a>block scope (<code>let</code>)</h3>
+<!-- END README -->
 
-<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="p">{</span> <span class="c1">// new block</span>
-    <span class="kd">let</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
-    <span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span><span class="p">;</span>
-    <span class="nx">b</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'tmp is undefined: '</span><span class="p">,</span> <span class="k">typeof</span> <span class="nx">tmp</span> <span class="o">==</span> <span class="s1">'undefined'</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-
-<p><a href="https://github.com/thlorenz/es6ify/blob/master/example/src/features/block-scope.js">full example</a></p>
-
-<p>The block binding <code>let</code> is implemented in ES5 via <code>try/catch</code> blocks which may affect performance.</p>
-<p>It is also experimental and therefore not supported by default, but you can support for it by adding 
-<code>{ blockBinding: true }</code> to <code>es6ify.traceurOverrides</code>.</p>
 
       </section>
-
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
