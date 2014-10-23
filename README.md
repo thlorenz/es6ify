@@ -71,9 +71,55 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 <section>
 <article>
 <div class="container-overview">
+<dl class="details">
+</dl>
+</div>
 <dl>
 <dt>
-<h4 class="name" id="es6ify"><span class="type-signature"></span>es6ify<span class="type-signature"> &rarr; {function}</span></h4>
+<h4 class="name" id="e6ify::runtime"><span class="type-signature"></span>e6ify::runtime<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>The traceur runtime exposed here so it can be included in the bundle via:</p>
+<p><code>browserify.add(es6ify.runtime)</code></p>
+<p>The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.
+See <a href="https://github.com/google/traceur-compiler/issues/1007#issuecomment-42837067">this comment</a> for details.</p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L122">lineno 122</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="es6ify::traceurOverrides"><span class="type-signature"></span>es6ify::traceurOverrides<span class="type-signature"></span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Allows to override traceur compiler defaults.</p>
+<p>In order to support async functions (<code>async</code>/<code>await</code>) do:</p>
+<p><code>es6ify.traceurOverrides = { asyncFunctions: true }</code></p>
+</div>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L139">lineno 139</a>
+</li>
+</ul></dd>
+</dl>
+</dd>
+</dl>
+<dl>
+<dt>
+<h4 class="name" id="es6ify"><span class="type-signature"></span>es6ify<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -87,7 +133,7 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 <li>
 <a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L98">lineno 98</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L99">lineno 99</a>
 </li>
 </ul></dd>
 </dl>
@@ -104,52 +150,6 @@ Type
 </dd>
 </dl>
 </dd>
-<dl class="details">
-</dl>
-</div>
-<dl>
-<dt>
-<h4 class="name" id="e6ify::runtime"><span class="type-signature"></span>e6ify::runtime<span class="type-signature"></span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>The traceur runtime exposed here so it can be included in the bundle via:</p>
-<p><code>browserify.add(es6ify.runtime)</code></p>
-<p>The runtime is quite large and not needed for all ES6 features and therefore not added to the bundle by default.</p>
-</div>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L121">lineno 121</a>
-</li>
-</ul></dd>
-</dl>
-</dd>
-<dt>
-<h4 class="name" id="es6ify::traceurOverrides"><span class="type-signature"></span>es6ify::traceurOverrides<span class="type-signature"></span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>Allows to override traceur compiler defaults.</p>
-<p>In order to support block scope (<code>let</code>) do:</p>
-<p><code>es6ify.traceurOverrides = { blockBinding: true }</code></p>
-</div>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L137">lineno 137</a>
-</li>
-</ul>
-</dd>
-</dl>
-</dd>
-</dl>
 <dt>
 <h4 class="name" id="es6ify::compileFile"><span class="type-signature"></span>es6ify::compileFile<span class="signature">(file, src)</span><span class="type-signature"> &rarr; {string}</span></h4>
 </dt>
@@ -242,7 +242,7 @@ Type
 <li>
 <a href="https://github.com/thlorenz/es6ify/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L111">lineno 111</a>
+<a href="https://github.com/thlorenz/es6ify/blob/master/index.js#L112">lineno 112</a>
 </li>
 </ul></dd>
 </dl>
