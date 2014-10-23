@@ -500,5 +500,3 @@ NOTE: Traceur has a pretty bad bug that makes the above code not work correctly 
 
 Imports and exports are converted to `commonjs` style `require` and `module.exports` statements to seamlessly integrate
 with browserify.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thlorenz/es6ify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
