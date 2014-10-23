@@ -1,0 +1,12 @@
+{
+  "name": "es6ify",
+  "dependencies": {},
+  "devDependencies": {
+    "marked": "~0.3.2",
+    "resolve-bin": "~0.3.0",
+    "update-section": "~0.3.3"
+  },
+  "scripts": {
+    "update-readme": "./build/update-readme-section.js"
+  }
+}
