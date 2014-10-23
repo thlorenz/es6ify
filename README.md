@@ -48,7 +48,6 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 	- [templateLiterals](#templateliterals)
 	- [restParameters](#restparameters)
 	- [spread](#spread)
-	- [generatorComprehension](#generatorcomprehension)
 	- [generators](#generators)
 	- [modules](#modules)
 
@@ -441,17 +440,6 @@ add(...numbers);
 ```
 
 [full example](https://github.com/thlorenz/es6ify/blob/master/example/src/features/spread-operator.js)
-
-### generatorComprehension
-
-```js
-function* numberlist() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-(for (i of numberlist) i * i); // [1, 4, 9]
-```
 
 ### generators
 
