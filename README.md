@@ -500,6 +500,8 @@ for (let node of inorder(tree)) {
 console.log(typeof tmp === 'undefined'); // true
 ```
 
+NOTE: Traceur has a pretty bad bug that makes the above code not work correctly for now: [google/traceur-compiler#1358](https://github.com/google/traceur-compiler/issues/1358).
+
 ### modules
 
 Imports and exports are converted to `commonjs` style `require` and `module.exports` statements to seamlessly integrate
