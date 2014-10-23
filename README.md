@@ -408,6 +408,12 @@ var object = {
 
 ### propertyNameShorthand
 
+```js
+var foo = 'foo';
+var bar = 'bar';
+var obj = { foo, bar };
+```
+
 ### templateLiterals
 
 ```js
