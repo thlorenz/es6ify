@@ -1,0 +1,29 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": ".*(node_modules|example|test|assets)"
+  },
+  "plugins": [ "plugins/markdown" ],
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  },
+  "templates": {
+
+    "cleverLinks"     :  true,
+    "monospaceLinks"  :  false,
+    "linenums"        :  true,
+    "collapseSymbols" :  false,
+
+    "default": {
+      "outputSourceFiles": false
+    }
+  },
+  "opts": {
+    "recurse": true,
+    "private": false
+  }
+}

@@ -4,6 +4,7 @@
   "description": "browserify v2 transform to compile JavaScript.next (ES6) to JavaScript.current (ES5) on the fly.",
   "main": "es6ify.js",
   "scripts": {
+    "docme": "JSDOC_GITHUBIFY_BRANCH=master docme README.md -- --configure .jsdocrc",
     "test": "tap test/*.js"
   },
   "repository": {
