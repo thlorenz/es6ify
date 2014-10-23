@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="stylesheets/jsdoc.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/tomorrow-night-bright.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
     <script src="javascripts/respond.js"></script>
     <script src="javascripts/bundle.js"></script>
     <!--[if lt IE 9]>
@@ -16,6 +20,16 @@
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="stylesheets/ie.css">
     <![endif]-->
+
+    <script>
+      $(document).ready(function(){
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   </head>
