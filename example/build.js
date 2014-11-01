@@ -8,11 +8,11 @@ var path       = require('path')
   , bundlePath = path.join(jsRoot, 'bundle.js')
   ;
 
-browserify()
+browserify({ debug: true })
   .add(es6ify.runtime)
   .transform(es6ify)
   .require(require.resolve('./src/main.js'), { entry: true })
-  .bundle({ debug: true })
+  .bundle()
   .on('error', function (err) { console.error(err); })
   .pipe(fs.createWriteStream(bundlePath));
 

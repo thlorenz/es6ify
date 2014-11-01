@@ -6,11 +6,11 @@
 JavaScript.current (ES5) on the fly.
 
 ```js
-browserify()
+browserify({ debug: true })
   .add(es6ify.runtime)
   .transform(es6ify)
   .require(require.resolve('./src/main.js'), { entry: true })
-  .bundle({ debug: true })
+  .bundle()
   .pipe(fs.createWriteStream(bundlePath));
 ```
 
@@ -278,12 +278,12 @@ By configuring the regex to exclude ES5 files, you can optimize the performance 
 ES5 JavaScript will work since it is a subset of ES6.
 
 ```js
-browserify()
+browserify({ debug: true })
   .add(require('es6ify').runtime)
    // compile all .js files except the ones coming from node_modules
   .transform(require('es6ify').configure(/^(?!.*node_modules)+.+\.js$/))
   .require(require.resolve('./src/main.js'), { entry: true })
-  .bundle({ debug: true })
+  .bundle()
   .pipe(fs.createWriteStream(bundlePath));
 ```
 
@@ -298,10 +298,10 @@ For instance to support the async functions (`async`/`await`) feature you'd do t
 ```js
 var es6ify = require('es6ify');
 es6ify.traceurOverrides = { asyncFunctions: true };
-browserify()
+browserify({ debug: true })
   .add(es6ify.runtime)
   .require(require.resolve('./src/main.js'), { entry: true })
-  .bundle({ debug: true })
+  .bundle()
   .pipe(fs.createWriteStream(bundlePath));
 ```
 
