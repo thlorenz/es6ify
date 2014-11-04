@@ -9,7 +9,7 @@ var compile    =  require('../compile');
 var format     =  require('util').format;
 
 [ 
-  [ 'run-destructuring'     , [ 'hello, world' ], true ]
+  [ 'run-destructuring'     , [ 'hello, world' ], false ]
 //, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]

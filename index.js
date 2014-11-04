@@ -1,14 +1,15 @@
 'use strict';
 
-var SM          = require('source-map')
-  , SMConsumer  = SM.SourceMapConsumer
-  , SMGenerator = SM.SourceMapGenerator
-  , through     = require('through2')
-  , compile     = require('./compile')
-  , crypto      = require('crypto')
-  , path        = require('path')
-  , runtime     = require.resolve(require('traceur').RUNTIME_PATH)
-  , cache       = {};
+var SM            = require('source-map')
+  , SMConsumer    = SM.SourceMapConsumer
+  , SMGenerator   = SM.SourceMapGenerator
+  , through       = require('through2')
+  , compile       = require('./compile')
+  , crypto        = require('crypto')
+  , path          = require('path')
+  , runtime       = require.resolve(require('traceur').RUNTIME_PATH)
+  , resolveConfig = require('./resolve-config')
+  , cache         = {}
 
 function getHash(data) {
   return crypto
@@ -64,17 +65,17 @@ function compileFile(file, src) {
 }
 
 function es6ify(filePattern) {
-  filePattern =  filePattern || /\.js$/;
+  var resolvedFilePattern = filePattern;
 
   return function es6ifyTransform(file) {
 
     // Don't es6ify the traceur runtime
     if (file === runtime) return through();
-
-    if (!filePattern.test(file)) return through();
+    if (resolvedFilePattern && !resolvedFilePattern.test(file)) return through();
 
     var bufs = [];
-    return through(write, end);
+    var stream = through(write, end);
+    return stream;
 
     function write (buf, _, cb) {
       bufs.push(buf);
@@ -82,20 +83,40 @@ function es6ify(filePattern) {
     }
 
     function end (cb) {
-      var data = Buffer.concat(bufs).toString()
-        , hash = getHash(data)
-        , cached = cache[file];
+      var self = stream;
+      resolveConfig(file, onpkgConfig);
 
-      if (!cached || cached.hash !== hash) {
-        try {
-          cache[file] = { compiled: compileFile(file, data), hash: hash };
-        } catch (ex) {
-          return cb(ex);
+      function onpkgConfig(err, conf) {
+        if (err) return self.emit('error', err);
+
+        var includeRuntime = conf.includeRuntime;
+        if (conf.filePattern) resolvedFilePattern = new RegExp(conf.filePattern);
+        else resolvedFilePattern = /\.js$/;
+
+        var data = Buffer.concat(bufs).toString()
+          , hash = getHash(data)
+          , cached = cache[file];
+
+        // This should only be true for the very first file since for the ones
+        // following this one we are doing this check before aggregating the stream data
+        if (!resolvedFilePattern.test(file)) {
+          self.push(data);
+          return cb();
         }
-      }
 
-      this.push(cache[file].compiled);
-      cb();
+        if (!cached || cached.hash !== hash) {
+          // Include traceur runtime automatically if so desired by the user
+          if (conf.includeRuntime) data = 'require(\'' + runtime + '\');\n' + data;
+          try {
+            cache[file] = { compiled: compileFile(file, data), hash: hash };
+          } catch (ex) {
+            return cb(ex);
+          }
+        }
+
+        self.push(cache[file].compiled);
+        cb();
+      }
     }
   };
 }

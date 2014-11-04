@@ -1,0 +1,8 @@
+{
+  "name": "config-include-runtime",
+  "version": "0.0.0",
+  "description": "Demonstrating how to configure the traceur runtime inclusion via es6ify config in the package.json.",
+  "es6ify": {
+    "includeRuntime": true
+  }
+}
