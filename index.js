@@ -3,12 +3,12 @@
 var SM          = require('source-map')
   , SMConsumer  = SM.SourceMapConsumer
   , SMGenerator = SM.SourceMapGenerator
-  , through     =  require('through')
-  , compile     =  require('./compile')
-  , crypto      =  require('crypto')
-  , path        =  require('path')
-  , runtime     =  require.resolve(require('traceur').RUNTIME_PATH)
-  , cache       =  {};
+  , through     = require('through2')
+  , compile     = require('./compile')
+  , crypto      = require('crypto')
+  , path        = require('path')
+  , runtime     = require.resolve(require('traceur').RUNTIME_PATH)
+  , cache       = {};
 
 function getHash(data) {
   return crypto
@@ -66,32 +66,36 @@ function compileFile(file, src) {
 function es6ify(filePattern) {
   filePattern =  filePattern || /\.js$/;
 
-  return function (file) {
+  return function es6ifyTransform(file) {
 
     // Don't es6ify the traceur runtime
     if (file === runtime) return through();
 
     if (!filePattern.test(file)) return through();
 
-    var data = '';
+    var bufs = [];
     return through(write, end);
 
-    function write (buf) { data += buf; }
-    function end () {
-      var hash = getHash(data)
+    function write (buf, _, cb) {
+      bufs.push(buf);
+      cb();
+    }
+
+    function end (cb) {
+      var data = Buffer.concat(bufs).toString()
+        , hash = getHash(data)
         , cached = cache[file];
 
       if (!cached || cached.hash !== hash) {
         try {
           cache[file] = { compiled: compileFile(file, data), hash: hash };
         } catch (ex) {
-          this.emit('error', ex);
-          return this.queue(null);
+          return cb(ex);
         }
       }
 
-      this.queue(cache[file].compiled);
-      this.queue(null);
+      this.push(cache[file].compiled);
+      cb();
     }
   };
 }

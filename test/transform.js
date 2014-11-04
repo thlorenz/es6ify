@@ -4,7 +4,7 @@
 var test       =  require('tap').test
   , fs         =  require('fs')
   , path       =  require('path')
-  , through    =  require('through')
+  , through    =  require('through2')
   , convert    =  require('convert-source-map')
   , compile    =  require('../compile')
   , proxyquire =  require('proxyquire')
@@ -37,8 +37,8 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       .on('error', console.error)
       .pipe(through(write, end));
 
-    function write (buf) { data += buf; }
-    function end () {
+    function write (buf, _, cb) { data += buf; cb(); }
+    function end (cb) {
       var sourceMap = convert.fromSource(data).toObject();
       t.deepEqual(
           sourceMap
@@ -52,5 +52,6 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       );
       t.ok(sourceMap.mappings.length);
       t.equal(compiles, 1, 'compiles only the first time');
+      cb();
     }
 });
