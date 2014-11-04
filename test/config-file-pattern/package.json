@@ -1,0 +1,8 @@
+{
+  "name": "config-file-pattern",
+  "version": "0.0.0",
+  "description": "Demonstrating how to configure the file pattern via es6ify config in the package.json.",
+  "es6ify": {
+    "filePattern": ".js.es6$"
+  }
+}

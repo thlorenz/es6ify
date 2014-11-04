@@ -8,7 +8,8 @@ var es6ify     =  require('..');
 var compile    =  require('../compile');
 var format     =  require('util').format;
 
-[ [ 'run-destructuring'     , [ 'hello, world' ], true ]
+[ 
+  [ 'run-destructuring'     , [ 'hello, world' ], false ]
 //, [ 'run-block-scope'       , [ 'tmp is undefined:  true' ] , false ]
 , [ 'run-default-parameters', [ 'name: Bruno, codes: JavaScript, lives in: USA' ] ]
 , [ 'run-rest-parameters'   , ['list fruits has the following items', 'apple', 'banana' ] ]
@@ -16,7 +17,7 @@ var format     =  require('util').format;
 , [ 'run-spread-operator'   , [ '3 + 4 = 7' ], true ]
 , [ 'run-combined'
   , [ 'hello, world'
-//    , 'tmp is undefined:  true'
+//  , 'tmp is undefined:  true'
     , 'An instance of Foo says hi from its .toString()!'
     , 'name: Bruno, codes: JavaScript, lives in: USA'
     , 'list fruits has the following items', 'apple', 'banana'
@@ -43,10 +44,10 @@ var format     =  require('util').format;
       .require(__dirname + '/bundle/' + filename + '.js', { entry: true })
       .bundle(function (err, src) {
         if (err) t.fail(err);
-        src = 'window=this;'+src;
+        src = 'window=this;' + src;
         vm.runInNewContext(src, {
-            window: {},
-            console: { log: log }
+          window: {},
+          console: { log: log }
         });
         t.end()
       });

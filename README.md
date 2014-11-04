@@ -31,25 +31,33 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Enabling sourcemaps and related posts](#enabling-sourcemaps-and-related-posts)
+- [Configuration](#configuration)
 - [API](#api)
+    - [e6ify::runtime](#e6ifyruntime)
+    - [es6ify() → {function}](#es6ify-→-function)
+    - [es6ify::traceurOverrides](#es6ifytraceuroverrides)
+    - [Example](#example)
+    - [es6ify::compileFile(file, src) → {string}](#es6ifycompilefilefile-src-→-string)
+    - [es6ify::configure(filePattern) → {function}](#es6ifyconfigurefilepattern-→-function)
 - [Examples](#examples)
-	- [es6ify.configure(filePattern : Regex)](#es6ifyconfigurefilepattern--regex)
-	- [es6ify.traceurOverrides](#es6ifytraceuroverrides)
+  - [es6ify.configure(filePattern : Regex)](#es6ifyconfigurefilepattern--regex)
+  - [es6ify.traceurOverrides](#es6ifytraceuroverrides)
 - [Caching](#caching)
 - [Source Maps](#source-maps)
 - [Supported ES6 features](#supported-es6-features)
-	- [arrowFunctions](#arrowfunctions)
-	- [classes](#classes)
-	- [defaultParameters](#defaultparameters)
-	- [destructuring](#destructuring)
-	- [forOf](#forof)
-	- [propertyMethods](#propertymethods)
-	- [propertyNameShorthand](#propertynameshorthand)
-	- [templateLiterals](#templateliterals)
-	- [restParameters](#restparameters)
-	- [spread](#spread)
-	- [generators](#generators)
-	- [modules](#modules)
+  - [arrowFunctions](#arrowfunctions)
+  - [classes](#classes)
+  - [defaultParameters](#defaultparameters)
+  - [destructuring](#destructuring)
+  - [forOf](#forof)
+  - [propertyMethods](#propertymethods)
+  - [propertyNameShorthand](#propertynameshorthand)
+  - [templateLiterals](#templateliterals)
+  - [restParameters](#restparameters)
+  - [spread](#spread)
+  - [generators](#generators)
+  - [block scoping](#block-scoping)
+  - [modules](#modules)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -59,6 +67,26 @@ Find the full version of this example [here](https://github.com/thlorenz/es6ify/
 - In IE: works in IE11 onward by default
 - [browserify-sourcemaps](http://thlorenz.com/blog/browserify-sourcemaps)
 - [html5 rocks sourcemaps post](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)
+
+## Configuration
+
+In addition to the configuration via `JavaScript` (see examples below), some aspects of es6ify can be configured inside
+the `package.json` file of the package that uses it as a transform.
+
+```json
+{
+  "browserify": {
+    "transform": [ "es6ify" ]
+  },
+  "es6ify": {
+    "filePattern": ".js.es6$",
+    "includeRuntime": true
+  }
+}
+```
+
+In the above example we tell es6ify to only transpile files with the `.js.es6` extension and to include the traceur
+runtime which is needed for certain ES6 features.
 
 ## API
 
