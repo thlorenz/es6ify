@@ -1,9 +1,6 @@
 'use strict';
 
-var SM          = require('source-map')
-  , SMConsumer  = SM.SourceMapConsumer
-  , SMGenerator = SM.SourceMapGenerator
-  , through     =  require('through')
+var through     =  require('through')
   , compile     =  require('./compile')
   , crypto      =  require('crypto')
   , path        =  require('path')
@@ -31,36 +28,7 @@ function compileFile(file, src) {
   compiled = compile(file, src, exports.traceurOverrides);
   if (compiled.error) throw new Error(compiled.error);
 
-  var comment
-    , consumer = new SMConsumer(compiled.sourcemap)
-    , generator = new SMGenerator({file: file + '.es6'});
-
-  generator.setSourceContent(file, src);
-
-  consumer.eachMapping(function (mapping) {
-    mapping.source = path.normalize(mapping.source);
-    // Ignore mappings that are not from our source file
-    if(mapping.source && file === mapping.source) {
-      generator.addMapping(
-        {
-          original: {
-            column: mapping.originalColumn
-          , line: mapping.originalLine
-          }
-        , generated: {
-            column: mapping.generatedColumn
-          , line: mapping.generatedLine
-          }
-        , source: file
-        , name: mapping.name
-        }
-      );
-    }
-  });
-
-  comment = new Buffer(generator.toString()).toString('base64');
-
-  return compiled.source + '\n//@ sourceMappingURL=data:application/json;base64,' + comment;
+  return compiled.source;
 }
 
 function es6ify(filePattern) {
