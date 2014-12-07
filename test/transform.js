@@ -54,3 +54,25 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       t.equal(compiles, 1, 'compiles only the first time');
     }
 });
+
+test('transform does not add sourcemaps if traceurOverrides.sourceMaps is false', function (t) {
+
+    t.plan(1);
+    var data = '';
+
+    var es6ify = require('..');
+    var file = path.join(__dirname, '../example/src/features/iterators.js');
+
+    es6ify.traceurOverrides = { sourceMaps: false };
+
+    fs.createReadStream(file)
+      .pipe(es6ify(file))
+      .on('error', function (e) { throw e; })
+      .pipe(through(write, end));
+
+    function write (buf) { data += buf; }
+    function end () {
+      var sourceMap = convert.fromSource(data);
+      t.ok(sourceMap === null);
+    }
+})
