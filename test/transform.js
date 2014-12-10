@@ -43,11 +43,15 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       t.deepEqual(
           sourceMap
         , { version: 3,
-            file: file + '.es6',
-            sources: [ file ],
+            file: file,
+            sources: [ file, '@traceur/generated/TemplateParser/1' ],
             names: [],
             mappings: sourceMap.mappings,
-            sourcesContent: [ 'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n' ] }
+            sourceRoot: path.join(path.dirname(file), path.sep),
+            sourcesContent: [
+              'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n',
+              '\n        for (var $__placeholder__0 =\n                 $__placeholder__1[Symbol.iterator](),\n                 $__placeholder__2;\n             !($__placeholder__3 = $__placeholder__4.next()).done; ) {\n          $__placeholder__5;\n          $__placeholder__6;\n        }'
+            ] }
         , 'adds sourcemap comment including original source'
       );
       t.ok(sourceMap.mappings.length);

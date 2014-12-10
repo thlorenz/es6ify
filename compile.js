@@ -30,7 +30,7 @@ exports = module.exports = function compileFile(file, contents, traceurOverrides
   try{
     var compiler = new Compiler(options);
 
-    var result = compiler.compile(contents, file, file + '.es6');
+    var result = compiler.compile(contents, file, file);
   }catch(errors){
       return { source: null, error: errors[0] };
   }
