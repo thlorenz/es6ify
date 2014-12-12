@@ -40,17 +40,34 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     function write (buf) { data += buf; }
     function end () {
       var sourceMap = convert.fromSource(data).toObject();
+
+      // Traceur converts all \s to /s so we need to do so also before comparing
+      var fileConverted = file.replace(/\\/g, '/');
+      var sourceRootConverted = path.join(path.dirname(file), path.sep).replace(/\\/g, '/');
+
       t.deepEqual(
           sourceMap
         , { version: 3,
-            file: file,
-            sources: [ file, '@traceur/generated/TemplateParser/1' ],
+            file: fileConverted,
+            sources: [ fileConverted, '@traceur/generated/TemplateParser/1' ],
             names: [],
             mappings: sourceMap.mappings,
-            sourceRoot: path.join(path.dirname(file), path.sep),
+            sourceRoot: sourceRootConverted,
             sourcesContent: [
-              'module.exports = function () {\n  for (let element of [1, 2, 3]) {\n    console.log(\'element:\', element);\n  }\n};\n',
-              '\n        for (var $__placeholder__0 =\n                 $__placeholder__1[Symbol.iterator](),\n                 $__placeholder__2;\n             !($__placeholder__3 = $__placeholder__4.next()).done; ) {\n          $__placeholder__5;\n          $__placeholder__6;\n        }'
+              'module.exports = function () {\n' +
+              '  for (let element of [1, 2, 3]) {\n' +
+              '    console.log(\'element:\', element);\n' +
+              '  }\n' +
+              '};\n',
+
+              '\n        for (var $__placeholder__0 =\n' +
+              '                 $__placeholder__1[\n' +
+              '                     $traceurRuntime.toProperty(Symbol.iterator)](),\n' +
+              '                 $__placeholder__2;\n' +
+              '             !($__placeholder__3 = $__placeholder__4.next()).done; ) {\n' +
+              '          $__placeholder__5;\n' +
+              '          $__placeholder__6;\n' +
+              '        }'
             ] }
         , 'adds sourcemap comment including original source'
       );
