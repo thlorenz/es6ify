@@ -7,11 +7,8 @@
     "docme": "JSDOC_GITHUBIFY_BRANCH=master docme README.md -- --configure .jsdocrc",
     "test": "tap test/*.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/thlorenz/es6ify.git"
-  },
-  "homepage": "https://github.com/thlorenz/es6ify",
+  "repository": "thlorenz/es6ify",
+  "homepage": "https://thlorenz.github.io/es6ify/",
   "dependencies": {
     "through": "~2.2.7",
     "traceur": "0.0.79",
