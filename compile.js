@@ -6,28 +6,38 @@ var Compiler = require('traceur').NodeCompiler
 
 var traceurOptions = {
   modules      : 'commonjs',
-  sourceMaps   : true
+  sourceMaps   : 'inline'
 };
 
-exports = module.exports = function compileFile(file, contents, traceurOverrides) {
-  var options = xtend(traceurOptions, traceurOverrides);
+function buildTraceurOptions(overrides) {
+  var options = xtend(traceurOptions, overrides);
+
   if (typeof options.sourceMap !== 'undefined') {
-    console.warn('es6ify: DEPRECATED options.sourceMap has changed to options.sourceMaps (plural)');
+    console.warn('es6ify: DEPRECATED traceurOverrides.sourceMap has changed to traceurOverrides.sourceMaps (plural)');
     options.sourceMaps = options.sourceMap;
     delete options.sourceMap;
   }
+
+  if (options.sourceMaps === true) {
+    console.warn('es6ify: DEPRECATED "traceurOverrides.sourceMaps = true" is not a valid option, traceur sourceMaps options are [false|inline|file]');
+    options.sourceMaps = 'inline';
+  }
+
+  return options;
+}
+
+exports = module.exports = function compileFile(file, contents, traceurOverrides) {
+  var options = buildTraceurOptions(traceurOverrides);
   try{
     var compiler = new Compiler(options);
 
-    var result = compiler.compile(contents, file);
-    var sourceMap = compiler.getSourceMap();
+    var result = compiler.compile(contents, file, file);
   }catch(errors){
-      return { source: null, sourcemap: null, error: errors[0] };
+      return { source: null, error: errors[0] };
   }
 
   return {
       source: result,
-      error: null,
-      sourcemap: sourceMap ? JSON.parse(sourceMap) : null
+      error: null
   };
 };
