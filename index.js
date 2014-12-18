@@ -27,7 +27,6 @@ function compileFile(file, src) {
   var compiled;
   compiled = compile(file, src, exports.traceurOverrides);
   if (compiled.error) throw new Error(compiled.error);
-  if (!compiled.sourcemap) return compiled.source;
 
   return compiled.source;
 }
