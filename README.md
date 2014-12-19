@@ -494,7 +494,7 @@ for (let node of inorder(tree)) {
 console.log(typeof tmp === 'undefined'); // true
 ```
 
-NOTE: Traceur has a pretty bad bug that makes the above code not work correctly for now: [google/traceur-compiler#1358](https://github.com/google/traceur-compiler/issues/1358).
+NOTE: Traceur had a [pretty bad bug (#1358)](https://github.com/google/traceur-compiler/issues/1358) that made the above code not work correctly prior to traceur 0.0.79 / es6ify v1.6.0.
 
 ### modules
 
