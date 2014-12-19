@@ -34,7 +34,10 @@ function compileFile(file, src) {
 function es6ify(filePattern) {
   filePattern =  filePattern || /\.js$/;
 
-  return function (file) {
+  return function (file, opts) {
+    if (opts && opts.extension) {
+      filePattern = new RegExp(opts.extension);
+    }
 
     // Don't es6ify the traceur runtime
     if (file === runtime) return through();
