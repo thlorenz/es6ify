@@ -91,6 +91,11 @@ exports.configure = es6ify;
  * The traceur runtime exposed here so it can be included in the bundle via:
  *
  * `browserify.add(es6ify.runtime)`
+ * 
+ * Adding the runtime as such, however, breaks the default behavior of Browserify: instead of
+ * applying transforms (including es6ify) only to the local package, it will apply them to
+ * all files in `node_modules`. This may break some packages, so it is recommended to use 
+ * `es6ify::configure` with `/^(?!.*node_modules)+.+\.js$/`.
  *
  * ### Note
  *
