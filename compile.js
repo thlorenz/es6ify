@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var Compiler = require('traceur').NodeCompiler
   , xtend = require('xtend')
   ;
@@ -30,7 +32,9 @@ exports = module.exports = function compileFile(file, contents, opts) {
   try{
     var compiler = new Compiler(buildTraceurOptions(opts.traceurOverrides));
 
-    var result = compiler.compile(contents, file, file, opts.sourceRoot);
+    var outFile = opts.sourceRoot ? path.relative(opts.sourceRoot, file) : file;
+
+    var result = compiler.compile(contents, file, outFile, opts.sourceRoot);
   }catch(errors){
       return { source: null, error: errors[0] };
   }
