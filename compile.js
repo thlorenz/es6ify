@@ -26,12 +26,11 @@ function buildTraceurOptions(overrides) {
   return options;
 }
 
-exports = module.exports = function compileFile(file, contents, traceurOverrides) {
-  var options = buildTraceurOptions(traceurOverrides);
+exports = module.exports = function compileFile(file, contents, opts) {
   try{
-    var compiler = new Compiler(options);
+    var compiler = new Compiler(buildTraceurOptions(opts.traceurOverrides));
 
-    var result = compiler.compile(contents, file, file);
+    var result = compiler.compile(contents, file, file, opts.sourceRoot);
   }catch(errors){
       return { source: null, error: errors[0] };
   }

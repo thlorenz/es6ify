@@ -23,16 +23,23 @@ function getHash(data) {
  * @param {string} src source of the file being compiled to ES5
  * @return {string} compiled source
  */
-function compileFile(file, src) {
+function compileFile(file, src, opts) {
   var compiled;
-  compiled = compile(file, src, exports.traceurOverrides);
+  opts.traceurOverrides = exports.traceurOverrides;
+  compiled = compile(file, src, opts);
   if (compiled.error) throw new Error(compiled.error);
 
   return compiled.source;
 }
 
-function es6ify(filePattern) {
-  filePattern =  filePattern || /\.js$/;
+function es6ify(opts) {
+  opts || (opts = {});
+
+  // This function's argument used to be filePattern (regex), so duck type opts
+  // to see if it's meant as filePattern.
+  if (typeof opts.ignoreCase !== 'undefined') opts = {filePattern: opts};
+
+  var filePattern = opts.filePattern = opts.filePattern || /\.js$/;
 
   return function (file) {
 
@@ -51,7 +58,7 @@ function es6ify(filePattern) {
 
       if (!cached || cached.hash !== hash) {
         try {
-          cache[file] = { compiled: compileFile(file, data), hash: hash };
+          cache[file] = { compiled: compileFile(file, data, opts), hash: hash };
         } catch (ex) {
           this.emit('error', ex);
           return this.queue(null);
