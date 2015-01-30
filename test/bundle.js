@@ -46,7 +46,11 @@ var format     =  require('util').format;
         src = 'window=this;'+src;
         vm.runInNewContext(src, {
             window: {},
-            console: { log: log }
+            console: { log: log },
+            // See:
+            // https://github.com/thlorenz/es6ify/issues/79
+            // https://github.com/joyent/node/issues/9121
+            Float32Array: Float32Array,
         });
         t.end()
       });
