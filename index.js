@@ -34,8 +34,10 @@ function compileFile(file, src, opts) {
 
 function es6ify(opts) {
   if (opts === undefined) opts = {};
-
   if (opts.filePattern === undefined) opts.filePattern = /\.js$/;
+  else if (!(opts.filePattern instanceof RegExp)) {
+    throw new Error("`filePattern` must be a RegExp if defined.");
+  }
   var filePattern = opts.filePattern;
 
   return function (file) {
