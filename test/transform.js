@@ -54,23 +54,22 @@ function addsSourceMap (t, opts) {
   function end () {
     var sourceMap = convert.fromSource(data).toObject();
 
-    // Traceur converts all \s to /s so we need to do so also before comparing
-    paths.out.sources = (
+    paths.out.sources =
       opts.useSourceRoot ?
       paths.in.sources :
-      path.basename(paths.in.sources)
-    )
-      .replace(/\\/g, '/');
+      path.basename(paths.in.sources);
 
-    paths.out.file = (opts.useSourceRoot ? paths.out.sources : paths.in.file)
-      .replace(/\\/g, '/');
+    paths.out.file = opts.useSourceRoot ? paths.out.sources : paths.in.file;
 
-    paths.out.sourceRoot = (
+    paths.out.sourceRoot =
       opts.useSourceRoot ?
       paths.in.sourceRoot :
-      path.dirname(paths.in.file) + '/'
-    )
-      .replace(/\\/g, '/');
+      path.dirname(paths.in.file) + '/';
+
+    // Traceur converts all "\" to "/" so we need to do so also before comparing
+    Object.keys(paths.out).forEach(function (key) {
+      paths.out[key] = paths.out[key].replace(/\\/g, '/');
+    });
 
     t.deepEqual(
         sourceMap
