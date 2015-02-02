@@ -33,13 +33,14 @@ function compileFile(file, src, opts) {
 }
 
 function es6ify(opts) {
-  opts || (opts = {});
+  if (opts === undefined) opts = {};
 
   // This function's argument used to be filePattern (regex), so duck type opts
   // to see if it's meant as filePattern.
   if (typeof opts.ignoreCase !== 'undefined') opts = {filePattern: opts};
 
-  var filePattern = opts.filePattern = opts.filePattern || /\.js$/;
+  if (opts.filePattern === undefined) opts.filePattern = /\.js$/;
+  var filePattern = opts.filePattern;
 
   return function (file) {
 

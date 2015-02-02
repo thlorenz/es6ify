@@ -26,14 +26,14 @@ test('transform adds sourcemap comment and uses cache on second time', function 
     var sourceRoot = path.join(__dirname, '..', 'example', 'src');
     var relPath = path.join('features', 'iterators.js');
 
-    var opts = {sourceRoot: sourceRoot};
+    var opts = { sourceRoot: sourceRoot };
 
     es6ify = es6ify.configure(opts);
 
     var file = path.join(sourceRoot, relPath);
-    if (! opts.sourceRoot) relPath = path.basename(file);
+    if (opts.sourceRoot === undefined) relPath = path.basename(file);
 
-    var contents = fs.readFileSync(file).toString();
+    var contents = fs.readFileSync(file, { encoding: 'utf8' });
 
     // first time
     fs.createReadStream(file)
