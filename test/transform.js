@@ -85,16 +85,13 @@ function addsSourceMap (t, opts) {
           sourceRoot: paths.out.sourceRoot,
           sourcesContent: [
             contents,
-
-            '\n        for (var $__placeholder__0 =\n' +
-            '                 $__placeholder__1[\n' +
-            '                     $traceurRuntime.toProperty(Symbol.iterator)](),\n' +
-            '                 $__placeholder__2;\n' +
-            '             !($__placeholder__3 = $__placeholder__4.next()).done; ) {\n' +
-            '          $__placeholder__5;\n' +
-            '          $__placeholder__6;\n' +
-            '        }',
-
+            fs.readFileSync(
+              path.join(
+                __dirname, 'transform', 'traceur-generated-template-parser.js'
+              ),
+              { encoding: 'utf8' }
+            )
+              .replace(/\s+$/, ''),
             'void 0'
           ] }
       , 'adds sourcemap comment including original source'
