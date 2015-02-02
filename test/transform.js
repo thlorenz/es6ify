@@ -41,18 +41,15 @@ test('transform adds sourcemap comment and uses cache on second time', function 
 
     es6ify = es6ify.configure(opts);
 
-    // first time
-    fs.createReadStream(file)
-      .pipe(es6ify(file))
-      .on('error', console.error)
-      .pipe(through(write));
     var contents = fs.readFileSync(paths.in.file, { encoding: 'utf8' });
 
-    // second time
-    fs.createReadStream(file)
-      .pipe(es6ify(file))
-      .on('error', console.error)
-      .pipe(through(write, end));
+    // Run without, then with, `end()`
+    [undefined, end].forEach(function (end) {
+      fs.createReadStream(paths.in.file)
+        .pipe(es6ify(paths.in.file))
+        .on('error', console.error)
+        .pipe(through(write, end));
+    });
 
     function write (buf) { data += buf; }
     function end () {
