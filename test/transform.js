@@ -120,8 +120,12 @@ function addsSourceMap (t, opts) {
 }
 // addsSourceMap
 
-test('transform adds sourcemap comment and uses cache on second time', function (t) {
+test("transform adds sourcemap comment, doesn't use sourceRoot, and uses cache on second time", function (t) {
+  addsSourceMap(t, { useSourceRoot: false });
+});
 
+test("transform adds sourcemap comment, uses sourceRoot, and uses cache on second time", function (t) {
+  addsSourceMap(t, { useSourceRoot: true });
 });
 
 test('transform does not add sourcemaps if traceurOverrides.sourceMaps is false', function (t) {
