@@ -35,7 +35,8 @@ function addsSourceMap (t, opts) {
   };
   paths.in.file = path.join(paths.in.sourceRoot, paths.in.sources);
 
-  var es6ifyOpts = { sourceRoot: paths.in.sourceRoot };
+  var es6ifyOpts = {};
+  if (opts.useSourceRoot) es6ifyOpts.sourceRoot = paths.in.sourceRoot;
   var es6ify = proxyquire('..', { './compile' : trackingCompile } )
   es6ify = es6ify.configure(es6ifyOpts);
 
@@ -54,13 +55,18 @@ function addsSourceMap (t, opts) {
     var sourceMap = convert.fromSource(data).toObject();
 
     // Traceur converts all \s to /s so we need to do so also before comparing
-    paths.out.file = (es6ifyOpts.sourceRoot ? paths.in.sources : paths.in.file)
+    paths.out.sources = (
+      opts.useSourceRoot ?
+      paths.in.sources :
+      path.basename(paths.in.sources)
+    )
       .replace(/\\/g, '/');
 
-    paths.out.sources = paths.in.sources.replace(/\\/g, '/');
+    paths.out.file = (opts.useSourceRoot ? paths.out.sources : paths.in.file)
+      .replace(/\\/g, '/');
 
     paths.out.sourceRoot = (
-      es6ifyOpts.sourceRoot ?
+      opts.useSourceRoot ?
       paths.in.sourceRoot :
       path.dirname(paths.in.file) + '/'
     )
