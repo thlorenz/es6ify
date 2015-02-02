@@ -8,6 +8,24 @@ var test       =  require('tap').test
   , convert    =  require('convert-source-map')
   , compile    =  require('../compile')
   , proxyquire =  require('proxyquire')
+  , cache = {}
+
+/**
+ * Check the cache for path, or read from fs and cache, and return contents.
+ * @param {string} path
+ * @returns {string}
+ */
+function readFileCache (path) {
+  var file =
+    cache[path] !== undefined ?
+    cache[path] :
+    fs.readFileSync(path, { encoding: 'utf8' });
+
+  cache[path] = file;
+
+  return file;
+}
+// readFileCache
 
 /**
  * @function
@@ -40,7 +58,7 @@ function addsSourceMap (t, opts) {
   var es6ify = proxyquire('..', { './compile' : trackingCompile } )
   es6ify = es6ify.configure(es6ifyOpts);
 
-  var contents = fs.readFileSync(paths.in.file, { encoding: 'utf8' });
+  var contents = readFileCache(paths.in.file);
 
   // Run without, then with, `end()`
   [undefined, end].forEach(function (end) {
@@ -85,7 +103,7 @@ function addsSourceMap (t, opts) {
           sourceRoot: paths.out.sourceRoot,
           sourcesContent: [
             contents,
-            fs.readFileSync(
+            readFileCache(
               path.join(
                 __dirname, 'transform', 'traceur-generated-template-parser.js'
               ),
