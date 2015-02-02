@@ -10,7 +10,6 @@ var test       =  require('tap').test
   , proxyquire =  require('proxyquire')
 
 test('transform adds sourcemap comment and uses cache on second time', function (t) {
-
     t.plan(3);
     var data = '';
     var compiles = 0;
@@ -21,25 +20,33 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       return compile.apply(this, args);
     }
 
-    var es6ify = proxyquire('..', { './compile' : trackingCompile } )
+    // Input / output paths
+    var paths = { out: {} };
 
-    var sourceRoot = path.join(__dirname, '..', 'example', 'src');
-    var relPath = path.join('features', 'iterators.js');
+    paths.in = {
+      sourceRoot: path.join(__dirname, '..', 'example', 'src'),
+      // Path that should wind up in `sources` in the map when sourceRoot is
+      // used.
+      sources: path.join('features', 'iterators.js'),
+    };
+    paths.in.file = path.join(paths.in.sourceRoot, paths.in.sources);
 
     var opts = { sourceRoot: sourceRoot };
 
+    if (opts.sourceRoot === undefined) {
+      paths.in.sources = path.basename(paths.in.file);
+    }
+
+    var es6ify = proxyquire('..', { './compile' : trackingCompile } )
+
     es6ify = es6ify.configure(opts);
-
-    var file = path.join(sourceRoot, relPath);
-    if (opts.sourceRoot === undefined) relPath = path.basename(file);
-
-    var contents = fs.readFileSync(file, { encoding: 'utf8' });
 
     // first time
     fs.createReadStream(file)
       .pipe(es6ify(file))
       .on('error', console.error)
       .pipe(through(write));
+    var contents = fs.readFileSync(paths.in.file, { encoding: 'utf8' });
 
     // second time
     fs.createReadStream(file)
@@ -52,24 +59,30 @@ test('transform adds sourcemap comment and uses cache on second time', function 
       var sourceMap = convert.fromSource(data).toObject();
 
       // Traceur converts all \s to /s so we need to do so also before comparing
-      var fileConverted = (opts.sourceRoot ? relPath : file)
+      paths.out.file = (opts.sourceRoot ? paths.in.sources : paths.in.file)
         .replace(/\\/g, '/');
-      var relPathConverted = relPath.replace(/\\/g, '/');
-      var sourceRootConverted = (opts.sourceRoot ? sourceRoot : path.dirname(file) + '/')
+
+      paths.out.sources = paths.in.sources.replace(/\\/g, '/');
+
+      paths.out.sourceRoot = (
+        opts.sourceRoot ?
+        paths.in.sourceRoot :
+        path.dirname(paths.in.file) + '/'
+      )
         .replace(/\\/g, '/');
 
       t.deepEqual(
           sourceMap
         , { version: 3,
-            file: fileConverted,
+            file: paths.out.file,
             sources: [
-              relPathConverted,
+              paths.out.sources,
               '@traceur/generated/TemplateParser/2',
               '@traceur/generated/TemplateParser/3',
             ],
             names: [],
             mappings: sourceMap.mappings,
-            sourceRoot: sourceRootConverted,
+            sourceRoot: paths.out.sourceRoot,
             sourcesContent: [
               contents,
 
