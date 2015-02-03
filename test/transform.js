@@ -98,17 +98,16 @@ function addsSourceMap (t, opts) {
   function end () {
     var sourceMap = convert.fromSource(data).toObject();
 
-    paths.out.sources =
-      opts.useSourceRoot ?
-      paths.in.sources :
-      path.basename(paths.in.sources);
-
-    paths.out.file = opts.useSourceRoot ? paths.out.sources : paths.in.file;
-
-    paths.out.sourceRoot =
-      opts.useSourceRoot ?
-      paths.in.sourceRoot :
-      path.dirname(paths.in.file) + '/';
+    if (opts.useSourceRoot) {
+      paths.out.sources = paths.in.sources;
+      paths.out.file = paths.out.sources;
+      paths.out.sourceRoot = paths.in.sourceRoot;
+    }
+    else {
+      paths.out.sources = path.basename(paths.in.sources);
+      paths.out.file = paths.in.file;
+      paths.out.sourceRoot = path.dirname(paths.in.file) + '/';
+    }
 
     // Traceur converts all "\" to "/" so we need to do so also before comparing
     Object.keys(paths.out).forEach(function (key) {
