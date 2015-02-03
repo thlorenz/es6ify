@@ -88,7 +88,7 @@ function addsSourceMap (t, opts) {
     [undefined, end].forEach(function (end) {
       fs.createReadStream(paths.in.file)
         .pipe(es6ify(paths.in.file))
-        .on('error', console.error)
+        .on('error', function (e) { throw e; })
         .pipe(through(write, end));
     });
   }
