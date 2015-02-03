@@ -8,22 +8,30 @@ var test       =  require('tap').test
   , convert    =  require('convert-source-map')
   , compile    =  require('../compile')
   , proxyquire =  require('proxyquire')
-  , cache = {}
+    // Cached file contents.
+  , files = {}
 
 /**
- * Check the cache for path, or read from fs and cache, and return contents.
+ * Check the cache for path, or read from fs and cache.
+ * @param {string} label
  * @param {string} path
+ * @param {function} cb
  * @returns {string}
  */
-function readFileCache (path) {
-  var file =
-    cache[path] !== undefined ?
-    cache[path] :
-    fs.readFileSync(path, { encoding: 'utf8' });
+function readFileCache (label, path, cb) {
+  if (files[label] === undefined) {
+    fs.readFile(path, { encoding: 'utf8' }, readComplete);
+  }
+  else process.nextTick(function () {
+    readComplete(null, files[label]);
+  });
 
-  cache[path] = file;
-
-  return file;
+  function readComplete (err, src) {
+    if (err) throw err;
+    files[label] = src;
+    cb(src);
+  }
+  // readComplete
 }
 // readFileCache
 
@@ -58,15 +66,33 @@ function addsSourceMap (t, opts) {
   var es6ify = proxyquire('..', { './compile' : trackingCompile } )
   es6ify = es6ify.configure(es6ifyOpts);
 
-  var contents = readFileCache(paths.in.file);
+  // File reads pending.
+  var pending = 0;
 
-  // Run without, then with, `end()`
-  [undefined, end].forEach(function (end) {
-    fs.createReadStream(paths.in.file)
-      .pipe(es6ify(paths.in.file))
-      .on('error', console.error)
-      .pipe(through(write, end));
+  // Read some files in.
+  [
+    ['input', paths.in.file],
+    [
+      'generated',
+      path.join(__dirname, 'transform', 'traceur-generated-template-parser.js'),
+    ],
+  ].forEach(function (file) {
+    pending++;
+    readFileCache(file[0], file[1], function () {
+      if (--pending === 0) fileReadsComplete();
+    })
   });
+
+  function fileReadsComplete () {
+    // Run without, then with, `end()`
+    [undefined, end].forEach(function (end) {
+      fs.createReadStream(paths.in.file)
+        .pipe(es6ify(paths.in.file))
+        .on('error', console.error)
+        .pipe(through(write, end));
+    });
+  }
+  // fileReadsComplete
 
   function write (buf) { data += buf; }
   function end () {
@@ -102,14 +128,8 @@ function addsSourceMap (t, opts) {
           mappings: sourceMap.mappings,
           sourceRoot: paths.out.sourceRoot,
           sourcesContent: [
-            contents,
-            readFileCache(
-              path.join(
-                __dirname, 'transform', 'traceur-generated-template-parser.js'
-              ),
-              { encoding: 'utf8' }
-            )
-              .replace(/\s+$/, ''),
+            files.input,
+            files.generated.replace(/\s+$/, ''),
             'void 0'
           ] }
       , 'adds sourcemap comment including original source'
