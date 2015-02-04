@@ -23,16 +23,22 @@ function getHash(data) {
  * @param {string} src source of the file being compiled to ES5
  * @return {string} compiled source
  */
-function compileFile(file, src) {
+function compileFile(file, src, opts) {
   var compiled;
-  compiled = compile(file, src, exports.traceurOverrides);
+  opts.traceurOverrides = exports.traceurOverrides;
+  compiled = compile(file, src, opts);
   if (compiled.error) throw new Error(compiled.error);
 
   return compiled.source;
 }
 
-function es6ify(filePattern) {
-  filePattern =  filePattern || /\.js$/;
+function es6ify(opts) {
+  if (opts === undefined) opts = {};
+  if (opts.filePattern === undefined) opts.filePattern = /\.js$/;
+  else if (!(opts.filePattern instanceof RegExp)) {
+    throw new Error("`filePattern` must be a RegExp if defined.");
+  }
+  var filePattern = opts.filePattern;
 
   return function (file) {
 
@@ -51,7 +57,7 @@ function es6ify(filePattern) {
 
       if (!cached || cached.hash !== hash) {
         try {
-          cache[file] = { compiled: compileFile(file, data), hash: hash };
+          cache[file] = { compiled: compileFile(file, data, opts), hash: hash };
         } catch (ex) {
           this.emit('error', ex);
           return this.queue(null);
@@ -82,7 +88,9 @@ exports = module.exports = es6ify();
  *
  * @name es6ify::configure
  * @function
- * @param {string=} filePattern (default: `/\.js$/) pattern of files that will be es6ified
+ * @param {{filePattern: (undefined|!RegExp), basedir: (undefined|string)}=} opts
+ * filePattern (default: `/\.js$/`) pattern of files that will be es6ified
+ * basedir Base path to compute relative paths for `sources`
  * @return {function} function that returns a `TransformStream` when called with a `file`
  */
 exports.configure = es6ify;
