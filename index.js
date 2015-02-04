@@ -88,9 +88,9 @@ exports = module.exports = es6ify();
  *
  * @name es6ify::configure
  * @function
- * @param {{filePattern: (undefined|!RegExp), sourceRoot: (undefined|string)}=} opts
+ * @param {{filePattern: (undefined|!RegExp), basedir: (undefined|string)}=} opts
  * filePattern (default: `/\.js$/`) pattern of files that will be es6ified
- * sourceRoot Path that `sources` paths are relative to.
+ * basedir Base path to compute relative paths for `sources`
  * @return {function} function that returns a `TransformStream` when called with a `file`
  */
 exports.configure = es6ify;

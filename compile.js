@@ -32,9 +32,19 @@ exports = module.exports = function compileFile(file, contents, opts) {
   try{
     var compiler = new Compiler(buildTraceurOptions(opts.traceurOverrides));
 
-    var outFile = opts.sourceRoot ? path.relative(opts.sourceRoot, file) : file;
+    var outFile =
+      opts.basedir !== undefined ?
+      path.relative(opts.basedir, file) :
+      file;
 
-    var result = compiler.compile(contents, file, outFile, opts.sourceRoot);
+    // opts.basedir is passed here as the `sourceRoot` param, which traceur
+    // totally misappropriates. See
+    // https://github.com/google/traceur-compiler/issues/1676
+    // It's ok for here for now because it gets the
+    // correct path populated in `sources` and browserify overwrites sourceRoot.
+    // This should be revisited to see if a relative path should be passed in
+    // `file` and what `sourceRoot` value, if any, should be passed.
+    var result = compiler.compile(contents, file, outFile, opts.basedir);
   }catch(errors){
       return { source: null, error: errors[0] };
   }

@@ -62,7 +62,9 @@ function addsSourceMap (t, opts) {
   paths.in.file = path.join(paths.in.sourceRoot, paths.in.sources);
 
   var es6ifyOpts = {};
-  if (opts.useSourceRoot) es6ifyOpts.sourceRoot = paths.in.sourceRoot;
+  // Traceur misappropriates sourceRoot to apply to local input paths, so the
+  // public option for es6ify is named basedir.
+  if (opts.useSourceRoot) es6ifyOpts.basedir = paths.in.sourceRoot;
   var es6ify = proxyquire('..', { './compile' : trackingCompile } )
   es6ify = es6ify.configure(es6ifyOpts);
 
