@@ -11,7 +11,7 @@
   "homepage": "https://thlorenz.github.io/es6ify/",
   "dependencies": {
     "through": "~2.2.7",
-    "traceur": "0.0.79",
+    "traceur": "0.0.90",
     "xtend": "~2.2.0"
   },
   "devDependencies": {

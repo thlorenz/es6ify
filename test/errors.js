@@ -23,7 +23,7 @@ test('\ncompiling block-scope with blockBinding: false', function (t) {
     .transform(es6ify)
     .require(__dirname + '/../example/src/features/block-scope.js', { entry: true })
     .bundle(function (err, src) {
-      t.similar(err.message, /Unexpected token let/, 'returns error indicating that let is not supported')
+      t.similar(err.message, /Unexpected reserved word let while parsing file/, 'returns error indicating that let is not supported')
       es6ify.traceurOverrides = null;
       t.end();
     });

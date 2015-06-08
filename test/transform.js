@@ -43,31 +43,20 @@ test('transform adds sourcemap comment and uses cache on second time', function 
 
       // Traceur converts all \s to /s so we need to do so also before comparing
       var fileConverted = file.replace(/\\/g, '/');
-      var sourceRootConverted = path.join(path.dirname(file), path.sep).replace(/\\/g, '/');
 
       t.deepEqual(
           sourceMap
         , { version: 3,
             file: fileConverted,
-            sources: [ fileConverted, '@traceur/generated/TemplateParser/1' ],
+            sources: [ path.basename(fileConverted) ],
             names: [],
             mappings: sourceMap.mappings,
-            sourceRoot: sourceRootConverted,
             sourcesContent: [
               'module.exports = function () {\n' +
               '  for (let element of [1, 2, 3]) {\n' +
               '    console.log(\'element:\', element);\n' +
               '  }\n' +
-              '};\n',
-
-              '\n        for (var $__placeholder__0 =\n' +
-              '                 $__placeholder__1[\n' +
-              '                     $traceurRuntime.toProperty(Symbol.iterator)](),\n' +
-              '                 $__placeholder__2;\n' +
-              '             !($__placeholder__3 = $__placeholder__4.next()).done; ) {\n' +
-              '          $__placeholder__5;\n' +
-              '          $__placeholder__6;\n' +
-              '        }'
+              '};\n'
             ] }
         , 'adds sourcemap comment including original source'
       );
