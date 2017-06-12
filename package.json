@@ -10,7 +10,7 @@
   "repository": "thlorenz/es6ify",
   "homepage": "https://thlorenz.github.io/es6ify/",
   "dependencies": {
-    "through": "~2.2.7",
+    "through": "~2.3.8",
     "traceur": "0.0.79",
     "xtend": "~2.2.0"
   },
